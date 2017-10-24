@@ -1,0 +1,9 @@
+{
+  "ios": {
+    "release": {
+      "developmentTeam": "C27Q7B659F",
+      "packageType": "app-store", 
+      "provisioningProfile": "yourprovfileUUID"
+    }
+  }
+}
