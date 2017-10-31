@@ -9,7 +9,10 @@
     "build:cordova": "webpack --config ./webpack.cordova.config.js --watch"
   },
   "dependencies": {
+    "babel-preset-stage-0": "^6.24.1",
+    "material-ui": "next",
     "path": "^0.12.7",
+    "radium": "^0.19.5",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-router-dom": "^4.2.2"
