@@ -13,9 +13,9 @@ const TextField = (props) => {
 
   return(
     <MuiTextField
-      defaultValue={value}
-      onBlur={(ev) => stateHandler.set(name, ev.target.value)}
+      value={value}
       onChange={(ev) => {
+        stateHandler.set(name, ev.target.value);
         if(typeof props.onChange === 'function') {
           props.onChange(ev);
         }

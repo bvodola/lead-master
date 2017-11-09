@@ -1,6 +1,8 @@
 import React from 'react';
+
 import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
+
 import { Row, Col, col, flexCenter } from '../helpers/grid';
 import Text from '../helpers/Text';
 import { Icon } from '../helpers';
@@ -36,6 +38,7 @@ const Agenda = () => (
         </Text>
       </Col>
       <Col>
+
         <Text type='body1'>24/10/2017</Text>
       </Col>
       <Col style={{position: 'relative', float: 'right'}}>
@@ -51,14 +54,11 @@ const Agenda = () => (
     <TaskList>
       <Task />
       <Task />
-      <Task />
-      <Task />
-      <Task />
-      <Task />
-      <Task />
-      <Task />
     </TaskList>
 
+    <form onSubmit={(ev) => { ev.preventDefault(); ev.persist(); console.log(ev); window.evt = ev;}}>
+      <button className='testClass'>test</button>
+    </form>
 
     <Button fab color="primary" aria-label="add" style={style.addTask}>
       <Icon>add</Icon>

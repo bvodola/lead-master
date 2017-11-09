@@ -1,4 +1,5 @@
 import React from 'react';
+import VMasker from 'vanilla-masker';
 
 const Icon = (props) => {
   const { children } = props;
@@ -48,4 +49,23 @@ const merge = (obj1, obj2) => {
   }
 }
 
-export { Icon, checkNested, getNested, merge, isObject };
+const unmask = (maskedValue) => {
+  const el = document.createElement('input');
+  el.value = maskedValue;
+  VMasker(el).unMask();
+  return el.value;
+}
+
+const getToken = () => {
+  let cks = {};
+  if(document && document.cookie) {
+    document.cookie.split(';').forEach(function(c,i){
+      let keyval = c.split('=');
+      cks[keyval[0].trim()] = keyval[1];
+    });
+  }
+
+	return cks.token || false;
+}
+
+export { Icon, checkNested, getNested, merge, isObject, unmask, getToken };
