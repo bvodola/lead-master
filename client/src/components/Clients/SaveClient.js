@@ -13,20 +13,29 @@ const style = {
   }
 }
 
-const initialState = () => ({
-  client: {
-    name: '',
-    attributes: {
-      phone: '',
-      email: ''
+const initialState = (client) => {
+  console.log(client);
+  return client === false ?
+    {
+      client: {
+        name: '',
+        attributes: {
+          phone: '',
+          email: ''
+        }
+      }
     }
-  }
-});
+  :
+    {
+      client: { ...client }
+    };
+};
 
 class SaveClient extends React.Component {
-  constructor() {
-    super();
-    this.state = initialState();
+  constructor(props) {
+    super(props);
+    console.log(props.client);
+    this.state = initialState(props.client || false);
   }
 
   handleSubmit() {

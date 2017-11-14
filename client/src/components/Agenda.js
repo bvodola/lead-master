@@ -56,10 +56,6 @@ const Agenda = () => (
       <Task />
     </TaskList>
 
-    <form onSubmit={(ev) => { ev.preventDefault(); ev.persist(); console.log(ev); window.evt = ev;}}>
-      <button className='testClass'>test</button>
-    </form>
-
     <Button fab color="primary" aria-label="add" style={style.addTask}>
       <Icon>add</Icon>
     </Button>

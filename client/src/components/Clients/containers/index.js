@@ -2,6 +2,13 @@ import React from 'react';
 import axios from 'axios';
 import Clients from '../';
 
+const removeById = (arr, id) => {
+  return arr.filter((v,i,a) => {
+    if(v.id === id || v._id === id) return false;
+    else return true
+  })
+}
+
 class ClientsContainer extends React.Component {
 
   constructor(props) {
@@ -21,9 +28,21 @@ class ClientsContainer extends React.Component {
           cb(dataWasAdded);
         });
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        console.log(err);
       });
+  }
+
+  deleteClient(id) {
+    axios.delete('/api/clients/'+id)
+    .then((response) => {
+      let { data } = this.state;
+      data = removeById(data, id);
+      this.setState({data});
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   }
 
   componentDidMount() {
@@ -32,7 +51,7 @@ class ClientsContainer extends React.Component {
 
   render() {
     return(
-      <Clients {...this.props} {...this.state} />
+      <Clients {...this.props} {...this.state} deleteClient={this.deleteClient.bind(this)} />
     )
   }
 };

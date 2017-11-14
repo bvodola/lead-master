@@ -31,48 +31,51 @@ const style = {
 const Clients = (props) => {
   const clients = props.data;
 
-  return(
-    <div className='ClientsComponent'>
 
-      <Text type='title'>
-        Clientes
-      </Text>
+    console.log('else');
+    return(
+      <div className='ClientsComponent'>
 
-      <Table header={['Nome', 'Email', 'Celular', 'Ações']}>
+        <Text type='title'>
+          Clientes
+        </Text>
 
-        {clients.map((client,i) => (
-          <Tr key={i}>
-            <Td stackable><strong>{client.name}</strong></Td>
-            <Td stackable>
-              {client.attributes.email}
-            </Td>
-            <Td stackable>
-              <a target='_blank' href={'http://api.whatsapp.com/send?phone=55'+unmask(client.attributes.phone)}>{client.attributes.phone}</a>
-            </Td>
-            <Td style={style.actions}>
-              <span style={style.actions.showSmUp}>
+        <Table header={['Nome', 'Email', 'Celular', 'Ações']}>
+
+          {clients.map((client,i) => (
+            <Tr key={i}>
+              <Td stackable><strong>{client.name}</strong></Td>
+              <Td stackable>
+                {client.attributes.email}
+              </Td>
+              <Td stackable>
+                <a target='_blank' href={'http://api.whatsapp.com/send?phone=55'+unmask(client.attributes.phone)}>{client.attributes.phone}</a>
+              </Td>
+              <Td style={style.actions}>
+                <span style={style.actions.showSmUp}>
+                  <IconButton onClick={() => { props.deleteClient(client._id) } }>
+                    <Icon>delete</Icon>
+                  </IconButton>
+                </span>
                 <IconButton>
-                  <Icon>delete</Icon>
+                  <Icon>more_vert</Icon>
                 </IconButton>
-              </span>
-              <IconButton>
-                <Icon>more_vert</Icon>
-              </IconButton>
-            </Td>
-          </Tr>
-        ))}
+              </Td>
+            </Tr>
+          ))}
 
 
-      </Table>
+        </Table>
 
-      <Link to='/clients/add'>
-        <Button fab color="primary" aria-label="add" style={style.addClient}>
-          <Icon>add</Icon>
-        </Button>
-      </Link>
+        <Link to='/clients/add'>
+          <Button fab color="primary" aria-label="add" style={style.addClient}>
+            <Icon>add</Icon>
+          </Button>
+        </Link>
 
-    </div>
-  )
+      </div>
+    )
+
 };
 
 export default Clients;

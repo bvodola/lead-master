@@ -2,10 +2,12 @@ import React from 'react';
 import {StyleRoot} from 'radium';
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom';
 
+import KeyLogger from './KeyLogger';
 import AppBar from './AppBar';
 import Agenda from './Agenda';
 import Clients from './Clients/containers';
 import SaveClient from './Clients/SaveClient';
+import SaveClientContainer from './Clients/containers/SaveClient';
 
 import { getToken } from '../helpers';
 
@@ -17,55 +19,14 @@ const style = {
   }
 }
 
-let isAuthenticated = false;
-
-const PrivateRoute = (props) => (
-  isAuthenticated ?
-    <Route {...props} />
-    :
-    <Redirect to={{
-      pathname: '/login',
-      state: { from: props.location }
-    }}/>
-);
-
-class Login extends React.Component {
-  state = {
-    redirectToReferrer: false
-  }
-
-  login = () => {
-    // isAuthenticated = true;
-    // this.setState({ redirectToReferrer: true })
-
-  }
-
-  render() {
-    const { from } = this.props.location.state || { from: { pathname: '/' } }
-    const { redirectToReferrer } = this.state
-
-    if (redirectToReferrer) {
-      return (
-        <Redirect to={from}/>
-      )
-    }
-
-    return (
-      <div>
-        <p>You must log in to view the page at {from.pathname}</p>
-        <button onClick={this.login}>Log in</button>
-      </div>
-    )
-  }
-}
-
 
 class App extends React.Component {
 
   constructor() {
     super();
     this.state = {
-      authToken: ''
+      authToken: '',
+      isAuthenticated: false
     }
   }
 
@@ -92,28 +53,27 @@ class App extends React.Component {
   render() {
     return (
       <StyleRoot>
-        <Router>
+        {this.state.isAuthenticated ?
+          <Router>
+            <KeyLogger>
+              <AppBar logout={this.deleteToken.bind(this)} />
+              <div style={style.content}>
+                <Switch>
+                  <Route exact path='/' render={(props) => <Agenda {...props} />} />
+                  <Route path='/clients/add' component={SaveClient} />
+                  <Route path='/clients/edit/:_id' render={({match}) => <SaveClientContainer clientId={match.params._id} />} />
+                  <Route path='/clients' component={Clients} />
+                  <Route path='/playground' component={Playground} />
+                </Switch>
+              </div>
+            </KeyLogger>
+          </Router>
+        :
           <div>
-            <AppBar />
-
-            <div style={style.content}>
-              {!this.state.isAuthenticated ?
-                <div>
-                  <a href='http://localhost:3000/auth/facebook'>FB Login</a>
-                  <a href='http://localhost:3000/auth/twitter'>Twitter Login</a>
-                </div>
-              : <button onClick={() => this.deleteToken()}>Logout</button>}
-
-              <Switch>
-                <Route path='/login' component={Login} />
-                <Route exact path='/' render={(props) => <Agenda {...props} />} />
-                <Route path='/clients/add' component={SaveClient} />
-                <Route path='/clients' component={Clients} />
-                <Route path='/playground' component={Playground} />
-              </Switch>
-            </div>
+            <a href='http://localhost:3000/auth/facebook'>FB Login</a>
+            <a href='http://localhost:3000/auth/twitter'>Twitter Login</a>
           </div>
-        </Router>
+        }
       </StyleRoot>
     );
   }
