@@ -3,7 +3,7 @@ const http = require('http');
 const path = require('path');
 const bodyParser = require('body-parser');
 const passport = require('passport');
-const session = require('express-session');
+const session = require('cookie-session');
 const ejs = require('ejs');
 const api = require('./api');
 const { Clients } = require('./models');
@@ -32,7 +32,7 @@ app.use(function(req, res, next) {
 app.use(bodyParser.json()); // Support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // Support encoded bodies
 app.use('/static', express.static('static/'));
-app.use(session({secret: 'passport-secret', resave: true, saveUninitialized: true}));
+app.use(session({secret: 'passport-secret'}));
 app.use(passport.initialize());
 
 // ====

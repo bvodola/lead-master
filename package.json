@@ -4,7 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "start:dev": "nodemon"
   },
   "engines": {
     "node": "8.x"
@@ -14,9 +15,9 @@
     "babel-polyfill": "^6.26.0",
     "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.18.2",
+    "cookie-session": "^2.0.0-beta.3",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
-    "express-session": "^1.15.6",
     "googleapis": "^23.0.0",
     "intl": "^1.2.5",
     "jsonwebtoken": "^8.1.0",
