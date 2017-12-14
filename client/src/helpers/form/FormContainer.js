@@ -31,7 +31,7 @@ const FormContainer = (props) => {
 
     return formFields.indexOf(field) === -1 ?
       React.cloneElement(child, {stateHandler: stateHandler}):
-      React.cloneElement(child);
+      React.cloneElement(child, {stateHandler: stateHandler});
 
   });
 

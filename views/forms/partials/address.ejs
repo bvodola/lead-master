@@ -1,0 +1,24 @@
+
+<h1>Declaração de Residência</h1>
+
+<h2>Declarante</h2>
+<p>
+  <%- include('_client', {client: client}) -%>
+</p>
+
+<p>
+  Venho perante a este instrumento declarar que não possuo comprovante de endereço em meu nome,
+  sendo certo e verdadeiro que resido no endereço abaixo descrito seguindo, em
+  anexo, documento comprobatório em nome de terceiro:
+  Por ser verdade, firmo-me.
+</p>
+
+<p>
+  São Paulo, <%= date %>.
+</p>
+
+<div style="margin: 60px 40px 10px 40px; text-align: center">
+____________________________________________________________
+<br>
+Declarante: <%= client.name %> - CPF <%= client.cpf %>
+</div>

@@ -35,5 +35,20 @@ module.exports = function(passport) {
       res.redirect('http://localhost:4000');
     });
 
+    router.get('/google',
+      passport.authenticate('google', { scope: [
+        'https://www.googleapis.com/auth/calendar',
+        'https://www.googleapis.com/auth/plus.login',
+        'https://www.googleapis.com/auth/plus.profile.emails.read'
+      ]}));
+
+    router.get('/google/callback',
+      passport.authenticate('google'),
+      function(req, res) {
+        const user = req.user.toObject();
+        res.cookie('token', user.tokens.local);
+        res.redirect('http://localhost:4000');
+      });
+
   return router;
 }

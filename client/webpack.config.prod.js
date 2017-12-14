@@ -9,8 +9,8 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 })
 
 module.exports = {
+  devtool: 'cheap-module-source-map',
   entry: [
-    'react-hot-loader/patch',
     './src/index.js'
   ],
   output: {
@@ -24,21 +24,13 @@ module.exports = {
       { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ }
     ]
   },
-  devServer: {
-    port: 4000,
-    hot: true,
-    historyApiFallback: true,
-    proxy: {
-      "/api/**": {
-        target: "http://localhost:2000",
-        secure: false,
-        pathRewrite: { "$/": "" }
-      },
-    }
-  },
   plugins: [
     HtmlWebpackPluginConfig,
-    new webpack.NamedModulesPlugin(),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.optimize.UglifyJsPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+      }
+    })
   ]
 }

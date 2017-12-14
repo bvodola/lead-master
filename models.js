@@ -47,9 +47,17 @@ const tasksSchema = new Schema({
   { strict: false }
 );
 
-const Users = mongoose.model('users', usersSchema);
-const Clients = mongoose.model('clients', clientsSchema);
-const Logs = mongoose.model('logs', logsSchema);
-const Tasks = mongoose.model('tasks', tasksSchema);
+const messagesSchema = new Schema({
+    created: { type: Date, default: Date.now }
+  },
+  { strict: false }
+);
 
-module.exports = { Users, Clients };
+const models = {};
+models.Users = mongoose.model('users', usersSchema);
+models.Clients = mongoose.model('clients', clientsSchema);
+models.Logs = mongoose.model('logs', logsSchema);
+models.Tasks = mongoose.model('tasks', tasksSchema);
+models.Messages = mongoose.model('messages', messagesSchema);
+
+module.exports = models;

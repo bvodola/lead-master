@@ -2,7 +2,24 @@ import React from 'react';
 import axios from 'axios';
 import SaveClient from '../SaveClient';
 
+const initialState = () => (
+  {
+    client: {
+      name: '',
+      attributes: {
+        phone: '',
+        email: ''
+      }
+    }
+  }
+);
+
 class SaveClientContainer extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = initialState();
+  }
 
   getData(page=0, cb=() => {}) {
 
@@ -22,7 +39,7 @@ class SaveClientContainer extends React.Component {
 
   render() {
     return(
-      <SaveClient {...this.props} {...this.state} />
+      <SaveClient scope={this} {...this.props} {...this.state} initialState={initialState} />
     )
   }
 };

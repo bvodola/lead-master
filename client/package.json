@@ -4,19 +4,27 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "test": "jest",
     "start": "webpack-dev-server",
-    "build": "webpack --watch",
+    "build": "webpack",
+    "build:prod": "webpack --config ./webpack.config.prod.js",
     "build:cordova": "webpack --config ./webpack.cordova.config.js --watch"
   },
   "dependencies": {
     "axios": "^0.17.0",
+    "babel-jest": "^21.2.0",
     "babel-preset-stage-0": "^6.24.1",
+    "enzyme": "^3.2.0",
+    "enzyme-adapter-react-16": "^1.1.0",
+    "jest": "^21.2.1",
     "material-ui": "next",
     "path": "^0.12.7",
+    "prop-types": "^15.6.0",
     "radium": "^0.19.5",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-router-dom": "^4.2.2",
+    "react-test-renderer": "^16.2.0",
     "vanilla-masker": "^1.2.0"
   },
   "devDependencies": {
@@ -28,5 +36,10 @@
     "react-hot-loader": "^3.1.1",
     "webpack": "^3.8.1",
     "webpack-dev-server": "^2.9.3"
+  },
+  "jest": {
+    "setupFiles": [
+      "./jest.setup.js"
+    ]
   }
 }

@@ -1,0 +1,4 @@
+---
+applications:
+ - name: lead-master
+   memory: 512M

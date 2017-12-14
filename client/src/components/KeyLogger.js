@@ -13,6 +13,9 @@ class KeyLogger extends React.Component {
           case(99):
             this.props.history.push('/clients');
             break;
+          case(100):
+            this.props.history.push('/documents-form');
+            break;
         }
       }
 

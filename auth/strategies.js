@@ -2,6 +2,7 @@ var { Users } = require('../models');
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 var TwitterStrategy = require('passport-twitter').Strategy;
+var GoogleStrategy = require('passport-google-oauth20').Strategy;
 var { register } = require('./index');
 
 // ====
@@ -11,7 +12,6 @@ var { register } = require('./index');
 module.exports = function(passport) {
 
   passport.serializeUser(function(user, done) {
-    console.log(user);
     done(null, user._id || user.id);
   });
 
@@ -48,7 +48,6 @@ module.exports = function(passport) {
     profileFields: ['id', 'emails', 'name']
   },
   function(accessToken, refreshToken, profile, cb) {
-    console.log(profile);
     const fbUser = {
       name: profile.name,
       email: profile.emails[0].value,
@@ -67,10 +66,8 @@ module.exports = function(passport) {
       if (err) { return done(err); }
       if (!user) {
         user = await register(fbUser);
-        console.log(user);
         return cb(err, user);
       } else {
-        console.log(user);
         return cb(err, user);
       }
 
@@ -97,13 +94,48 @@ module.exports = function(passport) {
         }
       }
 
-      Users.findOne({ 'services.twitter.id': twitterUser.id }, async function (err, user) {
+      Users.findOne({ 'services.twitter.id': twitterUser.services.twitter[0].id }, async function (err, user) {
         if (err) { return done(err); }
         if (!user) {
           user = await register(twitterUser);
           return done(err, user);
         } else {
-          console.log(user);
+          return done(err, user);
+        }
+
+      });
+
+    }
+
+  ));
+
+  passport.use(new GoogleStrategy({
+      clientID: '91860760724-teieu2bcja7voosvhvsuog6tpt2rt6ff.apps.googleusercontent.com',
+      clientSecret: 'AX5-QGmsbw1dsgtXjJh_9EYH',
+      callbackURL: "http://localhost:3000/auth/google/callback"
+    },
+    function(accessToken, refreshToken, profile, done) {
+      const googleUser = {
+        name: profile.displayName,
+        email: profile.emails[0].value,
+        services: {
+          google: [
+            {
+              id: profile.id,
+              username: profile.username,
+              accessToken,
+              refreshToken
+            }
+          ]
+        }
+      }
+
+      Users.findOne({ 'email': googleUser.email }, async function (err, user) {
+        if (err) { return done(err); }
+        if (!user) {
+          user = await register(googleUser);
+          return done(err, user);
+        } else {
           return done(err, user);
         }
 

@@ -1,0 +1,62 @@
+<html>
+  <head>
+    <style>
+      * {
+        background:transparent !important;
+        color:#000 !important;
+        text-shadow:none !important;
+        filter:none !important;
+        -ms-filter:none !important;
+      }
+      @page {
+        margin: 1cm;
+        size: A4;
+      }
+      body {
+        font-family: arial;
+        margin:0;
+        padding:0;
+        line-height: 1.4em;
+      }
+      h1 {
+        font-size: 22px;
+      }
+      h2 {
+        margin: 0;
+        font-size: 18px;
+      }
+      p {
+        margin: 0  0 15px 0;
+        font-size: 12pt;
+      }
+      .contract p {
+        font-size: 10pt;
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('partials/contract', {client: client, date: date})  -%>
+    <div style="page-break-after: always;">&nbsp;</div>
+    <%- include('partials/contract', {client: client, date: date})  -%>
+    <div style="page-break-after: always;">&nbsp;</div>
+    <%- include('partials/iml', {client: client, date: date})  -%>
+    <div style="page-break-after: always;">&nbsp;</div>
+    <%- include('partials/adm', {client: client, date: date})  -%>
+    <div style="page-break-after: always;">&nbsp;</div>
+    <%- include('partials/jud', {client: client, date: date})  -%>
+    <div style="page-break-after: always;">&nbsp;</div>
+    <%- include('partials/iprf', {client: client, date: date})  -%>
+    <div style="page-break-after: always;">&nbsp;</div>
+    <%- include('partials/poverty', {client: client, date: date})  -%>
+    <div style="page-break-after: always;">&nbsp;</div>
+    <%- include('partials/address', {client: client, date: date})  -%>
+    <div style="page-break-after: always;">&nbsp;</div>
+    <%- include('partials/payment', {client: client, date: date})  -%>
+    <div style="page-break-after: always;">&nbsp;</div>
+    <%- include('partials/vehicle', {client: client, date: date})  -%>
+    <div style="page-break-after: always;">&nbsp;</div>
+
+    </div>
+
+  </body>
+</html>

@@ -31,8 +31,6 @@ const style = {
 const Clients = (props) => {
   const clients = props.data;
 
-
-    console.log('else');
     return(
       <div className='ClientsComponent'>
 
@@ -57,9 +55,11 @@ const Clients = (props) => {
                     <Icon>delete</Icon>
                   </IconButton>
                 </span>
-                <IconButton>
-                  <Icon>more_vert</Icon>
-                </IconButton>
+                <Link style={{textDecoration: 'none'}} to={'/clients/edit/'+client._id}>
+                  <IconButton>
+                    <Icon>edit</Icon>
+                  </IconButton>
+                </Link>
               </Td>
             </Tr>
           ))}

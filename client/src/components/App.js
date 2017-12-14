@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-ro
 
 import KeyLogger from './KeyLogger';
 import AppBar from './AppBar';
+import DocumentsForm from './Documents/containers/DocumentsForm';
 import Agenda from './Agenda';
 import Clients from './Clients/containers';
 import SaveClient from './Clients/SaveClient';
@@ -53,16 +54,17 @@ class App extends React.Component {
   render() {
     return (
       <StyleRoot>
-        {this.state.isAuthenticated ?
+        {this.state.isAuthenticated || 1 ?
           <Router>
             <KeyLogger>
               <AppBar logout={this.deleteToken.bind(this)} />
               <div style={style.content}>
                 <Switch>
                   <Route exact path='/' render={(props) => <Agenda {...props} />} />
-                  <Route path='/clients/add' component={SaveClient} />
+                  <Route path='/clients/add' component={SaveClientContainer} />
                   <Route path='/clients/edit/:_id' render={({match}) => <SaveClientContainer clientId={match.params._id} />} />
                   <Route path='/clients' component={Clients} />
+                  <Route path='/documents-form' component={DocumentsForm} />
                   <Route path='/playground' component={Playground} />
                 </Switch>
               </div>
@@ -72,6 +74,7 @@ class App extends React.Component {
           <div>
             <a href='http://localhost:3000/auth/facebook'>FB Login</a>
             <a href='http://localhost:3000/auth/twitter'>Twitter Login</a>
+            <a href='http://localhost:3000/auth/google'>Google Login</a>
           </div>
         }
       </StyleRoot>

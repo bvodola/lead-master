@@ -4,6 +4,7 @@ import Text from '../../helpers/Text';
 import TextField from '../../helpers/form/TextField';
 import MaskedTextField from '../../helpers/form/MaskedTextField';
 import FormContainer from '../../helpers/form/FormContainer';
+
 import axios from 'axios';
 
 const style = {
@@ -13,53 +14,36 @@ const style = {
   }
 }
 
-const initialState = (client) => {
-  console.log(client);
-  return client === false ?
-    {
-      client: {
-        name: '',
-        attributes: {
-          phone: '',
-          email: ''
-        }
-      }
-    }
-  :
-    {
-      client: { ...client }
-    };
-};
 
 class SaveClient extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props.client);
-    this.state = initialState(props.client || false);
   }
 
   handleSubmit() {
-    axios.post('/api/clients', this.state.client)
+    axios.post('/api/clients'+this.props.client)
       .then((response) => {
-        this.setState({client: initialState().client}, () => {
+        this.setState({client: this.props.initialState().client}, () => {
         });
       })
   }
 
   render() {
+    console.log('this.props',this.props);
     return(
-      <div>
+      <FormContainer scope={this.props.scope}>
         <Text type='title'>Cadastrar Cliente</Text>
-        <FormContainer scope={this}>
-          <TextField name='client.name' label='Nome' fullWidth />
-          <TextField name='client.attributes.email' label='E-mail' fullWidth />
-          <MaskedTextField fullWidth label='Celular' name='client.attributes.phone' mask='(99) 99999-9999' />
-          <Button type='submit' style={style.submitButton} onClick={() => this.handleSubmit()} raised color='primary'>Cadastrar Cliente</Button>
-        </FormContainer>
-
-      </div>
+        <TextField name='client.name' label='Nome' fullWidth />
+        <TextField name='client.attributes.email' label='E-mail' fullWidth />
+        <MaskedTextField fullWidth label='Celular' name='client.attributes.phone' mask='(99) 99999-9999' />
+        <Button type='submit' style={style.submitButton} onClick={() => this.handleSubmit()} raised color='primary'>Cadastrar Cliente</Button>
+      </FormContainer>
     )
   }
 }
 
 export default SaveClient;
+
+SaveClient.propTypes = {
+
+}

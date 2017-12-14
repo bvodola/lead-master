@@ -1,0 +1,37 @@
+<h1>Procuração Administrativa</h1>
+
+<h2>Outorgante</h2>
+<p>
+  <%- include('_client', {client: client}) -%>
+</p>
+
+<h2>Outorgado</h2>
+<p>
+  <%- include('_adm_rep') -%>
+</p>
+
+<h2>Poderes</h2>
+<p>O OUTORGANTE concede poderes especiais ao OUTORGADO para:</p>
+<p>
+Enviar documentos, receber correspondências, solicitar informações por escrito
+ou por telefone, ter acesso ao número do sinistro, acompanhar o andamento
+do sinistro, ter informações e acompanhar pericias necessárias e apresentar
+documentos referentes ao sinistro, junto à Seguradora Líder, Seguradoras
+conveniadas e a Susep.
+</p>
+<p>
+Obs.: É de responsabilidade do outorgante a veracidade das informações e
+documentos apresentados e disponibilizados ao outorgado.
+</p>
+
+<p>
+  São Paulo, <%= date %>.
+</p>
+
+<div style="margin: 60px 40px 10px 40px; text-align: center">
+____________________________________________________________
+<br>
+Outorgante: <%= client.name %> - CPF <%= client.cpf %>
+<br>
+(Firma por Autenticidade)
+</div>

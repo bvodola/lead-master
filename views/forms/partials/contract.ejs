@@ -1,0 +1,98 @@
+<div class="contract">
+  <h1>CONTRATO DE HONORÁRIOS – DPVAT ADMINISTRATIVO E/OU JUDICIAL</h1>
+
+  <h2>I – CONTRATANTE</h2>
+  <p>
+    <%- include('_client', {client: client}) -%>
+  </p>
+
+  <h2>II – CONTRATADO</h2>
+  <p>
+    <%- include('_adm_rep') -%>
+  </p>
+
+
+  <h2>III – OBJETO</h2>
+  <p>
+    Pedido Administrativo e/ou ajuizamento de Ação de Cobrança de Seguro Obrigatório (DPVAT), perante à SEGURADORA
+    LÍDER, ou qualquer outra seguradora participante do Convênio DPVAT.
+  </p>
+
+  <h2>IV – CONDIÇÕES DA CONTRATAÇÃO</h2>
+  <p>
+    1. O contratado obriga-se, no cumprimento do mandato procuratório a ser outorgado pelo contratante, a prestar os seus
+    serviços profissionais como atividade meio, dispensar todo o zelo e toda à diligência, na defesa dos direitos e interesses do
+    contratante, relativamente ao objeto contratado.
+    2. O contratante obriga-se, por meio deste instrumento, a fornecer para o contratado, a fim de instruir o procedimento,
+    todos os documentos (originais e/ou cópias autenticadas), rol de testemunhas e informações solicitadas pela empresa
+    contratada, bem como o pagamento, após o recebimento da indenização, de eventuais despesas decorrentes do processo.
+  </p>
+
+  <h2>V – LOCAL DA AÇÃO</h2>
+  <p>
+    Fica, por este instrumento particular, desde já ajustado, que os interesses do contratante serão defendidos no
+   município e Comarca de São Paulo – SP.
+  </p>
+
+  <h2>VI – HONORÁRIOS PROFISSIONAIS/REMUNERAÇÃO</h2>
+  <p>
+    1. O contratante pagará ao contratado pelos serviços profissionais que ora contrata por este instrumento particular,
+    honorários fixados em 30% (trinta por cento) do valor da condenação, tanto para o pedido administrativo junto à
+    seguradora, quanto para o ajuizamento da Ação de Cobrança.
+    2. O (a) contratante autoriza a emissão de boleto bancário em seu nome, com prazo de vencimento de 03 dias úteis
+    (acrescidos de prazo postal se necessário) para a efetivação da cobrança dos honorários devidos ao contratado, ficando
+    ciente de que o não pagamento dos honorários no prazo ajustado implicará no protesto do título.
+    3. O não pagamento dos honorários fixados neste contrato, nos prazos nele estabelecidos, importará em multa de 20% (vinte
+    por cento) sobre o total devido, acrescido de correção monetária calculada com base na variação do IGP-DI da FGV e juros
+    de 5,94% (cinco ponto noventa e quatro por cento) ao mês.
+  </p>
+
+  <h2>VII – DO VENCIMENTO ANTECIPADO DOS HONORÁRIOS PROFISSIONAIS</h2>
+  <p>
+    os honorários profissionais ora contratados, considerar-se-
+    ão automaticamente vencidos e imediatamente exigíveis nas seguintes hipóteses:
+    a) No caso de composição amigável, realizada direta ou indiretamente, quer pelo outorgado/contratado ou pelo
+    outorgante/contratante;
+    b) No caso do outorgante/contratante não fornecer documentos ou informações necessárias solicitadas pelo
+    outorgado/contratado, ou por abandono da causa por aquele;
+    c) No caso do outorgante/contratante revogar o mandato procuratório, ou pedir o substabelecimento sem reserva de
+    poderes;
+    d) No caso do outorgante/contratante desistir do procedimento, já tendo este instrumento particular sido firmado entre às
+    partes.
+  </p>
+
+  <h2>VIII – DA ELEIÇÃO DE FORO</h2>
+  <p>
+    às partes contratantes elegem o foro da Comarca de São Paulo – SP, para solucionar quaisquer questões
+   judiciais, resultantes do presente instrumento, não obstante a mudança de domicílio pelo contratante, ou qualquer outra
+   prerrogativa de ordem legal disponível deste, podendo entrementes, o contratado, optar pelo foro do domicílio daquele.
+  </p>
+
+  <h2>IX – DA DISPENSA DO RECONHECIMENTO DE FIRMAS</h2>
+  <p>
+    1. Por motivos de economia financeira, dispensam-se reciprocamente às partes, o reconhecimento de firma no presente
+    instrumento, reconhecendo como verdadeiras às assinaturas apostas no presente instrumento.
+    2. Para a firmeza e também como prova de assim terem acordado e contratado, fizeram este instrumento particular,
+    impresso em 2(duas) vias de igual teor e forma, assinadas pelas partes contratantes abaixo, a tudo presentes:
+  </p>
+
+  <p style="text-align: center; margin-bottom: 40px">
+  São Paulo, <%= date %>
+  </p>
+  <div style="text-align: center">
+  <div style="margin: 10px 40px">
+  ____________________________________________________________
+  <br>
+  Contratante: <%= client.name %> - CPF <%= client.cpf %>
+  </div>
+
+  <br>
+  <div style="margin: 10px 40px">
+  ____________________________________________________________
+  <br>
+  Contratado: Douglas Augusto da Silva Dias – CPF 349.574.788-56
+  </div>
+
+  </div>
+
+</div>

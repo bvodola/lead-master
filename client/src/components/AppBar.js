@@ -26,6 +26,7 @@ const AppBar = (props) => (
       <div style={{marginLeft: '20px', float: 'right'}}>
         <Link style={{textDecoration: 'none'}} to='/'><Button color='contrast'>Agenda</Button></Link>
         <Link style={{textDecoration: 'none'}} to='/clients'><Button color='contrast'>Clientes</Button></Link>
+        <Link style={{textDecoration: 'none'}} to='/documents-form'><Button color='contrast'>Gerar Documentos</Button></Link>
         <Button onClick={() => props.logout()} classes={{label: props.classes.buttonLabel}} color='contrast'>
           <Icon style={{position: 'absolute', left: '10px'}}>power_settings_new</Icon> Logout
         </Button>
