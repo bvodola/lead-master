@@ -55,7 +55,8 @@ app.get('/documents/:client_id', function(req, res) {
 
 		const d = new Date();
 		const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-		context.date = d.getDate()+' de '+months[d.getMonth()]+' de '+d.getFullYear();
+		context.fullDate = d.getDate()+' de '+months[d.getMonth()]+' de '+d.getFullYear();
+		context.date = { day: d.getDate(), month: months[d.getMonth()], year: d.getFullYear() }
 
 		res.render('forms/index', context);
 	});

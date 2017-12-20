@@ -1,15 +1,13 @@
 import React from 'react';
-import axios from 'axios';
+import axios from '../../../helpers/axios';
 import SaveClient from '../SaveClient';
 
 const initialState = () => (
   {
     client: {
       name: '',
-      attributes: {
-        phone: '',
-        email: ''
-      }
+      phone: '',
+      email: ''
     }
   }
 );
@@ -23,14 +21,19 @@ class SaveClientContainer extends React.Component {
 
   getData(page=0, cb=() => {}) {
 
-    axios.get('/api/clients/'+this.props.clientId)
-      .then((response) => {
-        const client = response.data[0];
-        this.setState({ client });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const { clientId } = this.props;
+
+    if(typeof clientId !== 'undefined') {
+      axios.get('/api/clients/'+clientId)
+        .then((response) => {
+          const client = response.data[0];
+          this.setState({ client });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
   }
 
   componentDidMount() {

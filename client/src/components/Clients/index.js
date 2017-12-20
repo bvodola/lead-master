@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import IconButton from 'material-ui/IconButton';
 import Button from 'material-ui/Button';
+import Tooltip from 'material-ui/Tooltip';
 
 import { Icon, unmask } from '../../helpers';
 import { Table, Tr, Td } from '../../helpers/Table';
@@ -44,22 +45,33 @@ const Clients = (props) => {
             <Tr key={i}>
               <Td stackable><strong>{client.name}</strong></Td>
               <Td stackable>
-                {client.attributes.email}
+                {client.email}
               </Td>
               <Td stackable>
-                <a target='_blank' href={'http://api.whatsapp.com/send?phone=55'+unmask(client.attributes.phone)}>{client.attributes.phone}</a>
+                <a target='_blank' href={'http://api.whatsapp.com/send?phone=55'+unmask(client.phone)}>{client.phone}</a>
               </Td>
               <Td style={style.actions}>
                 <span style={style.actions.showSmUp}>
-                  <IconButton onClick={() => { props.deleteClient(client._id) } }>
-                    <Icon>delete</Icon>
-                  </IconButton>
+                  <Tooltip title='Apagar'>
+                    <IconButton onClick={() => { props.deleteClient(client._id) } }>
+                      <Icon>delete</Icon>
+                    </IconButton>
+                  </Tooltip>
                 </span>
-                <Link style={{textDecoration: 'none'}} to={'/clients/edit/'+client._id}>
-                  <IconButton>
-                    <Icon>edit</Icon>
-                  </IconButton>
-                </Link>
+                <Tooltip title='Editar'>
+                  <Link style={{textDecoration: 'none'}} to={'/clients/edit/'+client._id}>
+                    <IconButton>
+                      <Icon>edit</Icon>
+                    </IconButton>
+                  </Link>
+                </Tooltip>
+                <Tooltip title='Ver Documentação'>
+                  <a style={{textDecoration: 'none'}} target='_blank' href={'/documents/'+client._id}>
+                    <IconButton>
+                      <Icon>description</Icon>
+                    </IconButton>
+                  </a>
+                </Tooltip>
               </Td>
             </Tr>
           ))}

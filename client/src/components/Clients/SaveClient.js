@@ -34,8 +34,8 @@ class SaveClient extends React.Component {
       <FormContainer scope={this.props.scope}>
         <Text type='title'>Cadastrar Cliente</Text>
         <TextField name='client.name' label='Nome' fullWidth />
-        <TextField name='client.attributes.email' label='E-mail' fullWidth />
-        <MaskedTextField fullWidth label='Celular' name='client.attributes.phone' mask='(99) 99999-9999' />
+        <TextField name='client.email' label='E-mail' fullWidth />
+        <MaskedTextField fullWidth label='Celular' name='client.phone' mask='(99) 99999-9999' />
         <Button type='submit' style={style.submitButton} onClick={() => this.handleSubmit()} raised color='primary'>Cadastrar Cliente</Button>
       </FormContainer>
     )

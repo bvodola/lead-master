@@ -29,7 +29,8 @@ class ClientsContainer extends React.Component {
         });
       })
       .catch((err) => {
-        console.log(err);
+        console.error('getData() error');
+        console.error(err);
       });
   }
 

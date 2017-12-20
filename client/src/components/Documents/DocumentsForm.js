@@ -22,7 +22,7 @@ const DocumentsForm = (props) => {
 
   return(
     <div style={style.container}>
-      <Typography type='title'>Gerar Formulários DPVAT</Typography>
+      <Typography type='title'>Gerar Documentos DPVAT</Typography>
 
       <TextField value={client.name} onChange={(ev) => handleChange('client.name', ev.target.value)} label="Nome da vítima" fullWidth />
       <TextField value={client.birthday} onBlur={() => handleChangeAge()} onChange={(ev) => handleChange('client.birthday', ev.target.value)} label="Data de Nascimento" fullWidth />
