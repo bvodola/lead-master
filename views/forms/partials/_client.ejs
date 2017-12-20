@@ -1,3 +1,11 @@
-<%= client.name %>, <%= client.nacionality %>, <%= client.marital_status %>, <%= client.job %>, RG. <%= client.rg.number %>,
-CPF. <%= client.cpf %>, residente a <%= client.address.street %>, <%= client.address.number %>, <%= client.address.neighborhood %>,
-<%= client.address.city %>/<%= client.address.state %>, CEP <%= client.address.zip %>
+<% if(client.isUnder16)  { %>
+  <%= client.name %>, RG. <%= client.rg.number %>, menor impúbere, neste ato representado por <%= client.tutor.name %>,
+  <%= client.tutor.nacionality %>, <%= client.tutor.marital_status %>,
+  <%= client.tutor.job %>, CPF. <%= client.tutor.cpf %>, residente a <%= client.address.street %>,
+  <%= client.address.number %>, <%= client.address.neighborhood %>, <%= client.address.city %>/<%= client.address.state %>,
+  CEP <%= client.address.zip %>
+<% } else { %>
+  <%= client.name %>, <%= client.nacionality %>, <%= client.marital_status %>, <%= client.job %>, RG. <%= client.rg.number %>,
+  CPF. <%= client.cpf %>, residente a <%= client.address.street %>, <%= client.address.number %>, <%= client.address.neighborhood %>,
+  <%= client.address.city %>/<%= client.address.state %>, CEP <%= client.address.zip %>
+<% } %>

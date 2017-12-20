@@ -29,9 +29,7 @@ documentos apresentados e disponibilizados ao outorgado.
 </p>
 
 <div style="margin: 60px 40px 10px 40px; text-align: center">
-____________________________________________________________
-<br>
-Outorgante: <%= client.name %> - CPF <%= client.cpf %>
+<%- include('_client_signature', {client: client, text: 'Outorgante'}) -%>
 <br>
 (Firma por Autenticidade)
 </div>

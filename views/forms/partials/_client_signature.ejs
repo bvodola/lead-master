@@ -1,0 +1,14 @@
+<div style="margin: 10px 40px">
+____________________________________________________________
+<br>
+
+<%= text %>:
+
+
+<% if(client.isUnder16)  {%>
+  <%= client.tutor.name %> - CPF <%= client.tutor.cpf %>
+<% } else { %>
+  <%= client.name %> - CPF <%= client.cpf %>
+<% } %>
+
+</div>

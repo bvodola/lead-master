@@ -57,6 +57,8 @@ app.get('/documents/:client_id', function(req, res) {
 		const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 		context.fullDate = d.getDate()+' de '+months[d.getMonth()]+' de '+d.getFullYear();
 		context.date = { day: d.getDate(), month: months[d.getMonth()], year: d.getFullYear() }
+		console.log((new Date()) - new Date(context.client.birthday));
+		context.client.isUnder16 = Math.floor(((new Date()) - new Date(context.client.birthday))/31536000000) < 16;
 
 		res.render('forms/index', context);
 	});

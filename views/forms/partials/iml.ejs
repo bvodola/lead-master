@@ -29,6 +29,56 @@
     <%= client.accident_date %>
   </span>
 
+  <!-- ***** -->
+  <!-- Tutor -->
+  <!-- ***** -->
+
+  <% if(client.isUnder16) { %>
+    <span style="
+      font-size: 12px;
+      position: absolute;
+      left: 1.4%;
+      top: 43.5%;
+    ">
+      <%= client.tutor.name %>
+    </span>
+    <span style="
+      font-size: 12px;
+      position: absolute;
+      left: 76.3%;
+      top: 43.5%;
+    ">
+      <%= client.tutor.cpf %>
+    </span>
+    <span style="
+      font-size: 12px;
+      position: absolute;
+      left: 1.2%;
+      top: 47%;
+    ">
+      <%= client.tutor.email %>
+    </span>
+    <span style="
+      font-size: 12px;
+      position: absolute;
+      left: 76.3%;
+      top: 47%;
+    ">
+      <%= client.tutor.phone %>
+    </span>
+  <% } %>
+
+  <span style="
+    font-size: 15px;
+    font-weight: bold;
+    position: absolute;
+    left: 2%;
+    top: 62.2%;
+  ">
+    X
+  </span>
+
+
   <!-- **** -->
   <!-- Date -->
   <!-- **** -->

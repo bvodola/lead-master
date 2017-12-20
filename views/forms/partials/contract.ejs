@@ -80,11 +80,7 @@
   São Paulo, <%= fullDate %>
   </p>
   <div style="text-align: center">
-  <div style="margin: 10px 40px">
-  ____________________________________________________________
-  <br>
-  Contratante: <%= client.name %> - CPF <%= client.cpf %>
-  </div>
+  <%- include('_client_signature', {client: client, text: 'Contratante'}) -%>
 
   <br>
   <div style="margin: 10px 40px">
