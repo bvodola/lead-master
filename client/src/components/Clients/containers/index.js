@@ -20,6 +20,8 @@ class ClientsContainer extends React.Component {
 
   getData(page=0, cb=() => {}) {
 
+    // const data = [...(await axios.get('/api/clients/')).data , ...this.state.data];
+
     axios.get('/api/clients/')
       .then((response) => {
         const data = [ ...this.state.data , ...response.data ];

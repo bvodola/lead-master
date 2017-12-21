@@ -66,11 +66,11 @@ const Clients = (props) => {
                   </Link>
                 </Tooltip>
                 <Tooltip title='Ver Documentação'>
-                  <a style={{textDecoration: 'none'}} target='_blank' href={'/documents/'+client._id}>
+                  <Link style={{textDecoration: 'none'}} to={'/documents-form/'+client._id}>
                     <IconButton>
                       <Icon>description</Icon>
                     </IconButton>
-                  </a>
+                  </Link>
                 </Tooltip>
               </Td>
             </Tr>

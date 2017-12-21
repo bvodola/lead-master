@@ -7,8 +7,7 @@ import AppBar from './AppBar';
 import DocumentsForm from './Documents/containers/DocumentsForm';
 import Agenda from './Agenda';
 import Clients from './Clients/containers';
-import SaveClient from './Clients/SaveClient';
-import SaveClientContainer from './Clients/containers/SaveClient';
+import SaveClient from './Clients/containers/SaveClient';
 
 import { getToken } from '../helpers';
 
@@ -61,10 +60,10 @@ class App extends React.Component {
               <div style={style.content}>
                 <Switch>
                   <Route exact path='/' render={(props) => <Agenda {...props} />} />
-                  <Route path='/clients/add' component={SaveClientContainer} />
+                  <Route path='/clients/add' component={SaveClient} />
                   <Route path='/clients/edit/:_id' render={({match}) => <SaveClientContainer clientId={match.params._id} />} />
                   <Route path='/clients' component={Clients} />
-                  <Route path='/documents-form' component={DocumentsForm} />
+                  <Route path='/documents-form/:_id?' render={({match}) => <DocumentsForm clientId={match.params._id} />} />
                   <Route path='/playground' component={Playground} />
                 </Switch>
               </div>

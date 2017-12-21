@@ -2,6 +2,7 @@ import React from 'react'
 import DocumentsForm from '../DocumentsForm'
 import StateHandler from '../../../helpers/form/StateHandler'
 import axios from '../../../helpers/axios';
+import { LinearProgress } from 'material-ui/Progress';
 
 const initialState = () => ({
   client: {
@@ -46,6 +47,7 @@ const initialState = () => ({
     }
   },
   isUnder16: false,
+  loading: true,
 })
 
 class DocumentsFormContainer extends React.Component {
@@ -56,8 +58,11 @@ class DocumentsFormContainer extends React.Component {
   }
 
   async onSubmit() {
-    const client = (await axios.post('/api/clients/', this.state.client)).data;
-    window.open('/documents/'+client._id);
+    const _id = this.state.client._id;
+    const client = typeof _id === 'undefined' ?
+      (await axios.post('/api/clients/', this.state.client)).data:
+      (await axios.put('/api/clients/'+_id, this.state.client)).data;
+    window.open('/documents/'+_id);
   }
 
   handleChangeAge() {
@@ -69,17 +74,40 @@ class DocumentsFormContainer extends React.Component {
     this.setState({isUnder16});
   }
 
+  async getData() {
+    const { clientId } = this.props;
+
+    if(typeof clientId !== 'undefined') {
+      const client = (await axios.get('/api/clients/'+clientId)).data[0]
+      this.setState({ client });
+    }
+  }
+
+  async componentDidMount() {
+    await this.getData();
+    this.setState({ loading: false}, () => {
+      this.handleChangeAge();
+    });
+
+  }
+
   render() {
     const stateHandler = new StateHandler(this);
-    return(
-      <DocumentsForm
-        client={this.state.client}
-        isUnder16={this.state.isUnder16}
-        handleChange={stateHandler.set.bind(this)}
-        handleChangeAge={this.handleChangeAge.bind(this)}
-        onSubmit={this.onSubmit.bind(this)}
-      />
-    )
+
+    if(this.state.loading) {
+      return <LinearProgress />
+    } else {
+      return(
+        <DocumentsForm
+          client={this.state.client}
+          isUnder16={this.state.isUnder16}
+          handleChange={stateHandler.set.bind(this)}
+          handleChangeAge={this.handleChangeAge.bind(this)}
+          onSubmit={this.onSubmit.bind(this)}
+        />
+      )
+    }
+
   }
 }
 

@@ -26,6 +26,7 @@ const DocumentsForm = (props) => {
 
       <TextField value={client.name} onChange={(ev) => handleChange('client.name', ev.target.value)} label="Nome da vítima" fullWidth />
       <TextField value={client.birthday} onBlur={() => handleChangeAge()} onChange={(ev) => handleChange('client.birthday', ev.target.value)} label="Data de Nascimento" fullWidth />
+      <TextField value={client.accident_date} onChange={(ev) => handleChange('client.accident_date', ev.target.value)} label="Data do acidente" fullWidth />
       {!isUnder16?
         <div>
           <TextField value={client.nacionality} onChange={(ev) => handleChange('client.nacionality', ev.target.value)} label="Nacionalidade" fullWidth />
@@ -34,8 +35,7 @@ const DocumentsForm = (props) => {
           <TextField value={client.income} onChange={(ev) => handleChange('client.income', ev.target.value)} label="Renda mensal" fullWidth />
         </div>
       :null}
-      <TextField value={client.accident_date} onChange={(ev) => handleChange('client.accident_date', ev.target.value)} label="Data do acidente" fullWidth />
-
+      
       <div style={style.box}>
         <Typography type='subheading'>Dados de contato</Typography>
         <TextField value={client.phone} onChange={(ev) => handleChange('client.phone', ev.target.value)} label="Telefone" fullWidth />
