@@ -59,18 +59,18 @@ const Clients = (props) => {
                   </Tooltip>
                 </span>
                 <Tooltip title='Editar'>
-                  <Link style={{textDecoration: 'none'}} to={'/clients/edit/'+client._id}>
+                  <Link style={{textDecoration: 'none'}} to={'/documents-form/'+client._id}>
                     <IconButton>
                       <Icon>edit</Icon>
                     </IconButton>
                   </Link>
                 </Tooltip>
                 <Tooltip title='Ver Documentação'>
-                  <Link style={{textDecoration: 'none'}} to={'/documents-form/'+client._id}>
+                  <a style={{textDecoration: 'none'}} target='_blank' href={'/documents/'+client._id}>
                     <IconButton>
                       <Icon>description</Icon>
                     </IconButton>
-                  </Link>
+                  </a>
                 </Tooltip>
               </Td>
             </Tr>

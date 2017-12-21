@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Clients from '../';
+import { LinearProgress } from 'material-ui/Progress';
 
 const removeById = (arr, id) => {
   return arr.filter((v,i,a) => {
@@ -14,26 +15,19 @@ class ClientsContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: []
+      data: [],
+      loading: true
     };
   }
 
-  getData(page=0, cb=() => {}) {
+  async getData(page=0, cb=() => {}) {
+    const data = [...(await axios.get('/api/clients/')).data , ...this.state.data];
+    const dataWasAdded = this.state.data.length < data.length;
 
-    // const data = [...(await axios.get('/api/clients/')).data , ...this.state.data];
+    this.setState({ data }, () => {
+      cb(dataWasAdded);
+    });
 
-    axios.get('/api/clients/')
-      .then((response) => {
-        const data = [ ...this.state.data , ...response.data ];
-        const dataWasAdded = this.state.data.length < data.length;
-        this.setState({ data }, () => {
-          cb(dataWasAdded);
-        });
-      })
-      .catch((err) => {
-        console.error('getData() error');
-        console.error(err);
-      });
   }
 
   deleteClient(id) {
@@ -48,13 +42,16 @@ class ClientsContainer extends React.Component {
     })
   }
 
-  componentDidMount() {
-    this.getData();
+  async componentDidMount() {
+    await this.getData();
+    this.setState({loading: false});
   }
 
   render() {
     return(
-      <Clients {...this.props} {...this.state} deleteClient={this.deleteClient.bind(this)} />
+      this.state.loading ?
+        <LinearProgress />:
+        <Clients {...this.props} {...this.state} deleteClient={this.deleteClient.bind(this)} />
     )
   }
 };
