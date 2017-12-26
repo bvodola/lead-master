@@ -59,7 +59,6 @@ router.get('/clients/:_id?', (req, res) => {
 
 router.post('/clients/', (req, res) => {
   const client = req.body;
-  console.log('post to clients')
   Clients.create(client, (e,client) => {
     if(e) {
       console.log(e);

@@ -1,4 +1,5 @@
 import React from 'react';
+import Radium from 'radium';
 import { Link, withRouter } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
 import { default as MuiAppBar } from 'material-ui/AppBar';
@@ -7,19 +8,30 @@ import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import Text from '../helpers/Text';
 import { Icon } from '../helpers';
+import { screen } from '../helpers/grid';
 
 const classes = {
-    buttonLabel: {
-      paddingLeft: '20px',
+  buttonLabel: {
+    paddingLeft: '20px',
+  }
+}
+
+const style = {
+  menuIcon: {
+    [screen.mdUp]: {
+      display: 'none'
     }
+  }
 }
 
 const AppBar = (props) => (
   <MuiAppBar position="fixed">
     <Toolbar>
-      <IconButton color="contrast" aria-label="Menu">
-        <Icon>menu</Icon>
-      </IconButton>
+      <span style={style.menuIcon}>
+        <IconButton color="contrast" aria-label="Menu">
+          <Icon>menu</Icon>
+        </IconButton>
+      </span>
       <Text type="title" color="inherit">
         LM
       </Text>
@@ -36,4 +48,4 @@ const AppBar = (props) => (
   </MuiAppBar>
 );
 
-export default withStyles(classes)(AppBar);
+export default withStyles(classes)(Radium(AppBar));

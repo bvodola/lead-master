@@ -30,7 +30,10 @@ const style = {
 }
 
 const Clients = (props) => {
-  const clients = props.data;
+  const
+    clients = props.data,
+    isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent),
+    whatsappUrl = isMobile ?  'api' : 'web';
 
     return(
       <div className='ClientsComponent'>
@@ -48,7 +51,7 @@ const Clients = (props) => {
                 {client.email}
               </Td>
               <Td stackable>
-                <a target='_blank' href={'http://api.whatsapp.com/send?phone=55'+unmask(client.phone)}>{client.phone}</a>
+                <a target='_blank' href={`http://${whatsappUrl}.whatsapp.com/send?phone=55`+unmask(client.phone)}>{client.phone}</a>
               </Td>
               <Td style={style.actions}>
                 <span style={style.actions.showSmUp}>

@@ -58,10 +58,13 @@ class DocumentsFormContainer extends React.Component {
   }
 
   async onSubmit() {
-    const _id = this.state.client._id;
-    const client = typeof _id === 'undefined' ?
-      (await axios.post('/api/clients/', this.state.client)).data:
-      (await axios.put('/api/clients/'+_id, this.state.client)).data;
+    let _id = this.state.client._id;
+
+    if(typeof _id === 'undefined') {
+      _id = (await axios.post('/api/clients/', this.state.client)).data._id;
+    } else {
+      await axios.put('/api/clients/'+_id, this.state.client);
+    }
     window.open('/documents/'+_id);
   }
 
