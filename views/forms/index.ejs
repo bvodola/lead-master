@@ -56,6 +56,7 @@
     <%- include('partials/vehicle', {client: client, date: date})  -%>
     <div style="page-break-after: always;">&nbsp;</div>
 
+    <% if(client.products) { %>
     <% if(client.products.fisioterapia) { %>
       <%- include('partials/fisio_contract')  -%>
       <div style="page-break-after: always;">&nbsp;</div>
@@ -67,6 +68,7 @@
       <div style="page-break-after: always;">&nbsp;</div>
       <%- include('partials/fisio_optante_2')  -%>
       <div style="page-break-after: always;">&nbsp;</div>
+    <% } %>
     <% } %>
 
 
