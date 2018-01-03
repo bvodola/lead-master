@@ -1,0 +1,30 @@
+<h1>NOTA PROMISSÓRIA Nº 1/1</h1>
+
+<h2>Subscritor</h2>
+<p>
+  <%- include('_client') -%>
+</p>
+
+<h2>Tomador</h2>
+<p>
+  A.M.C Saúde Eireli, pessoa jurídica de direito privado, inscrita no CNPJ/MF sob o nº 27.722.641/0001-06, com sede na Rua Francisco Octávio Pacca, nº 139, Pq. América, São Paulo/SP, CEP 04822-030.
+</p>
+
+<p>
+  Vencimento: _________/_________/____________ <br>
+  Valor: R$ _____________
+</p>
+
+<p>
+  Aos ____/____/______ ( _______________________________________) <br>
+  pagarei por esta única via de Nota Promissória ao tomador, ou a sua ordem, a quantia de <br>
+  R$ __________ (___________________________________________), Pagável em São Paulo/SP.
+</p>
+
+<p style="text-align: center; margin-bottom: 40px">
+  São Paulo, <%= fullDate %>
+</p>
+
+<div style="text-align: center">
+  <%- include('_client_signature', {text: 'Subscritor'}) -%>
+</div>

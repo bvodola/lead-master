@@ -56,9 +56,20 @@ app.get('/documents/:client_id', function(req, res) {
 			let context = {  client: client.toObject() || {} };
 			const d = new Date();
 			const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+
+			if(typeof context.client.products !== 'undefined') {
+				let products = {};
+				context.client.products.forEach((product) => {
+					products[product] = true;
+				});
+				context.client.products = products;
+			}
+
 			context.fullDate = d.getDate()+' de '+months[d.getMonth()]+' de '+d.getFullYear();
 			context.date = { day: d.getDate(), month: months[d.getMonth()], year: d.getFullYear() }
 			context.client.isUnder16 = Math.floor(((new Date()) - new Date(context.client.birthday))/31536000000) < 16;
+
+
 			res.render('forms/index', context);
 		} else {
 			res.send('Cliente não encontrado.');

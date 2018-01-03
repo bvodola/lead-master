@@ -44,7 +44,8 @@ const initialState = () => ({
       marital_status: '',
       job: '',
       cpf: '',
-    }
+    },
+    products: []
   },
   isUnder16: false,
   loading: true,
@@ -107,6 +108,7 @@ class DocumentsFormContainer extends React.Component {
           handleChange={stateHandler.set.bind(this)}
           handleChangeAge={this.handleChangeAge.bind(this)}
           onSubmit={this.onSubmit.bind(this)}
+          stateHandler={stateHandler}
         />
       )
     }

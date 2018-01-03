@@ -35,11 +35,11 @@ class CheckboxGroup extends Component {
           {options.map((item,i) => {
 
             let isChecked = false;
-            let itemKey = item.id || item._id || item.value || item.label || item.name || item.title || item.content;
+            let itemKey = item.id || item._id || item.name || item.title || item.label || item.content || item.value;
             let itemLabel = item.label || item.name || item.title || item.content || item.value;
 
             checkedValues.forEach((v) => {
-              if(v === item.id)
+              if(v === itemKey)
                 isChecked = true;
             });
 
@@ -49,7 +49,7 @@ class CheckboxGroup extends Component {
 
                 control={
                   <Checkbox
-                    {...checkboxProps}    
+                    {...checkboxProps}
                     checked={isChecked}
                     label={itemLabel}
                     onChange={(ev, isChecked) => {this.handleChange(itemKey, isChecked)}}

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Button from 'material-ui/Button'
 import Divider from 'material-ui/Divider';
 import Typography from 'material-ui/Typography'
+import CheckboxGroup from '../../helpers/form/CheckboxGroup'
 
 const style = {
   container: {
@@ -18,7 +19,7 @@ const style = {
 }
 
 const DocumentsForm = (props) => {
-  const { client, handleChange, handleChangeAge, isUnder16 } = props
+  const { client, handleChange, handleChangeAge, isUnder16, stateHandler } = props
 
   return(
     <div style={style.container}>
@@ -35,7 +36,7 @@ const DocumentsForm = (props) => {
           <TextField value={client.income} onChange={(ev) => handleChange('client.income', ev.target.value)} label="Renda mensal" fullWidth />
         </div>
       :null}
-      
+
       <div style={style.box}>
         <Typography type='subheading'>Dados de contato</Typography>
         <TextField value={client.phone} onChange={(ev) => handleChange('client.phone', ev.target.value)} label="Telefone" fullWidth />
@@ -82,6 +83,16 @@ const DocumentsForm = (props) => {
         <TextField value={client.bank_account.number} onChange={(ev) => handleChange('client.bank_account.number', ev.target.value)} label="Conta" fullWidth />
       </div>
 
+      <div style={style.box}>
+        <Typography type='subheading'>Gerar também formulários para</Typography>
+        <CheckboxGroup stateHandler={stateHandler} name='client.products' options={[
+          {name: 'fisioterapia', label: 'Fisioterapia'},
+        ]}>
+
+        </CheckboxGroup>
+
+      </div>
+
       <Button style={{width: '100%'}} raised color='primary' onClick={() => props.onSubmit()}>Gerar Documentos</Button>
     </div>
   )
@@ -91,6 +102,7 @@ export default DocumentsForm;
 
 DocumentsForm.propTypes = {
   handleChange: PropTypes.func.isRequired,
+  stateHandler: PropTypes.object.isRequired,
   onSubmit: PropTypes.func.isRequired,
   data: PropTypes.object
 }

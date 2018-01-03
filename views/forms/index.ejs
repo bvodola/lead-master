@@ -56,6 +56,17 @@
     <%- include('partials/vehicle', {client: client, date: date})  -%>
     <div style="page-break-after: always;">&nbsp;</div>
 
+    <% if(client.products.fisioterapia) { %>
+      <div style="page-break-after: always;">&nbsp;</div>
+      <%- include('partials/fisio_contract')  -%>
+      <div style="page-break-after: always;">&nbsp;</div>
+      <%- include('partials/fisio_contract_2')  -%>
+      <div style="page-break-after: always;">&nbsp;</div>
+      <%- include('partials/fisio_note')  -%>
+    <% } %>
+
+
+
     </div>
 
   </body>
