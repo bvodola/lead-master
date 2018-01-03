@@ -8,7 +8,7 @@ class CheckboxGroup extends Component {
   handleChange(id, isChecked) {
     let { stateHandler, name } = this.props;
     let state = stateHandler.get();
-    let stateArray = _.get(state,name);
+    let stateArray = _.get(state,name) || [];
 
     if(isChecked) {
       stateArray.push(id);
@@ -38,10 +38,12 @@ class CheckboxGroup extends Component {
             let itemKey = item.id || item._id || item.name || item.title || item.label || item.content || item.value;
             let itemLabel = item.label || item.name || item.title || item.content || item.value;
 
-            checkedValues.forEach((v) => {
-              if(v === itemKey)
-                isChecked = true;
-            });
+            if(checkedValues instanceof Array) {
+              checkedValues.forEach((v) => {
+                if(v === itemKey)
+                  isChecked = true;
+              });
+            }
 
             return (
               <FormControlLabel
