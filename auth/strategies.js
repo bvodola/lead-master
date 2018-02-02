@@ -26,14 +26,17 @@ module.exports = function(passport) {
   	},
     function(email, password, done) {
       Users.findOne({ email }, function (err, user) {
-  			user = user.toObject();
+
+        if(user) user = user.toObject();
         const userModel = new Users(user);
 
         if (err) { return done(err); }
         if (!user) {
+          console.log('Incorrect username')
           return done(null, false, { message: 'Incorrect username.' });
         }
-        if (userModel.validPassword(user.password)) {
+        if (!userModel.validPassword(password)) {
+          console.log('Incorrect password')
           return done(null, false, { message: 'Incorrect password.' });
         }
         return done(null, user);

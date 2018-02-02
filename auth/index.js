@@ -3,9 +3,9 @@ var { Users } = require('../models');
 
 let tokens = {}, register, registerMiddleware;
 
-tokens.generate = (user) => {
+tokens.generate = (data) => {
   return new Promise((resolve, reject) => {
-    jwt.sign(user, 'secret', {}, function(err, token) {
+    jwt.sign(data, 'robocopisthesecret', {}, function(err, token) {
       if(err) reject(err);
       else {
         resolve(token);
@@ -29,11 +29,29 @@ tokens.save = (user, token) => {
 
 tokens.validate = (token) => {
   return new Promise((resolve, reject) => {
-    jwt.verify(token, 'secret', function(err, data) {
+    jwt.verify(token, 'robocopisthesecret', function(err, data) {
       if(err) reject(err);
       else resolve(data);
     });
   })
+}
+
+tokens.validateMiddleware = async (req, res, next) => {
+	if(typeof req.headers.authorization !== 'undefined') {
+		const token = String(req.headers.authorization).split('Bearer ')[1];
+		const token_data = await tokens.validate(token);
+    if(token.data !== 'undefined') {
+      res.locals.user_id = token_data._id;
+      next();
+    }
+    else {
+      res.sendStatus(401);
+    }
+
+	}
+  else {
+    res.sendStatus(401);
+  }
 }
 
 register = (user) => {

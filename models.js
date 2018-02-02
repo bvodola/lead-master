@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt-nodejs');
+const bcrypt = require('bcryptjs');
 
 // ===============
 // Database Config
@@ -21,7 +21,7 @@ const usersSchema = new Schema({
 );
 
 usersSchema.methods.generateHash = function(password) {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(8));
 };
 
 // checking if password is valid
@@ -36,6 +36,8 @@ const clientsSchema = new Schema({
 );
 
 const logsSchema = new Schema({
+    user_id: Schema.ObjectId,
+    client_id: Schema.ObjectId,
     created: { type: Date, default: Date.now }
   },
   { strict: false }

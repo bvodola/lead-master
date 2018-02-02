@@ -1,5 +1,5 @@
 var express = require('express');
-var { registerMiddleware } = require('./index');
+var { registerMiddleware, validateMiddleware } = require('./index');
 var router = express.Router();
 
 module.exports = function(passport) {
@@ -7,11 +7,14 @@ module.exports = function(passport) {
   router.post('/login',
     passport.authenticate('local'),
     function(req, res) {
-      res.send(req.user);
+      res.send(req.user.tokens.local);
     });
 
-  router.post('/register',
-    (req, res) => registerMiddleware(req, res));
+  if(process.env.NODE_ENV !== 'production') {
+    router.post('/register',
+      (req, res) => registerMiddleware(req, res)
+    );
+  }
 
   router.get('/facebook',
     passport.authenticate('facebook', { scope: ['email'] }));

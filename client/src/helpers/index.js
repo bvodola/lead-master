@@ -56,16 +56,29 @@ const unmask = (maskedValue) => {
   return el.value;
 }
 
-const getToken = () => {
-  let cks = {};
-  if(document && document.cookie) {
-    document.cookie.split(';').forEach(function(c,i){
-      let keyval = c.split('=');
-      cks[keyval[0].trim()] = keyval[1];
-    });
-  }
 
-	return cks.token || false;
+
+const cookie = {
+  get: (key) => {
+    let cks = {};
+    if(document && document.cookie) {
+      document.cookie.split(';').forEach(function(c,i){
+        let keyval = c.split('=');
+        cks[keyval[0].trim()] = keyval[1];
+      });
+    }
+
+  	return cks[key];
+  },
+
+  set: (key, val) => {
+    document.cookie = `${key}=${val}`
+  	return true;
+  },
+
+  delete: (key) => {
+    document.cookie = `${key}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+  }
 }
 
-export { Icon, checkNested, getNested, merge, isObject, unmask, getToken };
+export { Icon, checkNested, getNested, merge, isObject, unmask, cookie };

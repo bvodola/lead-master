@@ -6,7 +6,7 @@ const passport = require('passport');
 const session = require('cookie-session');
 const ejs = require('ejs');
 const api = require('./api');
-const { Clients } = require('./models');
+const models = require('./models');
 
 // ==============
 // Initial Config
@@ -19,18 +19,20 @@ app.set('view engine', 'ejs');
 // ====
 // CORS
 // ====
-app.use(function(req, res, next) {
-	res.header("Access-Control-Allow-Origin", "*");
-	res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-	next();
-});
+if(app.settings.env !== 'production') {
+	app.use(function(req, res, next) {
+		res.header("Access-Control-Allow-Origin", "*");
+		res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+		res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+		next();
+	});
+}
 
 // ==========
 // Middleware
 // ==========
-app.use(bodyParser.json()); // Support json encoded bodies
-app.use(bodyParser.urlencoded({ extended: true })); // Support encoded bodies
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/static', express.static('static/'));
 app.use(session({secret: 'passport-secret'}));
 app.use(passport.initialize());
@@ -45,6 +47,9 @@ app.use('/auth', require('./auth/routes')(passport));
 // API
 // ===
 app.use('/api', api);
+app.use('/api/clients', require('./crud')(models.Clients));
+app.use('/api/logs', require('./crud')(models.Logs));
+app.use('/api/tasks', require('./crud')(models.Tasks));
 
 // =====
 // Views
@@ -80,7 +85,7 @@ app.get('/documents/:client_id', function(req, res) {
 // ===================
 // Production Settings
 // ===================
-if(app.settings.env == 'production') {
+if(app.settings.env === 'production') {
   app.use(express.static(path.join(__dirname, 'client/build')));
   app.get('*', function (req, res) {
     res.sendFile(path.join(__dirname, 'client/build', 'index.html'));

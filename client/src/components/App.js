@@ -4,14 +4,16 @@ import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-ro
 
 import KeyLogger from './KeyLogger';
 import AppBar from './AppBar';
+import Login from './Login';
 import DocumentsForm from './Documents/containers/DocumentsForm';
 import Agenda from './Agenda';
 import Clients from './Clients/containers';
 import SaveClient from './Clients/containers/SaveClient';
 
-import { getToken } from '../helpers';
+import { cookie } from '../helpers';
+import axios from '../helpers/axios';
 
-import Playground from '../helpers/form/Playground';
+import Playground from './Playground';
 
 const style = {
   content: {
@@ -26,12 +28,14 @@ class App extends React.Component {
     super();
     this.state = {
       authToken: '',
-      isAuthenticated: false
+      isAuthenticated: false,
+      email: '',
+      password: ''
     }
   }
 
   setToken() {
-    const authToken = getToken();
+    const authToken = cookie.get('token');
 
     this.setState({
       authToken,
@@ -40,10 +44,19 @@ class App extends React.Component {
   }
 
   deleteToken() {
+    cookie.delete('token');
     this.setState({
       authToken: false,
       isAuthenticated: false
     })
+  }
+
+  async login(ev) {
+    ev.preventDefault();
+    const { email, password } = this.state;
+    const token = (await axios.post('/auth/login', {email, password})).data;
+    cookie.set('token', token);
+    this.setToken();
   }
 
   componentWillMount() {
@@ -53,10 +66,11 @@ class App extends React.Component {
   render() {
     return (
       <StyleRoot>
-        {this.state.isAuthenticated || 1 ?
+        {this.state.isAuthenticated?
           <Router>
             <KeyLogger>
               <AppBar logout={this.deleteToken.bind(this)} />
+
               <div style={style.content}>
                 <Switch>
                   <Route exact path='/' render={(props) => <Agenda {...props} />} />
@@ -70,11 +84,7 @@ class App extends React.Component {
             </KeyLogger>
           </Router>
         :
-          <div>
-            <a href='http://localhost:3000/auth/facebook'>FB Login</a>
-            <a href='http://localhost:3000/auth/twitter'>Twitter Login</a>
-            <a href='http://localhost:3000/auth/google'>Google Login</a>
-          </div>
+          <Login data={{...this.state}} setState={this.setState.bind(this)} handleSubmit={(ev) => this.login(ev)} />
         }
       </StyleRoot>
     );

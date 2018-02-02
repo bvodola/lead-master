@@ -1,6 +1,6 @@
 import React from 'react'
 import DocumentsForm from '../DocumentsForm'
-import StateHandler from '../../../helpers/form/StateHandler'
+import { StateHandler } from 'react-form-container';
 import axios from '../../../helpers/axios';
 import { LinearProgress } from 'material-ui/Progress';
 

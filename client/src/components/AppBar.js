@@ -28,7 +28,7 @@ const AppBar = (props) => (
   <MuiAppBar position="fixed">
     <Toolbar>
       <span style={style.menuIcon}>
-        <IconButton color="contrast" aria-label="Menu">
+        <IconButton color="default" aria-label="Menu">
           <Icon>menu</Icon>
         </IconButton>
       </span>
@@ -36,11 +36,11 @@ const AppBar = (props) => (
         LM
       </Text>
       <div style={{marginLeft: '20px', float: 'right'}}>
-        <Link style={{textDecoration: 'none'}} to='/'><Button color='contrast'>Agenda</Button></Link>
-        <Link style={{textDecoration: 'none'}} to='/clients'><Button color='contrast'>Clientes</Button></Link>
-        <Link style={{textDecoration: 'none'}} to='/documents-form'><Button color='contrast'>Gerar Documentos</Button></Link>
-        <Button onClick={() => props.logout()} classes={{label: props.classes.buttonLabel}} color='contrast'>
-          <Icon style={{position: 'absolute', left: '10px'}}>power_settings_new</Icon> Logout
+        <Link style={{textDecoration: 'none'}} to='/'><Button style={{color: 'white'}}>Agenda</Button></Link>
+        <Link style={{textDecoration: 'none'}} to='/clients'><Button style={{color: 'white'}}>Clientes</Button></Link>
+        <Link style={{textDecoration: 'none'}} to='/documents-form'><Button style={{color: 'white'}}>Gerar Documentos</Button></Link>
+        <Button onClick={() => props.logout()} classes={{label: props.classes.buttonLabel}} style={{color: 'white'}}>
+          <Icon style={{position: 'absolute', left: '10px', color: 'white'}}>power_settings_new</Icon> Logout
         </Button>
       </div>
 
