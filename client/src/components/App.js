@@ -7,7 +7,7 @@ import AppBar from './AppBar';
 import Login from './Login';
 import DocumentsForm from './Documents/containers/DocumentsForm';
 import Agenda from './Agenda';
-import Clients from './Clients/containers';
+import Clients from './Clients/ListClients.container.js';
 import SaveClient from './Clients/containers/SaveClient';
 
 import { cookie } from '../helpers';
