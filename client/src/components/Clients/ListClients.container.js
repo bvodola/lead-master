@@ -15,24 +15,27 @@ class ClientsContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      search: '',
-      searchField: '',
+      searchTerm: '',
       data: [],
       page: 2,
-      loading: false
+      loading: false,
+      showLoadMoreButton: true,
     };
   }
 
   async search(term) {
     this.setState({loading: true})
     const data = (await axios.get(`/api/clients?search=${term}&sort=name`)).data;
-    this.setState({ data, loading: false, page:2});
+    this.setState({ data, loading: false, page:2, showLoadMoreButton: true});
   }
 
   async getData(cb=() => {}) {
     const { page } = this.state;
-    const data = [ ...this.state.data, ...(await axios.get(`/api/clients?search=${this.state.searchField}&page=${page}&sort=name`)).data];
+    const data = [ ...this.state.data, ...(await axios.get(`/api/clients?search=${this.state.searchTerm}&page=${page}&sort=name`)).data];
     const dataWasAdded = this.state.data.length < data.length;
+
+    if(!dataWasAdded)
+      this.setState({showLoadMoreButton: false});
 
     this.setState({ data, page: page+1 }, () => {
       cb(dataWasAdded);

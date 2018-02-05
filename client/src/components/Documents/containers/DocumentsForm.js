@@ -82,7 +82,7 @@ class DocumentsFormContainer extends React.Component {
     const { clientId } = this.props;
 
     if(typeof clientId !== 'undefined') {
-      const client = (await axios.get('/api/clients/'+clientId)).data[0]
+      const client = (await axios.get('/api/clients/'+clientId)).data
       this.setState({ client });
     }
   }

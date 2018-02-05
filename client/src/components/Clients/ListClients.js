@@ -32,13 +32,24 @@ const Clients = (props) => {
           Clientes
         </Text>
         
-        <form action="" onSubmit={(ev) => { ev.preventDefault(); props.search(props.searchField) }}>
-          <TextField label='Buscar Clientes' autoFocus fullWidth value={props.searchField} onChange={(ev) => props.setState({searchField: ev.target.value})} />
+        <form action="" onSubmit={(ev) => { ev.preventDefault(); props.search(props.searchTerm) }}>
+          <TextField label='Buscar Clientes (Nome, Email, Telefone, RG, CPF)' autoFocus fullWidth value={props.searchTerm} onChange={(ev) => props.setState({searchTerm: ev.target.value})} />
         </form>
         
-        {props.loading ? <LinearProgress /> : null }
-        <ListClientsTable clients={clients} />
-        <Button onClick={() => props.getData()}>Carregar Mais</Button>
+        {props.loading ? <LinearProgress /> : <div style={{height: '5px' }}>&nbsp;</div> }
+        {props.data.length > 0 ?
+          <span>
+            <ListClientsTable deleteClient={props.deleteClient} clients={clients} />
+            <Button
+              disabled={props.showLoadMoreButton ? false : true }
+              onClick={() => props.getData()}>
+                {props.showLoadMoreButton ? 'Carregar Mais' : 'Fim da lista'}
+            </Button>
+          </span> :
+          null
+        }
+        
+        
 
         <Link to='/clients/add'>
           <Button fab color="primary" aria-label="add" style={style.addClient}>

@@ -29,10 +29,13 @@ class ListClientsTableRow extends React.Component {
   }
 
   render() {
+    console.log('ListClientTableRow render()');
     const
       { client } = this.props,
+      props = this.props,
       isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent),
       whatsappUrl = isMobile ?  'api' : 'web';
+      
     return(
       <Tr>
         <Td stackable><strong>{client.name}</strong></Td>
