@@ -17,6 +17,15 @@ class SaveClientContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = initialState();
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit() {
+    axios.post('/api/clients/', { ...this.state.client })
+      .then((response) => {
+        this.setState({client: initialState().client}, () => {
+        });
+      })
   }
 
   getData(page=0, cb=() => {}) {
@@ -42,7 +51,7 @@ class SaveClientContainer extends React.Component {
 
   render() {
     return(
-      <SaveClient scope={this} {...this.props} {...this.state} initialState={initialState} />
+      <SaveClient scope={this} {...this.props} {...this.state} handleSubmit={this.handleSubmit} />
     )
   }
 };

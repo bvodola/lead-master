@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-ro
 import KeyLogger from './KeyLogger';
 import AppBar from './AppBar';
 import Login from './Login';
+import Drawer from './Drawer';
 import DocumentsForm from './Documents/containers/DocumentsForm';
 import Agenda from './Agenda';
 import Clients from './Clients/ListClients.container.js';
@@ -21,17 +22,25 @@ const style = {
   }
 }
 
-
 class App extends React.Component {
 
   constructor() {
     super();
+
     this.state = {
       authToken: '',
       isAuthenticated: false,
       email: '',
-      password: ''
+      password: '',
+      isDrawerOpened: false
     }
+
+    this.toggleDrawer = this.toggleDrawer.bind(this);
+  }
+
+  toggleDrawer() {
+    console.log('toggleDrawer');
+    this.setState({isDrawerOpened: !this.state.isDrawerOpened});
   }
 
   setToken() {
@@ -69,7 +78,8 @@ class App extends React.Component {
         {this.state.isAuthenticated?
           <Router>
             <KeyLogger>
-              <AppBar logout={this.deleteToken.bind(this)} />
+              <Drawer logout={this.deleteToken.bind(this)} toggleDrawer={this.toggleDrawer} isDrawerOpened={this.state.isDrawerOpened}  />
+              <AppBar logout={this.deleteToken.bind(this)} toggleDrawer={this.toggleDrawer} />
 
               <div style={style.content}>
                 <Switch>

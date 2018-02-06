@@ -83,7 +83,7 @@ class DocumentsFormContainer extends React.Component {
 
     if(typeof clientId !== 'undefined') {
       const client = (await axios.get('/api/clients/'+clientId)).data
-      this.setState({ client });
+      this.setState({ client: { ...this.state.client, ...client}});
     }
   }
 
