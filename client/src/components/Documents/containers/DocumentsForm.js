@@ -2,7 +2,9 @@ import React from 'react'
 import DocumentsForm from '../DocumentsForm'
 import { StateHandler } from 'react-form-container';
 import axios from '../../../helpers/axios';
+import { cookie } from '../../../helpers';
 import { LinearProgress } from 'material-ui/Progress';
+import { withRouter } from 'react-router-dom';
 
 const initialState = () => ({
   client: {
@@ -59,14 +61,19 @@ class DocumentsFormContainer extends React.Component {
   }
 
   async onSubmit() {
-    let _id = this.state.client._id;
+    let _id = this.props.clientId;
 
     if(typeof _id === 'undefined') {
-      _id = (await axios.post('/api/clients/', this.state.client)).data._id;
+      _id = (await axios.post('/api/clients/', this.state.client, {
+        headers: {'Authorization': 'Bearer '+cookie.get('token')}
+      })).data._id;
     } else {
-      await axios.put('/api/clients/'+_id, this.state.client);
+      await axios.put('/api/clients/'+_id, this.state.client, {
+        headers: {'Authorization': 'Bearer '+cookie.get('token')}
+      });
     }
     window.open('/documents/'+_id);
+    this.props.history.push('/documents-form/'+_id);
   }
 
   handleChangeAge() {
@@ -82,7 +89,9 @@ class DocumentsFormContainer extends React.Component {
     const { clientId } = this.props;
 
     if(typeof clientId !== 'undefined') {
-      const client = (await axios.get('/api/clients/'+clientId)).data
+      const client = (await axios.get('/api/clients/'+clientId, {
+        headers: {'Authorization': 'Bearer '+cookie.get('token')}
+      })).data
       this.setState({ client: { ...this.state.client, ...client}});
     }
   }
@@ -116,4 +125,4 @@ class DocumentsFormContainer extends React.Component {
   }
 }
 
-export default DocumentsFormContainer
+export default withRouter(DocumentsFormContainer);

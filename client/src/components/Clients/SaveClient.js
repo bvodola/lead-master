@@ -12,11 +12,13 @@ const style = {
 
 const SaveClient = (props) => (
 <FormContainer scope={props.scope}>
-  <Text type='title'>Cadastrar Cliente</Text>
-  <TextField autoFocus name='client.name' label='Nome' fullWidth />
-  <TextField name='client.email' label='E-mail' fullWidth />
-  <MaskedTextField fullWidth label='Celular' name='client.phone' mask='(99) 99999-9999' />
-  <Button type='submit' style={style.submitButton} onClick={() => props.handleSubmit()} raised color='primary'>Cadastrar Cliente</Button>
+  <form onSubmit={(ev) => { ev.preventDefault(); props.handleSubmit()}}>
+    <Text type='title'>Cadastrar Cliente</Text>
+    <TextField autoFocus required name='client.name' label='Nome' fullWidth />
+    <TextField name='client.email' label='E-mail' fullWidth type="email" />
+    <MaskedTextField fullWidth required label='Celular' name='client.phone' mask='(99) 99999-9999' />
+    <Button type='submit' style={style.submitButton} raised color='primary'>Cadastrar Cliente</Button>
+  </form>
 </FormContainer>
 );
 

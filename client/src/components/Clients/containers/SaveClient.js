@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from '../../../helpers/axios';
 import SaveClient from '../SaveClient';
+import { cookie } from '../../../helpers';
 
 const initialState = () => (
   {
@@ -21,7 +22,9 @@ class SaveClientContainer extends React.Component {
   }
 
   handleSubmit() {
-    axios.post('/api/clients/', { ...this.state.client })
+    axios.post('/api/clients/', { ...this.state.client }, {
+      headers: {'Authorization': 'Bearer '+cookie.get('token')}
+    })
       .then((response) => {
         this.setState({client: initialState().client}, () => {
         });

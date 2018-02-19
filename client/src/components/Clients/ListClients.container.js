@@ -1,6 +1,7 @@
 import React from 'react';
-import axios from 'axios';
+import axios from '../../helpers/axios';
 import ListClients from './ListClients';
+import { cookie } from '../../helpers';
 
 
 const removeById = (arr, id) => {
@@ -25,13 +26,18 @@ class ClientsContainer extends React.Component {
 
   async search(term) {
     this.setState({loading: true})
-    const data = (await axios.get(`/api/clients?search=${term}&sort=name`)).data;
+    // const data = (await axios.get(`/api/logs`)).data;
+    const data = (await axios.get(`/api/clients?search=${term}&sort=name`, {
+      headers: {'Authorization': 'Bearer '+cookie.get('token')}
+    })).data;
     this.setState({ data, loading: false, page:2, showLoadMoreButton: true});
   }
 
   async getData(cb=() => {}) {
     const { page } = this.state;
-    const data = [ ...this.state.data, ...(await axios.get(`/api/clients?search=${this.state.searchTerm}&page=${page}&sort=name`)).data];
+    const data = [ ...this.state.data, ...(await axios.get(`/api/clients?search=${this.state.searchTerm}&page=${page}&sort=name`, {
+      headers: {'Authorization': 'Bearer '+cookie.get('token')}
+    })).data];
     const dataWasAdded = this.state.data.length < data.length;
 
     if(!dataWasAdded)
@@ -44,7 +50,9 @@ class ClientsContainer extends React.Component {
   }
 
   deleteClient(id) {
-    axios.delete('/api/clients/'+id)
+    axios.delete('/api/clients/'+id, {
+      headers: {'Authorization': 'Bearer '+cookie.get('token')}
+    })
     .then((response) => {
       let { data } = this.state;
       data = removeById(data, id);

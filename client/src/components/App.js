@@ -43,13 +43,13 @@ class App extends React.Component {
     this.setState({isDrawerOpened: !this.state.isDrawerOpened});
   }
 
-  setToken() {
+  setToken(cb = () => {}) {
     const authToken = cookie.get('token');
 
     this.setState({
       authToken,
       isAuthenticated: authToken ? true : false
-    });
+    }, cb);
   }
 
   deleteToken() {
@@ -63,7 +63,8 @@ class App extends React.Component {
   async login(ev) {
     ev.preventDefault();
     const { email, password } = this.state;
-    const token = (await axios.post('/auth/login', {email, password})).data;
+    const currentUser = (await axios.post('/auth/login', {email, password})).data;
+    const token = currentUser.tokens.local;
     cookie.set('token', token);
     this.setToken();
   }
@@ -83,12 +84,13 @@ class App extends React.Component {
 
               <div style={style.content}>
                 <Switch>
-                  <Route exact path='/' render={(props) => <Agenda {...props} />} />
+                  {/* <Route exact path='/' render={(props) => <Agenda {...props} />} /> */}
                   <Route path='/clients/add' component={SaveClient} />
                   <Route path='/clients/edit/:_id' render={({match}) => <SaveClientContainer clientId={match.params._id} />} />
                   <Route path='/clients' component={Clients} />
                   <Route path='/documents-form/:_id?' render={({match}) => <DocumentsForm clientId={match.params._id} />} />
-                  <Route path='/playground' component={Playground} />
+                  {/* <Route path='/playground' component={Playground} /> */}
+                  <Redirect to='/clients' />
                 </Switch>
               </div>
             </KeyLogger>
