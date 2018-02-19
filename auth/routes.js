@@ -7,7 +7,7 @@ module.exports = function(passport) {
   router.post('/login',
     passport.authenticate('local'),
     function(req, res) {
-      res.send(req.user.tokens.local);
+      res.send(req.user);
     });
 
   if(process.env.NODE_ENV !== 'production') {

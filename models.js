@@ -30,6 +30,7 @@ usersSchema.methods.validPassword = function(password) {
 };
 
 const clientsSchema = new Schema({
+    company_id: Schema.ObjectId,
     created: { type: Date, default: Date.now }
   },
   { strict: false }
@@ -55,11 +56,18 @@ const messagesSchema = new Schema({
   { strict: false }
 );
 
+const companiesSchema = new Schema({
+  created: { type: Date, default: Date.now }
+},
+{ strict: false }
+);
+
 const models = {};
 models.Users = mongoose.model('users', usersSchema);
 models.Clients = mongoose.model('clients', clientsSchema);
 models.Logs = mongoose.model('logs', logsSchema);
 models.Tasks = mongoose.model('tasks', tasksSchema);
 models.Messages = mongoose.model('messages', messagesSchema);
+models.Companies = mongoose.model('companies', companiesSchema);
 
 module.exports = models;

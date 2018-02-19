@@ -7,6 +7,7 @@ const session = require('cookie-session');
 const ejs = require('ejs');
 const api = require('./api');
 const models = require('./models');
+const tokens = require('./auth/tokens');
 
 // ==============
 // Initial Config
@@ -20,10 +21,10 @@ app.set('view engine', 'ejs');
 // CORS
 // ====
 if(app.settings.env !== 'production') {
-	app.use(function(req, res, next) {
+	app.use((req, res, next) => {
 		res.header("Access-Control-Allow-Origin", "*");
 		res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-		res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+		res.header("Access-Control-Allow-Headers", "Authorization, Origin, X-Requested-With, Content-Type, Accept");
 		next();
 	});
 }
@@ -47,7 +48,43 @@ app.use('/auth', require('./auth/routes')(passport));
 // API
 // ===
 app.use('/api', api);
-app.use('/api/clients', require('./crud')(models.Clients));
+app.use('/api/clients',
+	(req, res, next) => tokens.validateMiddleware(req, res, next),
+	async (req, res, next) => {
+		try {
+			let user = (await models.Users.findOne({_id: res.locals.user_id}).exec()).toObject();
+			
+
+			if(req.method == 'GET') {
+
+				let company = (await models.Companies.findOne({_id: user.company_id}).exec()).toObject();
+				let queries = [{ company_id: user.company_id }];
+
+				if(company.external_clients)
+					queries = queries.concat(company.external_clients.map((v) => v.query));
+					
+				res.locals.query = {
+					$and: [
+						{ $or: queries }
+					]
+				}
+			}
+
+			if(req.method == 'POST') {
+				req.body.company_id = user.company_id;
+			}
+			
+			next();
+
+		} catch(err) {
+			res.status(500).send({message: err.message});
+		}
+		
+	},
+	require('./crud')(models.Clients, {
+		searchFields: ['name', 'rg.number', 'cpf', 'phone', 'email', 'accident_date']
+	})
+);
 app.use('/api/logs', require('./crud')(models.Logs));
 app.use('/api/tasks', require('./crud')(models.Tasks));
 
@@ -55,7 +92,7 @@ app.use('/api/tasks', require('./crud')(models.Tasks));
 // Views
 // =====
 app.get('/documents/:client_id', function(req, res) {
-	Clients.findOne({_id: req.params.client_id}, (err, client) => {
+	models.Clients.findOne({_id: req.params.client_id}, (err, client) => {
 
 		if(client) {
 			let context = {  client: client.toObject() || {} };

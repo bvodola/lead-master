@@ -21,7 +21,7 @@
     "express": "^4.16.2",
     "googleapis": "^23.0.0",
     "intl": "^1.2.5",
-    "jsonwebtoken": "^8.1.0",
+    "jsonwebtoken": "^8.1.1",
     "mongoose": "^4.12.5",
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
