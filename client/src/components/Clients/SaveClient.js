@@ -14,6 +14,7 @@ const SaveClient = (props) => (
 <FormContainer scope={props.scope}>
   <form onSubmit={(ev) => { ev.preventDefault(); props.handleSubmit()}}>
     <Text type='title'>Cadastrar Cliente</Text>
+    <p name="namedop">Teste</p>
     <TextField autoFocus required name='client.name' label='Nome' fullWidth />
     <TextField name='client.email' label='E-mail' fullWidth type="email" />
     <MaskedTextField fullWidth required label='Celular' name='client.phone' mask='(99) 99999-9999' />

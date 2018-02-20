@@ -1,10 +1,9 @@
 import React from 'react'
-import TextField from 'material-ui/TextField';
 import PropTypes from 'prop-types';
 import Button from 'material-ui/Button'
 import Divider from 'material-ui/Divider';
-import Typography from 'material-ui/Typography';
-import { CheckboxGroup } from 'react-form-container';
+import Text from 'material-ui/Typography';
+import { FormContainer, TextField, MaskedTextField, CheckboxGroup } from 'react-form-container';
 
 const style = {
   container: {
@@ -19,90 +18,87 @@ const style = {
 }
 
 const DocumentsForm = (props) => {
-  const { client, handleChange, handleChangeAge, isUnder16, stateHandler } = props
+  const { client, handleChangeAge, isUnder16, scope } = props
 
   return(
-    <div style={style.container}>
-      <Typography type='title'>Gerar Documentos DPVAT</Typography>
+    <FormContainer scope={scope}>
+      <div style={style.container}>
+        <Text type='title'>Gerar Documentos DPVAT</Text>
+        <TextField name='client.name' label="Nome da vítima" fullWidth />
+        <MaskedTextField name='client.birthday' mask='99/99/9999' onBlur={() => handleChangeAge()} label="Data de Nascimento" fullWidth />
+        <MaskedTextField name='client.accident_date' mask='99/99/9999' label="Data do acidente" fullWidth />
+        {!isUnder16?
+          <div>
+            <TextField name='client.nacionality' label="Nacionalidade" fullWidth />
+            <TextField name='client.marital_status' label="Estado Civil" fullWidth />
+            <TextField name='client.job' label="Emprego" fullWidth />
+            <MaskedTextField name='client.income' mask='money' label="Renda mensal" fullWidth />
+          </div>
+        :null}
 
-      <TextField value={client.name} onChange={(ev) => handleChange('client.name', ev.target.value)} label="Nome da vítima" fullWidth />
-      <TextField value={client.birthday} onBlur={() => handleChangeAge()} onChange={(ev) => handleChange('client.birthday', ev.target.value)} label="Data de Nascimento" fullWidth />
-      <TextField value={client.accident_date} onChange={(ev) => handleChange('client.accident_date', ev.target.value)} label="Data do acidente" fullWidth />
-      {!isUnder16?
-        <div>
-          <TextField value={client.nacionality} onChange={(ev) => handleChange('client.nacionality', ev.target.value)} label="Nacionalidade" fullWidth />
-          <TextField value={client.marital_status} onChange={(ev) => handleChange('client.marital_status', ev.target.value)} label="Estado Civil" fullWidth />
-          <TextField value={client.job} onChange={(ev) => handleChange('client.job', ev.target.value)} label="Emprego" fullWidth />
-          <TextField value={client.income} onChange={(ev) => handleChange('client.income', ev.target.value)} label="Renda mensal" fullWidth />
+        <div style={style.box}>
+          <Text type='subheading'>Dados de contato</Text>
+          <MaskedTextField name='client.phone' mask='(99) 99999-9999' label="Telefone" fullWidth />
+          <TextField name='client.email' label="Email" fullWidth />
         </div>
-      :null}
 
-      <div style={style.box}>
-        <Typography type='subheading'>Dados de contato</Typography>
-        <TextField value={client.phone} onChange={(ev) => handleChange('client.phone', ev.target.value)} label="Telefone" fullWidth />
-        <TextField value={client.email} onChange={(ev) => handleChange('client.email', ev.target.value)} label="Email" fullWidth />
+        <div style={style.box}>
+          <Text type='subheading'>Documentos</Text>
+          <TextField name='client.rg.number' label="Número do RG" fullWidth />
+          <TextField name='client.rg.expedition_date' label="Data de expedição" fullWidth />
+          <TextField name='client.rg.emitter' label="Órgão Emissor" fullWidth />
+          <MaskedTextField name='client.cpf' label="CPF" fullWidth mask='999.999.999-99' />
+        </div>
+
+        {isUnder16?
+        <div style={style.box}>
+          <Text type='subheading'>Representante Legal</Text>
+          <TextField name='client.tutor.name' label="Nome" fullWidth />
+          <MaskedTextField name='client.tutor.cpf' label="CPF" fullWidth mask='999.999.999-99' />
+          <TextField name='client.tutor.job' label="Profissão" fullWidth />
+          <TextField name='client.tutor.nacionality' label="Nacionalidade" fullWidth />
+          <TextField name='client.tutor.marital_status' label="Estado Civil" fullWidth />
+          <TextField name='client.tutor.email' label="Email" fullWidth />
+          <MaskedTextField name='client.tutor.phone' label="Telefone" fullWidth mask='(99) 99999-9999'/>
+        </div>
+        :null}
+
+        <div style={style.box}>
+          <Text type='subheading'>Endereço{isUnder16?' (Representante Legal)':''}</Text>
+          <MaskedTextField name='client.address.zip' label="CEP" fullWidth mask='99999-99' />
+          <TextField name='client.address.street' label="Endereço" fullWidth />
+          <TextField name='client.address.number' label="Número" fullWidth />
+          <TextField name='client.address.complement' label="Complemento" fullWidth />
+          <TextField name='client.address.neighborhood' label="Bairro" fullWidth />
+          <TextField name='client.address.city' label="Cidade" fullWidth />
+          <TextField name='client.address.state' label="Estado" fullWidth />
+        </div>
+
+        <div style={style.box}>
+          <Text type='subheading'>Dados Bancários{isUnder16?' (Representante Legal)':''}</Text>
+          <TextField name='client.bank_account.name' label="Banco" fullWidth />
+          <TextField name='client.bank_account.type' label="Tipo" fullWidth />
+          <TextField name='client.bank_account.agency' label="Agência" fullWidth />
+          <TextField name='client.bank_account.number' label="Conta" fullWidth />
+        </div>
+
+        <div style={style.box}>
+          <Text type='subheading'>Gerar também formulários para</Text>
+          <CheckboxGroup name='client.products' options={[
+            {name: 'fisioterapia', label: 'Fisioterapia'},
+          ]} />
+        </div>
+
+        <Button style={{width: '100%'}} raised color='primary' onClick={() => props.onSubmit()}>Gerar Documentos</Button>
       </div>
-
-      <div style={style.box}>
-        <Typography type='subheading'>Documentos</Typography>
-        <TextField value={client.rg.number} onChange={(ev) => handleChange('client.rg.number', ev.target.value)} label="Número do RG" fullWidth />
-        <TextField value={client.rg.expedition_date} onChange={(ev) => handleChange('client.rg.expedition_date', ev.target.value)} label="Data de expedição" fullWidth />
-        <TextField value={client.rg.emitter} onChange={(ev) => handleChange('client.rg.emitter', ev.target.value)} label="Órgão Emissor" fullWidth />
-        <TextField value={client.cpf} onChange={(ev) => handleChange('client.cpf', ev.target.value)} label="CPF" fullWidth />
-      </div>
-
-      {isUnder16?
-      <div style={style.box}>
-        <Typography type='subheading'>Representante Legal</Typography>
-        <TextField value={client.tutor.name} onChange={(ev) => handleChange('client.tutor.name', ev.target.value)} label="Nome" fullWidth />
-        <TextField value={client.tutor.cpf} onChange={(ev) => handleChange('client.tutor.cpf', ev.target.value)} label="CPF" fullWidth />
-        <TextField value={client.tutor.job} onChange={(ev) => handleChange('client.tutor.job', ev.target.value)} label="Profissão" fullWidth />
-        <TextField value={client.tutor.nacionality} onChange={(ev) => handleChange('client.tutor.nacionality', ev.target.value)} label="Nacionalidade" fullWidth />
-        <TextField value={client.tutor.marital_status} onChange={(ev) => handleChange('client.tutor.marital_status', ev.target.value)} label="Estado Civil" fullWidth />
-        <TextField value={client.tutor.email} onChange={(ev) => handleChange('client.tutor.email', ev.target.value)} label="Email" fullWidth />
-        <TextField value={client.tutor.phone} onChange={(ev) => handleChange('client.tutor.phone', ev.target.value)} label="Telefone" fullWidth />
-      </div>
-      :null}
-
-      <div style={style.box}>
-        <Typography type='subheading'>Endereço{isUnder16?' (Representante Legal)':''}</Typography>
-        <TextField value={client.address.street} onChange={(ev) => handleChange('client.address.street', ev.target.value)} label="Endereço" fullWidth />
-        <TextField value={client.address.number} onChange={(ev) => handleChange('client.address.number', ev.target.value)} label="Número" fullWidth />
-        <TextField value={client.address.complement} onChange={(ev) => handleChange('client.address.complement', ev.target.value)} label="Complemento" fullWidth />
-        <TextField value={client.address.neighborhood} onChange={(ev) => handleChange('client.address.neighborhood', ev.target.value)} label="Bairro" fullWidth />
-        <TextField value={client.address.zip} onChange={(ev) => handleChange('client.address.zip', ev.target.value)} label="CEP" fullWidth />
-        <TextField value={client.address.city} onChange={(ev) => handleChange('client.address.city', ev.target.value)} label="Cidade" fullWidth />
-        <TextField value={client.address.state} onChange={(ev) => handleChange('client.address.state', ev.target.value)} label="Estado" fullWidth />
-      </div>
-
-      <div style={style.box}>
-        <Typography type='subheading'>Dados Bancários{isUnder16?' (Representante Legal)':''}</Typography>
-        <TextField value={client.bank_account.name} onChange={(ev) => handleChange('client.bank_account.name', ev.target.value)} label="Banco" fullWidth />
-        <TextField value={client.bank_account.type} onChange={(ev) => handleChange('client.bank_account.type', ev.target.value)} label="Tipo" fullWidth />
-        <TextField value={client.bank_account.agency} onChange={(ev) => handleChange('client.bank_account.agency', ev.target.value)} label="Agência" fullWidth />
-        <TextField value={client.bank_account.number} onChange={(ev) => handleChange('client.bank_account.number', ev.target.value)} label="Conta" fullWidth />
-      </div>
-
-      <div style={style.box}>
-        <Typography type='subheading'>Gerar também formulários para</Typography>
-        <CheckboxGroup stateHandler={stateHandler} name='client.products' options={[
-          {name: 'fisioterapia', label: 'Fisioterapia'},
-        ]}>
-
-        </CheckboxGroup>
-
-      </div>
-
-      <Button style={{width: '100%'}} raised color='primary' onClick={() => props.onSubmit()}>Gerar Documentos</Button>
-    </div>
+    </FormContainer>
   )
 }
 
 export default DocumentsForm;
 
 DocumentsForm.propTypes = {
-  handleChange: PropTypes.func.isRequired,
-  stateHandler: PropTypes.object.isRequired,
+  handleChangeAge: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   data: PropTypes.object
 }

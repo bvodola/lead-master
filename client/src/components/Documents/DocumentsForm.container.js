@@ -1,8 +1,8 @@
 import React from 'react'
-import DocumentsForm from '../DocumentsForm'
+import DocumentsForm from './DocumentsForm'
 import { StateHandler } from 'react-form-container';
-import axios from '../../../helpers/axios';
-import { cookie } from '../../../helpers';
+import axios from '../../helpers/axios';
+import { cookie } from '../../helpers';
 import { LinearProgress } from 'material-ui/Progress';
 import { withRouter } from 'react-router-dom';
 
@@ -118,6 +118,7 @@ class DocumentsFormContainer extends React.Component {
           handleChangeAge={this.handleChangeAge.bind(this)}
           onSubmit={this.onSubmit.bind(this)}
           stateHandler={stateHandler}
+          scope={this}
         />
       )
     }

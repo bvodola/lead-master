@@ -8,10 +8,10 @@ import MainMenu from './MainMenu';
 import KeyLogger from './KeyLogger';
 import Login from './Login';
 
-import DocumentsForm from './Documents/containers/DocumentsForm';
+import DocumentsForm from './Documents/DocumentsForm.container';
 import Agenda from './Agenda';
-import Clients from './Clients/ListClients.container.js';
-import SaveClient from './Clients/containers/SaveClient';
+import Clients from './Clients/ListClients.container';
+import SaveClient from './Clients/SaveClient.container';
 
 import { cookie } from '../helpers';
 import axios from '../helpers/axios';

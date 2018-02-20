@@ -1,7 +1,7 @@
 import React from 'react';
-import axios from '../../../helpers/axios';
-import SaveClient from '../SaveClient';
-import { cookie } from '../../../helpers';
+import axios from '../../helpers/axios';
+import SaveClient from './SaveClient';
+import { cookie } from '../../helpers';
 
 const initialState = () => ({
   client: {
