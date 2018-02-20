@@ -24,6 +24,7 @@ module.exports = {
       { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ }
     ]
   },
+  devtool: '#eval-source-map',
   devServer: {
     port: 4000,
     hot: true,

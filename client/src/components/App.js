@@ -2,13 +2,16 @@ import React from 'react';
 import {StyleRoot} from 'radium';
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom';
 
-import KeyLogger from './KeyLogger';
 import AppBar from './AppBar';
+import Drawer from './Drawer';
+import MainMenu from './MainMenu';
+import KeyLogger from './KeyLogger';
 import Login from './Login';
-import DocumentsForm from './Documents/containers/DocumentsForm';
+
+import DocumentsForm from './Documents/DocumentsForm.container';
 import Agenda from './Agenda';
-import Clients from './Clients/containers';
-import SaveClient from './Clients/containers/SaveClient';
+import Clients from './Clients/ListClients.container';
+import SaveClient from './Clients/SaveClient.container';
 
 import { cookie } from '../helpers';
 import axios from '../helpers/axios';
@@ -21,26 +24,34 @@ const style = {
   }
 }
 
-
 class App extends React.Component {
 
   constructor() {
     super();
+
     this.state = {
       authToken: '',
       isAuthenticated: false,
       email: '',
-      password: ''
+      password: '',
+      isDrawerOpened: false
     }
+
+    this.toggleDrawer = this.toggleDrawer.bind(this);
   }
 
-  setToken() {
+  toggleDrawer() {
+    console.log('toggleDrawer');
+    this.setState({isDrawerOpened: !this.state.isDrawerOpened});
+  }
+
+  setToken(cb = () => {}) {
     const authToken = cookie.get('token');
 
     this.setState({
       authToken,
       isAuthenticated: authToken ? true : false
-    });
+    }, cb);
   }
 
   deleteToken() {
@@ -54,7 +65,8 @@ class App extends React.Component {
   async login(ev) {
     ev.preventDefault();
     const { email, password } = this.state;
-    const token = (await axios.post('/auth/login', {email, password})).data;
+    const currentUser = (await axios.post('/auth/login', {email, password})).data;
+    const token = currentUser.tokens.local;
     cookie.set('token', token);
     this.setToken();
   }
@@ -69,16 +81,18 @@ class App extends React.Component {
         {this.state.isAuthenticated?
           <Router>
             <KeyLogger>
-              <AppBar logout={this.deleteToken.bind(this)} />
+              <Drawer logout={this.deleteToken.bind(this)} toggleDrawer={this.toggleDrawer} isDrawerOpened={this.state.isDrawerOpened}  />
+              <AppBar logout={this.deleteToken.bind(this)} toggleDrawer={this.toggleDrawer} />
 
               <div style={style.content}>
                 <Switch>
-                  <Route exact path='/' render={(props) => <Agenda {...props} />} />
+                  {/* <Route exact path='/' render={(props) => <Agenda {...props} />} /> */}
                   <Route path='/clients/add' component={SaveClient} />
                   <Route path='/clients/edit/:_id' render={({match}) => <SaveClientContainer clientId={match.params._id} />} />
                   <Route path='/clients' component={Clients} />
                   <Route path='/documents-form/:_id?' render={({match}) => <DocumentsForm clientId={match.params._id} />} />
-                  <Route path='/playground' component={Playground} />
+                  {/* <Route path='/playground' component={Playground} /> */}
+                  <Redirect to='/clients' />
                 </Switch>
               </div>
             </KeyLogger>

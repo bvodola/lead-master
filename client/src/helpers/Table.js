@@ -64,14 +64,17 @@ const style = {
   }
 }
 
+const noStyle = {};
+
 const RawTable = (props) => {
 
   const headerStyle = merge(style.header, getNested(props, 'style.header'));
   const cellStyle = merge(style.header.cell, getNested(props, 'style.header.cell'));
   const textStyle = merge(style.header.cell.text, getNested(props, 'style.header.cell.text'));
+  
 
   return (
-    <div style={{ ...style, ...(props.style || {})}}>
+    <div style={{ ...style, ...(props.style || noStyle )}}>
       {props.header?
         <div style={headerStyle}>
           {props.header.map((v,i) =>(
@@ -87,7 +90,7 @@ const RawTable = (props) => {
   );
 }
 const RawTr = (props) => (
-  <div style={{...style.row , ...(props.style || {})}}>
+  <div style={{...style.row , ...(props.style || noStyle)}}>
     {props.children}
   </div>
 );
@@ -105,7 +108,7 @@ const RawTd = (props) => {
   }
 
   return(
-    <div style={{ ...tdStyle , ...(props.style || {}) }}>
+    <div style={{ ...tdStyle , ...(props.style || noStyle) }}>
       {props.children}
     </div>
   );

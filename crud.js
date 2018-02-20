@@ -12,29 +12,68 @@ const dt = {
   }
 }
 
-module.exports = (Collection) => {
+const defaultCallbacks = {
+  get: (data) => data,
+  post: (data) => data,
+  put: (data) => data,
+  delete: (data) => data
+}
 
+module.exports = (Collection, config) => {
+  if(!config) config = {};
+
+  let callbacks = Object.assign({}, defaultCallbacks, config.callbacks);
   let router = express.Router();
 
   router.post('/', (req, res) => {
     const newEntry = req.body;
-    Collection.create(newEntry, (e,newEntry) => {
+    const cb = (e,newEntry) => {
       if(e) {
         console.log(e);
         res.sendStatus(500);
       }
       else res.send(newEntry);
-    });
+    };
+
+    console.log('newEntry', newEntry);
+    if(newEntry instanceof Array) {
+      Collection.insertMany(newEntry, (e, newEntry) => {
+        cb(e, newEntry)
+      });
+    } else {
+      Collection.create(newEntry, (e, newEntry) => {
+        cb(e, newEntry)
+      });
+    }
+
   });
 
   router.get('/*', (req, res) => {
+    let singleResult = false,
+        skip = 0,
+        query = res.locals.query || {},
+        { page, sort, fields, limit, search } = req.query;
 
-    console.log(new Date().toString());
-    let singleResult = false, query = {};
+    fields = typeof fields !== 'undefined' ? fields.split(',') : [];
+    limit = typeof limit !== 'undefined' ? parseInt(limit) : 10;
+    if(typeof sort === 'undefined') sort = '_id';
+  
+    if(page) {
+      sort == '_id' ?
+        query['_id'] = { "$gt": page } :
+        skip = (parseInt(page)-1)*limit;
+    }
+
+    if(search) {
+      // search = search.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+      query.$or = config.searchFields.map((field) => {
+        return { [field]: {'$regex': '.*' + search + '.*', '$options': 'i'} }
+      });
+
+    }
 
     if(typeof req.params[0] !== 'undefined' && req.params[0]) {
       if(typeof req.params[0].split(':')[1] !== 'undefined') {
-
         // Filtering Query
         const filters = req.params[0].split('/');
         filters.forEach((filter) => {
@@ -74,25 +113,27 @@ module.exports = (Collection) => {
         query = { _id: req.params[0] };
       }
     }
-    console.log(query);
 
-    Collection.find(query, (e,results) => {
+    Collection.find(query, fields, {sort, limit, skip}, (e,results) => {
       if(e) {
-        res.send(e);
+        res.status(500).send(e);
         console.log(e.message);
       }
       else {
-        if(singleResult)
-          res.send(results[0]);
-        else
-          res.send(results);
+        if(singleResult) {
+          res.send(callbacks.get(results[0]));
+        }
+          
+        else {
+          res.send(callbacks.get(results));
+        }
       }
     });
   });
 
   router.put('/:_id', (req, res) => {
     const changedEntry = req.body;
-    Collection.update({ _id: req.params._id }, { $set: changedEntry }, function(err) {
+    Collection.update({ _id: req.params._id }, { $set: changedEntry }, (err) => {
       if (err)
         res.sendStatus(500);
       else
@@ -101,7 +142,7 @@ module.exports = (Collection) => {
   });
 
   router.delete('/:_id', (req, res) => {
-    Collection.remove({ _id: req.params._id }, function(err) {
+    Collection.remove({ _id: req.params._id }, (err) => {
       if (err)
         res.send(err.message);
       else
