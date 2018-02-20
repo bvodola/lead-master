@@ -52,7 +52,7 @@ const Clients = (props) => {
         
 
         <Link to='/clients/add'>
-          <Button fab color="primary" aria-label="add" style={style.addClient}>
+          <Button variant='fab' color="primary" aria-label="add" style={style.addClient}>
             <Icon>add</Icon>
           </Button>
         </Link>

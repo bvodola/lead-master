@@ -89,7 +89,7 @@ const DocumentsForm = (props) => {
           ]} />
         </div>
 
-        <Button style={{width: '100%'}} raised color='primary' onClick={() => props.onSubmit()}>Gerar Documentos</Button>
+        <Button style={{width: '100%'}} variant='raised' color='primary' onClick={() => props.onSubmit()}>Gerar Documentos</Button>
       </div>
     </FormContainer>
   )

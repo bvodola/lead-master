@@ -9,6 +9,7 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 })
 
 module.exports = {
+  devtool: '#eval-source-map',
   entry: [
     'react-hot-loader/patch',
     './src/index.js'
@@ -24,7 +25,6 @@ module.exports = {
       { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ }
     ]
   },
-  devtool: '#eval-source-map',
   devServer: {
     port: 4000,
     hot: true,
