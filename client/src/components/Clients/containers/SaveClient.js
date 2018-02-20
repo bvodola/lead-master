@@ -3,15 +3,52 @@ import axios from '../../../helpers/axios';
 import SaveClient from '../SaveClient';
 import { cookie } from '../../../helpers';
 
-const initialState = () => (
-  {
-    client: {
+const initialState = () => ({
+  client: {
+    name: '',
+    birthday: '',
+    nacionality: '',
+    marital_status: '',
+    job: '',
+    income: '',
+    rg: {
+      number: '',
+      expedition_date: '',
+      emitter: ''
+    },
+    cpf: '',
+    address: {
+      street: '',
+      number: '',
+      complement: '',
+      neighborhood: '',
+      zip: '',
+      city: '',
+      state: '',
+    },
+    phone: '',
+    email: '',
+    accident_date: '',
+    bank_account: {
       name: '',
+      type: '',
+      agency: '',
+      number: ''
+    },
+    tutor: {
+      name: '',
+      email: '',
       phone: '',
-      email: ''
-    }
+      nacionality: '',
+      marital_status: '',
+      job: '',
+      cpf: '',
+    },
+    products: []
   }
-);
+});
+
+
 
 class SaveClientContainer extends React.Component {
 

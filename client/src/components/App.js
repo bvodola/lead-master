@@ -2,10 +2,12 @@ import React from 'react';
 import {StyleRoot} from 'radium';
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom';
 
-import KeyLogger from './KeyLogger';
 import AppBar from './AppBar';
-import Login from './Login';
 import Drawer from './Drawer';
+import MainMenu from './MainMenu';
+import KeyLogger from './KeyLogger';
+import Login from './Login';
+
 import DocumentsForm from './Documents/containers/DocumentsForm';
 import Agenda from './Agenda';
 import Clients from './Clients/ListClients.container.js';

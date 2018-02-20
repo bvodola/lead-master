@@ -9,11 +9,12 @@ import Text from '../helpers/Text';
 const Drawer = (props) => (
   <MuiDrawer onRequestClose={(ev) => props.toggleDrawer()} open={props.isDrawerOpened}>
     <List onClick={(ev) => {ev.preventDefault(); props.toggleDrawer()}}>
-      <Link style={{textDecoration: 'none'}} to='/'>
+    
+      {/* <Link style={{textDecoration: 'none'}} to='/'>
         <ListItem button>
             <ListItemText primary='Agenda' />
         </ListItem>
-      </Link>
+      </Link> */}
       <Link style={{textDecoration: 'none'}} to='/clients'>
         <ListItem button>
           <ListItemText primary='Clientes' />
@@ -26,8 +27,9 @@ const Drawer = (props) => (
       </Link>
       <ListItem button onClick={() => props.logout()}>
         <Icon style={{position: 'absolute', left: '10px', marginRight: '12px', color: 'rgba(0,0,0,0.87)'}}>power_settings_new</Icon>
-          <ListItemText primary='Logout' style={{marginLeft: '5px' }} />
-        </ListItem>  
+        <ListItemText primary='Logout' style={{marginLeft: '5px' }} />
+      </ListItem>
+
     </List>
   </MuiDrawer>
 );
