@@ -45,7 +45,7 @@ const DocumentsForm = (props) => {
         <div style={style.box}>
           <Text type='subheading'>Documentos</Text>
           <TextField name='client.rg.number' label="Número do RG" fullWidth />
-          <TextField name='client.rg.expedition_date' label="Data de expedição" fullWidth />
+          <MaskedTextField name='client.rg.expedition_date' mask='99/99/9999' label="Data de expedição" fullWidth />
           <TextField name='client.rg.emitter' label="Órgão Emissor" fullWidth />
           <MaskedTextField name='client.cpf' label="CPF" fullWidth mask='999.999.999-99' />
         </div>
@@ -65,7 +65,7 @@ const DocumentsForm = (props) => {
 
         <div style={style.box}>
           <Text type='subheading'>Endereço{isUnder16?' (Representante Legal)':''}</Text>
-          <MaskedTextField name='client.address.zip' label="CEP" fullWidth mask='99999-99' />
+          <MaskedTextField name='client.address.zip' label="CEP" fullWidth mask='99999-999' />
           <TextField name='client.address.street' label="Endereço" fullWidth />
           <TextField name='client.address.number' label="Número" fullWidth />
           <TextField name='client.address.complement' label="Complemento" fullWidth />
