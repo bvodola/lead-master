@@ -104,6 +104,29 @@ class DocumentsFormContainer extends React.Component {
 
   }
 
+  async completeAddress(zip) {
+    if(zip.length == 9) {
+      try {
+        const res = (await axios.get(`http://viacep.com.br/ws/${zip}/json/`)).data;
+      let { client } = this.state;
+  
+      let address = { 
+        zip,
+        street: res.logradouro,
+        complement: res.complemento,
+        neighborhood: res.bairro,
+        city: res.localidade,
+        state: res.uf,
+      };
+  
+      client.address = { ...client.address, ...address };
+      this.setState({ client });
+      } catch(err) {
+        console.log(err);
+      }
+    }
+  }
+
   render() {
     const stateHandler = new StateHandler(this);
 
@@ -118,6 +141,7 @@ class DocumentsFormContainer extends React.Component {
           handleChangeAge={this.handleChangeAge.bind(this)}
           onSubmit={this.onSubmit.bind(this)}
           stateHandler={stateHandler}
+          completeAddress={this.completeAddress.bind(this)}
           scope={this}
         />
       )

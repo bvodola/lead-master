@@ -18,7 +18,7 @@ const style = {
 }
 
 const DocumentsForm = (props) => {
-  const { client, handleChangeAge, isUnder16, scope } = props
+  const { client, handleChangeAge, isUnder16, scope, completeAddress } = props
 
   return(
     <FormContainer scope={scope}>
@@ -65,7 +65,7 @@ const DocumentsForm = (props) => {
 
         <div style={style.box}>
           <Text type='subheading'>Endereço{isUnder16?' (Representante Legal)':''}</Text>
-          <MaskedTextField name='client.address.zip' label="CEP" fullWidth mask='99999-999' />
+          <MaskedTextField onBlur={(ev) => completeAddress(ev.target.value)} name='client.address.zip' label="CEP" fullWidth mask='99999-999' />
           <TextField name='client.address.street' label="Endereço" fullWidth />
           <TextField name='client.address.number' label="Número" fullWidth />
           <TextField name='client.address.complement' label="Complemento" fullWidth />
