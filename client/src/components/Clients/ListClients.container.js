@@ -26,7 +26,6 @@ class ClientsContainer extends React.Component {
 
   async search(term) {
     this.setState({loading: true})
-    // const data = (await axios.get(`/api/logs`)).data;
     const data = (await axios.get(`/api/clients?search=${term}&sort=name`, {
       headers: {'Authorization': 'Bearer '+cookie.get('token')}
     })).data;

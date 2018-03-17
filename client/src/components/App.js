@@ -1,6 +1,8 @@
 import React from 'react';
 import {StyleRoot} from 'radium';
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom';
+import './grid.css';
+import './App.sass';
 
 import AppBar from './AppBar';
 import Drawer from './Drawer';
@@ -30,11 +32,11 @@ class App extends React.Component {
     super();
 
     this.state = {
-      authToken: '',
       isAuthenticated: false,
       email: '',
       password: '',
-      isDrawerOpened: false
+      isDrawerOpened: false,
+      currentUser: {}
     }
 
     this.toggleDrawer = this.toggleDrawer.bind(this);
@@ -45,20 +47,19 @@ class App extends React.Component {
     this.setState({isDrawerOpened: !this.state.isDrawerOpened});
   }
 
-  setToken(cb = () => {}) {
+  setAuth(cb = () => {}) {
     const authToken = cookie.get('token');
 
     this.setState({
-      authToken,
       isAuthenticated: authToken ? true : false
     }, cb);
   }
 
-  deleteToken() {
+  logout() {
     cookie.delete('token');
     this.setState({
-      authToken: false,
-      isAuthenticated: false
+      isAuthenticated: false,
+      currentUser: {}
     })
   }
 
@@ -66,13 +67,14 @@ class App extends React.Component {
     ev.preventDefault();
     const { email, password } = this.state;
     const currentUser = (await axios.post('/auth/login', {email, password})).data;
-    const token = currentUser.tokens.local;
-    cookie.set('token', token);
-    this.setToken();
+
+    cookie.set('token', currentUser.tokens.local);
+    this.setAuth();
+    this.setState({currentUser});
   }
 
   componentWillMount() {
-    this.setToken();
+    this.setAuth();
   }
 
   render() {
@@ -81,17 +83,16 @@ class App extends React.Component {
         {this.state.isAuthenticated?
           <Router>
             <KeyLogger>
-              <Drawer logout={this.deleteToken.bind(this)} toggleDrawer={this.toggleDrawer} isDrawerOpened={this.state.isDrawerOpened}  />
-              <AppBar logout={this.deleteToken.bind(this)} toggleDrawer={this.toggleDrawer} />
+              <Drawer logout={this.logout.bind(this)} toggleDrawer={this.toggleDrawer} isDrawerOpened={this.state.isDrawerOpened}  />
+              <AppBar logout={this.logout.bind(this)} toggleDrawer={this.toggleDrawer} />
 
               <div style={style.content}>
                 <Switch>
-                  {/* <Route exact path='/' render={(props) => <Agenda {...props} />} /> */}
                   <Route path='/clients/add' component={SaveClient} />
                   <Route path='/clients/edit/:_id' render={({match}) => <SaveClientContainer clientId={match.params._id} />} />
-                  <Route path='/clients' component={Clients} />
+                  <Route path='/clients' render={() => <Clients setAppState={this.setState.bind(this)} />} />
                   <Route path='/documents-form/:_id?' render={({match}) => <DocumentsForm clientId={match.params._id} />} />
-                  {/* <Route path='/playground' component={Playground} /> */}
+                  <Route path='/playground' component={Playground} />
                   <Redirect to='/clients' />
                 </Switch>
               </div>

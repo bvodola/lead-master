@@ -12,8 +12,10 @@
   },
   "dependencies": {
     "axios": "^0.17.0",
+    "css-loader": "^0.28.11",
     "localforage": "^1.5.5",
     "material-ui": "next",
+    "node-sass": "^4.7.2",
     "path": "^0.12.7",
     "prop-types": "^15.6.0",
     "radium": "^0.19.5",
@@ -21,6 +23,8 @@
     "react-dom": "^16.0.0",
     "react-form-container": "^0.0.4",
     "react-router-dom": "^4.2.2",
+    "sass-loader": "^6.0.7",
+    "style-loader": "^0.20.3",
     "vanilla-masker": "^1.2.0"
   },
   "devDependencies": {

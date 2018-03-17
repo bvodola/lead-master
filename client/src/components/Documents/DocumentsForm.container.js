@@ -2,9 +2,10 @@ import React from 'react'
 import DocumentsForm from './DocumentsForm'
 import { StateHandler } from 'react-form-container';
 import axios from '../../helpers/axios';
-import { cookie } from '../../helpers';
+import { cookie, getAge } from '../../helpers';
 import { LinearProgress } from 'material-ui/Progress';
 import { withRouter } from 'react-router-dom';
+
 
 const initialState = () => ({
   client: {
@@ -51,6 +52,7 @@ const initialState = () => ({
   },
   isUnder16: false,
   loading: true,
+  isSnackbarOpened: false
 })
 
 class DocumentsFormContainer extends React.Component {
@@ -60,7 +62,13 @@ class DocumentsFormContainer extends React.Component {
     this.state = initialState();
   }
 
-  async onSubmit() {
+  handleToggleSnackbar = (event, reason) => {
+    if (reason === 'clickaway') return;
+    const newState = reason !== 'timeout' ?  !this.state.isSnackbarOpened : false;
+    this.setState({ isSnackbarOpened: newState });
+  };
+
+  async onSubmit(generate=true) {
     let _id = this.props.clientId;
 
     if(typeof _id === 'undefined') {
@@ -72,17 +80,32 @@ class DocumentsFormContainer extends React.Component {
         headers: {'Authorization': 'Bearer '+cookie.get('token')}
       });
     }
-    window.open('/documents/'+_id);
+
     this.props.history.push('/documents-form/'+_id);
+    this.handleToggleSnackbar();
+
+    if(generate)
+      window.open('/documents/'+_id);      
   }
 
   handleChangeAge() {
     const { birthday } = this.state.client;
-    const age = String(birthday).length === 10 ?
-      Math.floor(((new Date()) - new Date(birthday))/31536000000):99;
-    const isUnder16 = (age < 16);
 
-    this.setState({isUnder16});
+    if(birthday.length === 10) {
+      const b = birthday;
+      const age = getAge(
+        b.substr(6,4),
+        b.substr(3,2),
+        b.substr(0,2)
+      );
+      const isUnder16 = (age < 16);
+
+      this.setState({isUnder16});
+      
+    } else if (this.state.isUnder16) {
+      this.setState({isUnder16 : false});
+    }
+    
   }
 
   async getData() {
@@ -135,9 +158,9 @@ class DocumentsFormContainer extends React.Component {
     } else {
       return(
         <DocumentsForm
-          client={this.state.client}
-          isUnder16={this.state.isUnder16}
+          {...this.state}
           handleChange={stateHandler.set.bind(this)}
+          handleToggleSnackbar={this.handleToggleSnackbar.bind(this)}
           handleChangeAge={this.handleChangeAge.bind(this)}
           onSubmit={this.onSubmit.bind(this)}
           stateHandler={stateHandler}

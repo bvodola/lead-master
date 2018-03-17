@@ -9,7 +9,7 @@ class KeyLogger extends React.Component {
         switch(ev.keyCode) {
           case(97):
             ev.preventDefault();
-            this.props.history.push('/');
+            this.props.history.push('/clients/add');
             break;
           case(99):
             ev.preventDefault();

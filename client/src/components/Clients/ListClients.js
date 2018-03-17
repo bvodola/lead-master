@@ -15,6 +15,9 @@ import ListClientsTable from './ListClientsTable';
 
 
 const style = {
+  container: {
+    marginBottom: '70px'
+  },
   addClient: {
     position: 'fixed',
     bottom: '15px',
@@ -26,7 +29,7 @@ const Clients = (props) => {
   const clients = props.data;
 
     return(
-      <div className='ClientsComponent'>
+      <div style={style.container} className='ClientsComponent'>
 
         <Text type='title'>
           Clientes

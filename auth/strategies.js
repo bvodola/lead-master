@@ -1,4 +1,4 @@
-var { Users } = require('../models');
+var { Users, Companies } = require('../models');
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 var TwitterStrategy = require('passport-twitter').Strategy;
@@ -21,6 +21,9 @@ module.exports = function(passport) {
     });
   });
 
+  // =====
+  // Local
+  // =====
   passport.use(new LocalStrategy({
   		usernameField: 'email'
   	},
@@ -39,45 +42,60 @@ module.exports = function(passport) {
           console.log('Incorrect password')
           return done(null, false, { message: 'Incorrect password.' });
         }
-        return done(null, user);
+
+        Companies.findOne({ _id: user.company_id }, function (err, company) {
+          if(company) {
+            user.company = company.toObject();
+            delete user.company_id;
+          }
+          return done(null, user);
+        });
+
       });
     }
   ));
 
-  passport.use(new FacebookStrategy({
-    clientID: '123947318298079',
-    clientSecret: '7c24f46ffea1c5be66aa4b8e05a8911d',
-    callbackURL: "http://localhost:3000/auth/facebook/callback",
-    profileFields: ['id', 'emails', 'name']
-  },
-  function(accessToken, refreshToken, profile, cb) {
-    const fbUser = {
-      name: profile.name,
-      email: profile.emails[0].value,
-      services: {
-        facebook: [
-          {
-            id: profile.id,
-            accessToken,
-            refreshToken
-          }
-        ]
-      }
-    };
+  // ========
+  // Facebook
+  // ========
+  passport.use(new FacebookStrategy(
+    {
+      clientID: '123947318298079',
+      clientSecret: '7c24f46ffea1c5be66aa4b8e05a8911d',
+      callbackURL: "http://localhost:3000/auth/facebook/callback",
+      profileFields: ['id', 'emails', 'name']
+    },
+    function(accessToken, refreshToken, profile, cb) {
+      const fbUser = {
+        name: profile.name,
+        email: profile.emails[0].value,
+        services: {
+          facebook: [
+            {
+              id: profile.id,
+              accessToken,
+              refreshToken
+            }
+          ]
+        }
+      };
 
-    Users.findOne({ email: fbUser.email }, async function (err, user) {
-      if (err) { return done(err); }
-      if (!user) {
-        user = await register(fbUser);
-        return cb(err, user);
-      } else {
-        return cb(err, user);
-      }
+      Users.findOne({ email: fbUser.email }, async function (err, user) {
+        if (err) { return done(err); }
+        if (!user) {
+          user = await register(fbUser);
+          return cb(err, user);
+        } else {
+          return cb(err, user);
+        }
 
-    });
-  }
-));
+      });
+    }
+  ));
 
+  // =======
+  // Twitter
+  // =======
   passport.use(new TwitterStrategy({
       consumerKey: 'fL4jVmZhz8UfxWomyMRbF4UDp',
       consumerSecret: 'CzVr3XuMvm6pMc5ac5ly6wLtORpGRZfV8waVHdIa1a5HN0He7i',
@@ -112,6 +130,9 @@ module.exports = function(passport) {
 
   ));
 
+  // ======
+  // Google
+  // ======
   passport.use(new GoogleStrategy({
       clientID: '91860760724-teieu2bcja7voosvhvsuog6tpt2rt6ff.apps.googleusercontent.com',
       clientSecret: 'AX5-QGmsbw1dsgtXjJh_9EYH',

@@ -7,14 +7,9 @@ import { Icon } from '../helpers';
 import Text from '../helpers/Text';
 
 const Drawer = (props) => (
-  <MuiDrawer onRequestClose={(ev) => props.toggleDrawer()} open={props.isDrawerOpened}>
+  <MuiDrawer onClose={(ev) => props.toggleDrawer()} open={props.isDrawerOpened}>
     <List onClick={(ev) => {ev.preventDefault(); props.toggleDrawer()}}>
-    
-      {/* <Link style={{textDecoration: 'none'}} to='/'>
-        <ListItem button>
-            <ListItemText primary='Agenda' />
-        </ListItem>
-      </Link> */}
+
       <Link style={{textDecoration: 'none'}} to='/clients'>
         <ListItem button>
           <ListItemText primary='Clientes' />

@@ -5,7 +5,7 @@ import { Table } from '../../helpers/Table';
 const ListClientsTable = (props) => {
   const { clients } = props;
   return(
-    <Table header={['Nome', 'Email', 'Celular', 'Ações']}>
+    <Table header={['Nome', 'Telefone', 'Produtos', 'Ações']}>
       {clients.map((client,i) => (
         <ListClientsTableRow client={client} deleteClient={props.deleteClient} key={i} />
       ))}

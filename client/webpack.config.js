@@ -22,7 +22,10 @@ module.exports = {
   module: {
     loaders: [
       { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
-      { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ }
+      { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ },
+      { test: /\.css$/, use: [{loader: "style-loader" }, {loader: "css-loader"}], exclude: /node_modules/},
+      { test: /\.sass$/, use: [{loader: "style-loader" }, {loader: "css-loader"}, {loader: "sass-loader"}], exclude: /node_modules/},
+      { test: /\.scss$/, use: [{loader: "style-loader" }, {loader: "css-loader"}, {loader: "sass-loader"}], exclude: /node_modules/}
     ]
   },
   devServer: {

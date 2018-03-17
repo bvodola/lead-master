@@ -56,8 +56,6 @@ const unmask = (maskedValue) => {
   return el.value;
 }
 
-
-
 const cookie = {
   get: (key) => {
     let cks = {};
@@ -81,4 +79,26 @@ const cookie = {
   }
 }
 
-export { Icon, checkNested, getNested, merge, isObject, unmask, cookie };
+const getAge = (year, month, day)  => {
+
+  year = Number(year);
+  month = Number(month);
+  day = Number(day);
+
+	var now = new Date()	
+	var age = now.getFullYear() - year
+	var mdif = now.getMonth() - month + 1
+	
+	if(mdif < 0)
+		{ --age }
+	else if(mdif == 0)
+	{
+		var ddif = now.getDate() - day
+		if(ddif < 0)
+		{ --age }
+	}
+
+	return age
+}
+
+export { Icon, checkNested, getNested, merge, isObject, unmask, cookie, getAge };

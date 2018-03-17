@@ -2,12 +2,15 @@ import React from 'react';
 import { Tr, Td } from '../../helpers/Table';
 import { Link } from 'react-router-dom';
 import { Icon, unmask } from '../../helpers';
+
 import IconButton from 'material-ui/IconButton';
 import Tooltip from 'material-ui/Tooltip';
+import Chip from 'material-ui/Chip';
+import Avatar from 'material-ui/Avatar';
 
 const style = {
   actions: {
-    minWidth: '100px',
+    minWidth: '150px',
     [screen.xsDown]: {
       position: 'relative',
       minWidth: '50px',
@@ -16,6 +19,33 @@ const style = {
       [screen.xsDown]: {
         display: 'none'
       }
+    }
+  },
+  product: {
+    position: 'relative',
+    display: 'inline-block',
+    margin: '0 4px 4px 0',
+    padding: '7px 48px 8px 10px',
+    borderRadius: '30px',
+    background: '#eee',
+    textTransform: 'capitalize',
+    icon: {
+      position: 'absolute',
+      top: '0px',
+      right: '0px',
+      color: 'rgba(0,0,0,0.5)',
+      background: 'rgba(0,0,0,0.1)',
+      borderRadius: '30px',
+      padding: '7px',
+      fontSize: '19px',
+    },
+    textIcon: {
+      padding: '7px 2px 7px 12px',
+      fontSize: '15px',
+      width: '19px',
+      height: '19px',
+      fontWeight: 'bold',
+      textTransform: 'uppercase'
     }
   }
 }
@@ -29,7 +59,7 @@ class ListClientsTableRow extends React.Component {
   }
 
   render() {
-    console.log('ListClientTableRow render()');
+
     const
       { client } = this.props,
       props = this.props,
@@ -38,12 +68,24 @@ class ListClientsTableRow extends React.Component {
       
     return(
       <Tr>
-        <Td stackable><strong>{client.name}</strong></Td>
-        <Td stackable>
-          {client.email}
+        <Td stackable style={{minWidth: '100px'}}><strong>{client.name}</strong></Td>
+        <Td stackable style={{minWidth: '150px'}}>
+          <a target='_blank' href={`http://${whatsappUrl}.whatsapp.com/send?phone=55`+unmask(client.phone)}>{client.phone}</a>
         </Td>
         <Td stackable>
-          <a target='_blank' href={`http://${whatsappUrl}.whatsapp.com/send?phone=55`+unmask(client.phone)}>{client.phone}</a>
+          {typeof client.products !== 'undefined' ?
+            client.products.map((product, i) => (
+              <span style={style.product} key={i}>
+                {typeof product == 'object' ? 
+                  <span>{product.name} <Icon style={style.product.icon}>{product.status.icon}</Icon></span>
+                  :
+                  <span>{product} <span style={{ ...style.product.icon , ...style.product.textIcon}}>{product.substr(0,1)}</span></span>
+                }
+              </span>
+            ))
+            :
+            null
+          }
         </Td>
         <Td style={style.actions}>
           <span style={style.actions.showSmUp}>
