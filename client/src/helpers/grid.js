@@ -23,7 +23,7 @@ const MD = 960;
 const LG = 1280;
 const XL = 1920;
 
-screen = {
+const screen = {
   xxs: `(max-width: ${XS-1}px)`,
 
   xs: `@media (min-width: ${XS}px) and (max-width: ${SM-1}px)`,

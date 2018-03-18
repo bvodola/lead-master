@@ -111,6 +111,9 @@ app.get('/documents/:client_id', function(req, res) {
 			context.date = { day: d.getDate(), month: months[d.getMonth()], year: d.getFullYear() }
 			context.client.isUnder16 = Math.floor(((new Date()) - new Date(context.client.birthday))/31536000000) < 16;
 
+			context.client.bank_account.agency = context.client.bank_account.agency.split('-');
+			context.client.bank_account.number = context.client.bank_account.number.split('-');
+
 
 			res.render('forms/index', context);
 		} else {

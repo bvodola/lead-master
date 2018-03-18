@@ -81,8 +81,45 @@ const DocumentsForm = (props) => {
 
           <div style={style.box}>
             <Text type='subheading'>Dados Bancários{isUnder16?' (Representante Legal)':''}</Text>
-            <TextField name='client.bank_account.name' label="Banco" fullWidth />
-            <TextField name='client.bank_account.type' label="Tipo" fullWidth />
+            <TextField name='client.bank_account.type' label="Agência" fullWidth />
+            <TextField name='client.bank_account.name' label="Conta" fullWidth />
+
+            {/* <SelectField
+              name='client.bank_account.type'
+              options={[
+                {id: 'corrente', label:'Conta Corrente'},
+                {id: 'poupanca', label:'Conta Poupança'}
+              ]}
+              label="Tipo"
+              fullWidth 
+            />
+
+            <SelectField
+              name='client.bank_account.name'
+              options={props.client.bank_account.type === 'poupanca' ?
+              [
+                'Banco do Brasil',
+                'Bradesco',
+                'Caixa',
+                'Itaú',
+              ]
+                :
+              [
+                'Banco do Brasil',
+                'Banco Real',
+                'Bradesco',
+                'Caixa',
+                'Citibank',
+                'HSBC',
+                'Itaú',
+                'Itaú Unibanco',
+                'Safra',
+                'Santander'
+              ]}
+              label="Banco"
+              fullWidth 
+            /> */}
+
             <TextField name='client.bank_account.agency' label="Agência" fullWidth />
             <TextField name='client.bank_account.number' label="Conta" fullWidth />
           </div>

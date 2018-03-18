@@ -170,29 +170,182 @@
     X
   </span>
 
-  <span style="
-    font-size: 15px;
-    font-weight: bold;
-    position: absolute;
-    left: 2.2%;
-    top: 66.7%
-  ">
-    <% if(client.bank_account.type == 'poupança') { %>
-      X
-    <% } %>
-  </span>
+  <!-- ******* -->
+  <!-- Banking -->
+  <!-- ******* -->
 
-  <span style="
-    font-size: 15px;
-    font-weight: bold;
-    position: absolute;
-    left: 50.4%;
-    top: 66.5%;
-  ">
-    <% if(client.bank_account.type == 'corrente') { %>
+  <!-- Poupança -->
+  <% if(client.bank_account.type == 'poupanca') { %>
+    <span style="
+      font-size: 15px;
+      font-weight: bold;
+      position: absolute;
+      left: 2.2%;
+      top: 66.7%
+    ">
       X
+    </span>
+
+    <!-- Brandesco -->
+    <% if(client.bank_account.name == 'Bradesco') { %>
+      <span style="
+        font-size: 15px;
+        font-weight: bold;
+        position: absolute;
+        left: 3.4%;
+        top: 68.3%;
+      ">
+        X
+      </span>
     <% } %>
-  </span>
+
+    <!-- Itau -->
+    <% if(client.bank_account.name == 'Itaú') { %>
+      <span style="
+        font-size: 15px;
+        font-weight: bold;
+        position: absolute;
+        left: 34%;
+        top: 68.3%;
+      ">
+        X
+      </span>
+    <% } %>
+
+    <!-- Banco do Brasil -->
+    <% if(client.bank_account.name == 'Banco do Brasil') { %>
+      <span style="
+        font-size: 15px;
+        font-weight: bold;
+        position: absolute;
+        left: 16.2%;
+        top: 68.3%;
+      ">
+        X
+      </span>
+    <% } %>
+
+    <!-- Caixa -->
+    <% if(client.bank_account.name == 'Caixa') { %>
+      <span style="
+        font-size: 15px;
+        font-weight: bold;
+        position: absolute;
+        left: 3.4%;
+        top: 69.9%;
+      ">
+        X
+      </span>
+    <% } %>
+
+
+    <!-- Bank Account Agency -->
+    <span style="
+      font-size: 15px;
+      font-weight: bold;
+      position: absolute;
+      left: 2.3%;
+      top: 73.7%;
+    ">
+      <%= client.bank_account.agency[0] %>
+    </span>
+    <span style="
+      font-size: 15px;
+      font-weight: bold;
+      position: absolute;
+      left: 18.1%;
+      top: 73.7%;
+    ">
+      <%= client.bank_account.agency[1] %>
+    </span>
+
+    <!-- Bank Account Number -->
+    <span style="
+      font-size: 15px;
+      font-weight: bold;
+      position: absolute;
+      left: 23.1%;
+      top: 73.7%;
+    ">
+      <%= client.bank_account.number[0] %>
+    </span>
+    <span style="
+      font-size: 15px;
+      font-weight: bold;
+      position: absolute;
+      left: 38.7%;
+      top: 73.7%;
+    ">
+      <%= client.bank_account.number[1] %>
+    </span>
+
+
+  <% } %>
+
+  <!-- Corrente -->
+  <% if(client.bank_account.type == 'corrente') { %>
+    <span style="
+      font-size: 15px;
+      font-weight: bold;
+      position: absolute;
+      left: 50.4%;
+      top: 66.5%;
+    ">
+      X 
+    </span>
+
+    <!-- Bank Name -->
+    <span style="
+      font-size: 15px;
+      font-weight: bold;
+      position: absolute;
+      left: 50.6%;
+      top: 69.8%;
+    ">
+      <%= client.bank_account.name %>
+    </span>
+
+    <!-- Bank Account Agency -->
+    <span style="
+      font-size: 15px;
+      font-weight: bold;
+      position: absolute;
+      left: 50.6%;
+      top: 73.7%;
+    ">
+      <%= client.bank_account.agency[0] %>
+    </span>
+    <span style="
+      font-size: 15px;
+      font-weight: bold;
+      position: absolute;
+      left: 66.4%;
+      top: 73.7%;
+    ">
+      <%= client.bank_account.agency[1] %>
+    </span>
+
+    <!-- Bank Account Number -->
+    <span style="
+      font-size: 15px;
+      font-weight: bold;
+      position: absolute;
+      left: 73%;
+      top: 73.7%;
+    ">
+      <%= client.bank_account.number[0] %>
+    </span>
+    <span style="
+      font-size: 15px;
+      font-weight: bold;
+      position: absolute;
+      left: 88.5%;
+      top: 73.7%;
+    ">
+      <%= client.bank_account.number[1] %>
+    </span>
+
+  <% } %>
 
   <!-- **** -->
   <!-- Date -->

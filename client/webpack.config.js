@@ -9,6 +9,7 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 })
 
 module.exports = {
+  mode: 'development',
   devtool: '#eval-source-map',
   entry: [
     'react-hot-loader/patch',
@@ -20,7 +21,7 @@ module.exports = {
     filename: 'bundle.js'
   },
   module: {
-    loaders: [
+    rules: [
       { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
       { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ },
       { test: /\.css$/, use: [{loader: "style-loader" }, {loader: "css-loader"}], exclude: /node_modules/},

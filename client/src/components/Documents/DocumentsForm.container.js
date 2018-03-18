@@ -11,7 +11,7 @@ const initialState = () => ({
   client: {
     name: '',
     birthday: '',
-    nacionality: '',
+    nacionality: 'brasileira',
     marital_status: '',
     job: '',
     income: '',
@@ -34,8 +34,8 @@ const initialState = () => ({
     email: '',
     accident_date: '',
     bank_account: {
+      type: 'poupanca',
       name: '',
-      type: '',
       agency: '',
       number: ''
     },

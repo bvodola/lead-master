@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "start": "node index.js",
-    "start:dev": "nodemon"
+    "start:dev": "nodemon",
+    "bluemix": "cd ./client && yarn build:prod && cd ../ && cf push"
   },
   "engines": {
     "node": "8.x"
