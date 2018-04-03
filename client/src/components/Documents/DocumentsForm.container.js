@@ -34,7 +34,7 @@ const initialState = () => ({
     email: '',
     accident_date: '',
     bank_account: {
-      type: 'poupanca',
+      type: '',
       name: '',
       agency: '',
       number: ''

@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-ro
 import './grid.css';
 import './App.sass';
 
+import JssProvider from 'react-jss/lib/JssProvider';
+
 import AppBar from './AppBar';
 import Drawer from './Drawer';
 import MainMenu from './MainMenu';
@@ -79,29 +81,31 @@ class App extends React.Component {
 
   render() {
     return (
-      <StyleRoot>
-        {this.state.isAuthenticated?
-          <Router>
-            <KeyLogger>
-              <Drawer logout={this.logout.bind(this)} toggleDrawer={this.toggleDrawer} isDrawerOpened={this.state.isDrawerOpened}  />
-              <AppBar logout={this.logout.bind(this)} toggleDrawer={this.toggleDrawer} />
+      <JssProvider classNamePrefix="mui-">
+        <StyleRoot>
+          {this.state.isAuthenticated?
+            <Router>
+              <KeyLogger>
+                <Drawer logout={this.logout.bind(this)} toggleDrawer={this.toggleDrawer} isDrawerOpened={this.state.isDrawerOpened}  />
+                <AppBar logout={this.logout.bind(this)} toggleDrawer={this.toggleDrawer} />
 
-              <div style={style.content}>
-                <Switch>
-                  <Route path='/clients/add' component={SaveClient} />
-                  <Route path='/clients/edit/:_id' render={({match}) => <SaveClientContainer clientId={match.params._id} />} />
-                  <Route path='/clients' render={() => <Clients setAppState={this.setState.bind(this)} />} />
-                  <Route path='/documents-form/:_id?' render={({match}) => <DocumentsForm clientId={match.params._id} />} />
-                  <Route path='/playground' component={Playground} />
-                  <Redirect to='/clients' />
-                </Switch>
-              </div>
-            </KeyLogger>
-          </Router>
-        :
-          <Login data={{...this.state}} setState={this.setState.bind(this)} handleSubmit={(ev) => this.login(ev)} />
-        }
-      </StyleRoot>
+                <div style={style.content}>
+                  <Switch>
+                    <Route path='/clients/add' component={SaveClient} />
+                    <Route path='/clients/edit/:_id' render={({match}) => <SaveClientContainer clientId={match.params._id} />} />
+                    <Route path='/clients' render={() => <Clients setAppState={this.setState.bind(this)} />} />
+                    <Route path='/documents-form/:_id?' render={({match}) => <DocumentsForm clientId={match.params._id} />} />
+                    <Route path='/playground' component={Playground} />
+                    <Redirect to='/clients' />
+                  </Switch>
+                </div>
+              </KeyLogger>
+            </Router>
+          :
+            <Login data={{...this.state}} setState={this.setState.bind(this)} handleSubmit={(ev) => this.login(ev)} />
+          }
+        </StyleRoot>
+      </JssProvider>
     );
   }
 }

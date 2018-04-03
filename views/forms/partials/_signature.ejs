@@ -1,0 +1,26 @@
+<% if(!(parts instanceof Array)) parts = [parts] %>
+
+  <% for(var i=0; i<parts.length; i++) { %>
+    <div style="margin: 10px 40px">
+      ____________________________________________________________
+      <br>
+      <%= text %>:
+
+      <!-- *********** -->
+      <!-- Is Under 16 -->
+      <!-- *********** -->
+      <% if(parts[i].isUnder16)  {%>
+        <%= parts[i].tutor.name %> - CPF <%= parts[i].tutor.cpf %>
+
+      <!-- **** -->
+      <!-- Else -->
+      <!-- **** -->
+      <% } else { %>
+        <%= parts[i].name %>
+        <% if(parts[i].cpf) { %>
+          - CPF <%= parts[i].cpf %>
+        <% } %> 
+      <% } %>
+    </div>
+    <br>
+  <% } %>

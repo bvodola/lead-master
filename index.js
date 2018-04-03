@@ -91,11 +91,16 @@ app.use('/api/tasks', require('./crud')(models.Tasks));
 // =====
 // Views
 // =====
-app.get('/documents/:client_id', function(req, res) {
-	models.Clients.findOne({_id: req.params.client_id}, (err, client) => {
+app.get('/documents/:client_id', async function(req, res) {
+
+		let client = await models.Clients.findOne({_id: req.params.client_id}).exec();
 
 		if(client) {
-			let context = {  client: client.toObject() || {} };
+			client = client.toObject();
+			client.company = (await models.Companies.findOne({_id: client.company_id}).exec()).toObject();
+			client.company.location = client.company.address.city + '/' + client.company.address.state;
+			
+			let context = {  client: client || {} };
 			const d = new Date();
 			const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
@@ -113,13 +118,11 @@ app.get('/documents/:client_id', function(req, res) {
 
 			context.client.bank_account.agency = context.client.bank_account.agency.split('-');
 			context.client.bank_account.number = context.client.bank_account.number.split('-');
-
-
 			res.render('forms/index', context);
 		} else {
 			res.send('Cliente não encontrado.');
 		}
-	});
+
 });
 
 // ===================

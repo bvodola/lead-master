@@ -1,0 +1,4 @@
+---
+applications:
+ - name: lead-master-staging
+   memory: 512M

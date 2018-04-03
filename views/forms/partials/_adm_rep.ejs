@@ -1,2 +1,25 @@
-DOUGLAS AUGUSTO DA SILVA DIAS, inscrito no CPF sob o nº. 349.574.788-56, e RG nº. 43.989.843-2, com
-endereço sito à Rua Jaboatão, 50, Casa Verde, na cidade de São Paulo – SP.
+<% if(reps.length > 0) { %>
+  <% for(var i=0; i<reps.length ; i++) { %>
+
+    <!-- ** -->
+    <!-- PF -->
+    <!-- ** -->
+    <% if(reps[i].type == 'pf') { %>
+      
+      <%= reps[i].name %>, <%= reps[i].nacionality %>, <%= reps[i].marital_status %>,
+      <%= reps[i].job %>, <%= reps[i].job_subtitle ? reps[i].job_subtitle + ',' : '' %>
+      <%= reps[i].cpf ? 'CPF ' + reps[i].cpf + ',' : '' %>
+      <%= reps[i].rg ? 'RG ' + reps[i].rg.number + ',' : '' %>
+      com endereço em
+      <%= reps[i].address.street %>, <%= reps[i].address.number %>, <%= reps[i].address.neighborhood %>,
+      <%= reps[i].address.city %>/<%= reps[i].address.state %>, CEP <%= reps[i].address.zip %>.
+
+    <% } %>
+    
+
+
+  <% } %>
+<% } else { %>
+  <br>
+  _____________________________________________________________________________________________________
+<% } %>

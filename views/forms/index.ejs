@@ -31,6 +31,7 @@
       }
       .contract p {
         font-size: 10pt;
+        line-height: 12pt;
       }
     </style>
   </head>
@@ -55,7 +56,7 @@
     <div style="page-break-after: always;">&nbsp;</div>
     <%- include('partials/vehicle', {client: client, date: date})  -%>
     <div style="page-break-after: always;">&nbsp;</div>
-    <%- include('partials/susep', {client: client, date: date})  -%>
+    <%- include('partials/susep', {client: client, date: date, rep: client.company.modules.dpvat.adm[0]})  -%>
     <div style="page-break-after: always;">&nbsp;</div>
 
     <% if(client.products) { %>

@@ -5,13 +5,13 @@
   <%- include('_client', {client: client}) -%>
 </p>
 
-<h2>Outorgado</h2>
+<h2>Outorgado(s)</h2>
 <p>
-  <%- include('_adm_rep') -%>
+  <%- include('_parts', {'parts': client.company.modules.dpvat.adm}) -%>
 </p>
 
 <h2>Poderes</h2>
-<p>O OUTORGANTE concede poderes especiais ao OUTORGADO para:</p>
+<p>O OUTORGANTE concede poderes especiais ao(s) OUTORGADO(S) para:</p>
 <p>
 Enviar documentos, receber correspondências, solicitar informações por escrito
 ou por telefone, ter acesso ao número do sinistro, acompanhar o andamento

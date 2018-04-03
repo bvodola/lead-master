@@ -5,10 +5,9 @@
   <%- include('_client', {client: client}) -%>
 </p>
 
-<h2>Outorgado</h2>
+<h2>Outorgado(s)</h2>
 <p>
-  <br>
-_____________________________________________________________________________________________________
+  <%- include('_parts', {'parts': client.company.modules.dpvat.jud}) -%>
 </p>
 
 <h2>Poder Específico</h2>
@@ -33,9 +32,9 @@ contra quem de direito.
 </p>
 
 <p>
-  São Paulo, <%= fullDate %>.
+  <%= client.company.location %>, <%= fullDate %>.
 </p>
 
 <div style="margin: 60px 40px 10px 40px; text-align: center">
-<%- include('_client_signature', {client: client, text: 'Outorgante'}) -%>
+<%- include('_signature', {parts: client, text: 'Outorgante'}) -%>
 </div>

@@ -5,10 +5,11 @@
   "license": "MIT",
   "scripts": {
     "test": "jest",
-    "start": "webpack-dev-server",
-    "build": "webpack",
-    "build:prod": "webpack --config ./webpack.config.prod.js",
-    "build:cordova": "webpack --config ./webpack.cordova.config.js --watch"
+    "start": "webpack-dev-server --config ./config/webpack.config.js",
+    "build": "webpack --config ./config/webpack.config.js",
+    "build:staging": "webpack --config ./config/webpack.config.staging.js",
+    "build:prod": "webpack --config ./config/webpack.config.prod.js",
+    "build:cordova": "webpack --config ./config/webpack.cordova.config.js --watch"
   },
   "dependencies": {
     "axios": "^0.17.0",
@@ -22,7 +23,7 @@
     "radium": "^0.19.5",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "react-form-container": "0.0.4",
+    "react-form-container": "0.0.8",
     "react-router-dom": "^4.2.2",
     "sass-loader": "^6.0.7",
     "style-loader": "^0.20.3",
@@ -44,11 +45,12 @@
     "mini-css-extract-plugin": "^0.2.0",
     "react-hot-loader": "^3.1.1",
     "react-test-renderer": "^16.2.0",
+    "uglifyjs-webpack-plugin": "^1.2.4",
     "webpack-cli": "^2.0.12"
   },
   "jest": {
     "setupFiles": [
-      "./jest.setup.js"
+      "./config/jest.setup.js"
     ]
   }
 }

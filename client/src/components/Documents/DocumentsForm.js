@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Button from 'material-ui/Button'
 import Divider from 'material-ui/Divider';
 import Text from 'material-ui/Typography';
-import { FormContainer, TextField, MaskedTextField, CheckboxGroup } from 'react-form-container';
+import { FormContainer, TextField, MaskedTextField, CheckboxGroup, SelectField } from 'react-form-container';
 import Snackbar from '../Commons/Snackbar';
 
 import './DocumentsForm.sass';
@@ -81,10 +81,8 @@ const DocumentsForm = (props) => {
 
           <div style={style.box}>
             <Text type='subheading'>Dados Bancários{isUnder16?' (Representante Legal)':''}</Text>
-            <TextField name='client.bank_account.type' label="Agência" fullWidth />
-            <TextField name='client.bank_account.name' label="Conta" fullWidth />
 
-            {/* <SelectField
+            <SelectField
               name='client.bank_account.type'
               options={[
                 {id: 'corrente', label:'Conta Corrente'},
@@ -118,7 +116,7 @@ const DocumentsForm = (props) => {
               ]}
               label="Banco"
               fullWidth 
-            /> */}
+            />
 
             <TextField name='client.bank_account.agency' label="Agência" fullWidth />
             <TextField name='client.bank_account.number' label="Conta" fullWidth />

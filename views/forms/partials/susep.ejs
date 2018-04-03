@@ -4,7 +4,7 @@
   width: 100%;
 ">
   <img style="width: 99%" src="/static/img/susep.jpg" alt="">
-  <img
+  <!-- <img
     style="
       position: absolute;
       left: 39.6%;
@@ -13,7 +13,7 @@
     "
     src="/static/img/assinatura-doug.png"
     alt=""
-  >
+  > -->
 
   <!-- ********* -->
   <!-- Main Info -->
@@ -24,7 +24,7 @@
     left: 13.6%;
     top: 43.2%;
   ">
-    DOUGLAS AUGUSTO DA SILVA DIAS
+    <%= rep.name %>
   </span>
   <span style="
     font-size: 12px;
@@ -32,7 +32,7 @@
     left: 70.5%;
     top: 43.2%;
   ">
-    349.574.788-56
+    <%= rep.cpf %>
   </span>
 
   <!-- ******* -->
@@ -45,7 +45,7 @@
     left: 6.6%;
     top: 72%;
   ">
-    Rua Jaboatão
+  <%= rep.address.street %>
   </span>
 
   <span style="

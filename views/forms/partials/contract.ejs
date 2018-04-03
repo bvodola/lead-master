@@ -6,9 +6,9 @@
     <%- include('_client', {client: client}) -%>
   </p>
 
-  <h2>II – CONTRATADO</h2>
+  <h2>II – CONTRATADO(S)</h2>
   <p>
-    <%- include('_adm_rep') -%>
+    <%- include('_parts', {'parts': client.company.modules.dpvat.adm}) -%>
   </p>
 
 
@@ -31,7 +31,7 @@
   <h2>V – LOCAL DA AÇÃO</h2>
   <p>
     Fica, por este instrumento particular, desde já ajustado, que os interesses do contratante serão defendidos no
-   município e Comarca de São Paulo – SP.
+   município e Comarca de <%= client.company.location %>.
   </p>
 
   <h2>VI – HONORÁRIOS PROFISSIONAIS/REMUNERAÇÃO</h2>
@@ -63,7 +63,7 @@
 
   <h2>VIII – DA ELEIÇÃO DE FORO</h2>
   <p>
-    às partes contratantes elegem o foro da Comarca de São Paulo – SP, para solucionar quaisquer questões
+    às partes contratantes elegem o foro da Comarca de <%= client.company.location %>, para solucionar quaisquer questões
    judiciais, resultantes do presente instrumento, não obstante a mudança de domicílio pelo contratante, ou qualquer outra
    prerrogativa de ordem legal disponível deste, podendo entrementes, o contratado, optar pelo foro do domicílio daquele.
   </p>
@@ -77,18 +77,13 @@
   </p>
 
   <p style="text-align: center; margin-bottom: 40px">
-  São Paulo, <%= fullDate %>
+      <%= client.company.location %>, <%= fullDate %>
   </p>
+  
   <div style="text-align: center">
-  <%- include('_client_signature', {client: client, text: 'Contratante'}) -%>
-
-  <br>
-  <div style="margin: 10px 40px">
-  ____________________________________________________________
-  <br>
-  Contratado: Douglas Augusto da Silva Dias – CPF 349.574.788-56
-  </div>
-
+    <%- include('_signature', {parts: client, text: 'Contratante'}) -%>
+    <br>
+    <%- include('_signature', {parts: client.company.modules.dpvat.adm, text: 'Contratado(s)'}) -%>
   </div>
 
 </div>
