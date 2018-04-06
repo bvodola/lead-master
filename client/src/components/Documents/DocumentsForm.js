@@ -124,6 +124,7 @@ const DocumentsForm = (props) => {
 
 
 
+              
           <div style={style.box}>
             <Text type='subheading'>Gerar também formulários para</Text>
             <CheckboxGroup name='client.products' options={[
