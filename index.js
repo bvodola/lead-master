@@ -132,13 +132,13 @@ app.get('/documents/:client_id', async function(req, res) {
 // ===================
 // Production Settings
 // ===================
-if(app.settings.env === 'production') {
-	// app.use(express.static(path.join(__dirname, 'client/build')));
-	app.use(express.static('./client/build'));
-  app.get('*', function (req, res) {
-    res.sendFile('./client/build/index.html');
-  });
-}
+// if(app.settings.env === 'production') {
+// 	// app.use(express.static(path.join(__dirname, 'client/build')));
+// 	app.use(express.static('./client/build'));
+//   app.get('*', function (req, res) {
+//     res.sendFile('./client/build/index.html');
+//   });
+// }
 
 // ======
 // Server
