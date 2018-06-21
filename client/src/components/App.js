@@ -14,6 +14,7 @@ import Login from './Login';
 
 import DocumentsForm from './Documents/DocumentsForm.container';
 import Agenda from './Agenda';
+import Calendar from './Calendar';
 import Clients from './Clients/ListClients.container';
 import SaveClient from './Clients/SaveClient.container';
 
@@ -92,6 +93,8 @@ class App extends React.Component {
                 <div style={style.content}>
                   <Switch>
                     <Route path='/clients/add' component={SaveClient} />
+                    <Route path='/agenda' component={Agenda} />
+                    <Route path='/calendar' component={Calendar} />
                     <Route path='/clients/edit/:_id' render={({match}) => <SaveClientContainer clientId={match.params._id} />} />
                     <Route path='/clients' render={() => <Clients setAppState={this.setState.bind(this)} />} />
                     <Route path='/documents-form/:_id?' render={({match}) => <DocumentsForm clientId={match.params._id} />} />

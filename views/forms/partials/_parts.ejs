@@ -10,9 +10,13 @@
       <%= parts[i].job %>, <%= parts[i].job_subtitle ? parts[i].job_subtitle + ',' : '' %>
       <%= parts[i].cpf ? 'CPF ' + parts[i].cpf + ',' : '' %>
       <%= parts[i].rg ? 'RG ' + parts[i].rg.number + ',' : '' %>
-      com endereço em
-      <%= parts[i].address.street %>, <%= parts[i].address.number %>, <%= parts[i].address.neighborhood %>,
-      <%= parts[i].address.city %>/<%= parts[i].address.state %>, CEP <%= parts[i].address.zip %>.
+      <%= parts[i].email ? 'com e-mail ' + parts[i].email + ',' : '' %>
+
+      <% if(typeof parts[i].show_address === 'undefined' || parts[i].show_address) { %>
+        com endereço em
+        <%= parts[i].address.street %>, <%= parts[i].address.number %>, <%= parts[i].address.neighborhood %>,
+        <%= parts[i].address.city %>/<%= parts[i].address.state %>, CEP <%= parts[i].address.zip %>.
+      <% } %>
 
     <% } %>
     <br>

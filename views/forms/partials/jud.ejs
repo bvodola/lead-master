@@ -1,37 +1,27 @@
-<h1>Procuração 'Ad Judicia'</h1>
+<div style="text-align: center;">
+  <img src="/static/img/logo-tvm.png" alt="" />
+</div>
 
-<h2>Outorgante</h2>
-<p>
-  <%- include('_client', {client: client}) -%>
+<h1 style="text-align: center;">Procuração 'Ad Judicia'</h1>
+
+<p style="text-align: justify;">
+<%- include('_client', {client: client}) -%>, pelo presente instrumento de procuração
+nomeia e constitui seu procurador o <%- include('_parts', {'parts': client.company.modules.dpvat.jud}) -%>
+a quem confere amplos poderes para o foro em geral, propor
+contra quem de direito as ações competentes e defendê-lo nas contrárias, seguindo
+umas e outras, até final decisão, usando recursos legais c acompanhando-a,
+conferindo-lhe ainda, poderes especiais para confessar, desistir, transigir, firmar
+compromissos ou acordos, receber e dar quitação, podendo ainda substabelecer
+esta em outrem, com ou sem reserva de poderes, dando tudo por bom, firme e
+valioso Especialmente e Unicamente para propor AÇÃO DE COBRANÇA DO
+SEGURO OBRIGATÓRIO DPVAT, contra qualquer Seguradora participante do
+convênio DPVAT.
 </p>
 
-<h2>Outorgado(s)</h2>
-<p>
-  <%- include('_parts', {'parts': client.company.modules.dpvat.jud}) -%>
-</p>
-
-<h2>Poder Específico</h2>
-<p>
-  Representar o Outorgante perante a Justiça, com o intuito de promover
-  Ação de Cobrança do Seguro Obrigatório DPVAT
-</p>
-
-<h2>Poderes</h2>
-<p>
-  Amplos poderes para atuação no foro em geral, com a cláusula “ad judicia et extra”, em qualquer Juízo, Instância
-ou Tribunal, podendo propor contra quem de direito as ações competentes e defendê-lo(a) nas causas contrárias, seguindo
-umas e outras, até final decisão, usando os recursos legais e acompanhando-os, conferindo-lhe amplos poderes especiais
-para conferir, desistir, transigir, transmitir compromissos ou acordos, receber e dar quitação, representa-lo(a) em
-Repartições Públicas, Federais, Estaduais e Municipais, podendo, ainda, substabelecer a outrem, com ou sem reservas de
-iguais poderes, dando tudo por bom, firme e valioso, podendo dito procurador praticar todos os atos que se fizerem
-necessários sem restrições, em especial para propor
 <br>
 <br>
-_____________________________________________________________________________________________________,<br>
-contra quem de direito.
-</p>
-
-<p>
+<br>
+<p style="text-align: center;">
   <%= client.company.location %>, <%= fullDate %>.
 </p>
 

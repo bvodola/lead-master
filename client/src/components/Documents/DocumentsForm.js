@@ -85,6 +85,7 @@ const DocumentsForm = (props) => {
             <SelectField
               name='client.bank_account.type'
               options={[
+                {id: ' ', label:' '},
                 {id: 'corrente', label:'Conta Corrente'},
                 {id: 'poupanca', label:'Conta Poupança'}
               ]}

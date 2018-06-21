@@ -8,6 +8,7 @@ const ejs = require('ejs');
 const api = require('./api');
 const models = require('./models');
 const tokens = require('./auth/tokens');
+const commons = require('./commons');
 
 // ==============
 // Initial Config
@@ -114,10 +115,13 @@ app.get('/documents/:client_id', async function(req, res) {
 
 			context.fullDate = d.getDate()+' de '+months[d.getMonth()]+' de '+d.getFullYear();
 			context.date = { day: d.getDate(), month: months[d.getMonth()], year: d.getFullYear() }
-			context.client.isUnder16 = Math.floor(((new Date()) - new Date(context.client.birthday))/31536000000) < 16;
+
+			let b = commons.date.convertFromString(context.client.birthday);
+			context.client.isUnder16 = commons.date.getAge(b) < 16;
 
 			context.client.bank_account.agency = context.client.bank_account.agency.split('-');
 			context.client.bank_account.number = context.client.bank_account.number.split('-');
+			
 			res.render('forms/index', context);
 		} else {
 			res.send('Cliente não encontrado.');
@@ -129,9 +133,10 @@ app.get('/documents/:client_id', async function(req, res) {
 // Production Settings
 // ===================
 if(app.settings.env === 'production') {
-  app.use(express.static(path.join(__dirname, 'client/build')));
+	// app.use(express.static(path.join(__dirname, 'client/build')));
+	app.use(express.static('./client/build'));
   app.get('*', function (req, res) {
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+    res.sendFile('./client/build/index.html');
   });
 }
 
