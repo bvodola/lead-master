@@ -2,7 +2,7 @@
 
 <h2>Contratante</h2>
 <p>
-  <%- include('_client', {client: client}) -%>
+  <%- include('_client', {_client: _client}) -%>
 </p>
 
 <h2>Contratada</h2>
@@ -30,7 +30,7 @@ E por ser expressão da verdade, firma-se o presente contrato na presença de 2 
 </p>
 
 <div style="text-align: center">
-  <%- include('_client_signature', {client: client, text: 'Contratante'}) -%>
+  <%- include('_client_signature', {_client: _client, text: 'Contratante'}) -%>
   <br>
   ____________________________________________<br>
   A.M.C Saúde Eireli

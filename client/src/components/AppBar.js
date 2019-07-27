@@ -44,7 +44,7 @@ const AppBar = (props) => (
       </Text>
       <div style={style.menu}>
 
-        {/* <Link style={{textDecoration: 'none'}} to='/'><Button style={{color: 'white'}}>Agenda</Button></Link> */}
+        <Link style={{textDecoration: 'none'}} to='/agenda'><Button style={{color: 'white'}}>Agenda</Button></Link>
         <Link style={{textDecoration: 'none'}} to='/clients'><Button style={{color: 'white'}}>Clientes</Button></Link>
         <Link style={{textDecoration: 'none'}} to='/documents-form'><Button style={{color: 'white'}}>Gerar Documentos</Button></Link>
         <Button onClick={() => props.logout()} classes={{label: props.classes.buttonLabel}} style={{color: 'white'}}>

@@ -19,48 +19,49 @@
         line-height: 1.4em;
       }
       h1 {
-        font-size: 22px;
+        font-size: 20px;
       }
       h2 {
         margin: 0;
-        font-size: 18px;
+        font-size: 16px;
       }
       p {
         margin: 0  0 15px 0;
         font-size: 12pt;
       }
       .contract p {
-        font-size: 10pt;
-        line-height: 12pt;
+        font-size: 9pt;
+        line-height: 10pt;
+        margin: 0  0 10px 0;
+      }
+
+      ._signature {
+        font-size: 13px;
       }
     </style>
   </head>
   <body>
-    <%- include('partials/contract', {client: client, date: date})  -%>
+    <%- include('partials/contract', {_client: _client, date: date})  -%>
     <div style="page-break-after: always;">&nbsp;</div>
-    <%- include('partials/contract', {client: client, date: date})  -%>
+    <%- include('partials/contract', {_client: _client, date: date})  -%>
     <div style="page-break-after: always;">&nbsp;</div>
-    <%- include('partials/iml', {client: client, date: date})  -%>
+    <%- include('partials/form_unico', {_client: _client, date: date})  -%>
     <div style="page-break-after: always;">&nbsp;</div>
-    <%- include('partials/adm', {client: client, date: date})  -%>
+    <%- include('partials/adm', {_client: _client, date: date})  -%>
     <div style="page-break-after: always;">&nbsp;</div>
-    <%- include('partials/jud', {client: client, date: date})  -%>
+    <%- include('partials/jud', {_client: _client, date: date})  -%>
     <div style="page-break-after: always;">&nbsp;</div>
-    <%- include('partials/iprf', {client: client, date: date})  -%>
+    <%- include('partials/iprf', {_client: _client, date: date})  -%>
     <div style="page-break-after: always;">&nbsp;</div>
-    <%- include('partials/poverty', {client: client, date: date})  -%>
+    <%- include('partials/poverty', {_client: _client, date: date})  -%>
     <div style="page-break-after: always;">&nbsp;</div>
-    <%- include('partials/address', {client: client, date: date})  -%>
+    <%- include('partials/vehicle', {_client: _client, date: date})  -%>
     <div style="page-break-after: always;">&nbsp;</div>
-    <%- include('partials/payment', {client: client, date: date})  -%>
-    <div style="page-break-after: always;">&nbsp;</div>
-    <%- include('partials/vehicle', {client: client, date: date})  -%>
-    <div style="page-break-after: always;">&nbsp;</div>
-    <%- include('partials/susep', {client: client, date: date, rep: client.company.modules.dpvat.adm[0]})  -%>
+    <%- include('partials/susep', {_client: _client, date: date, rep: _client.company.modules.dpvat.adm[0]})  -%>
     <div style="page-break-after: always;">&nbsp;</div>
 
-    <% if(client.products) { %>
-    <% if(client.products.fisioterapia) { %>
+    <% if(_client.products) { %>
+    <% if(_client.products.fisioterapia) { %>
       <%- include('partials/fisio_contract')  -%>
       <div style="page-break-after: always;">&nbsp;</div>
       <%- include('partials/fisio_contract_2')  -%>

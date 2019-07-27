@@ -1,4 +1,4 @@
-clients = [
+const clients = [
   {
     name: 'José da Silva',
     attributes: [
@@ -26,23 +26,30 @@ clients = [
   }
 ];
 
-categories: [
-  {
-    _id: '1',
-    name: 'Contato'
-  }
-]
+const kanban = {
+  cards: [
+    { id: 'card-1', content: 'Card 1'},
+    { id: 'card-2', content: 'Card 2'},
+    { id: 'card-3', content: 'Card 3'},
+  ],
+  columns: [
+    {
+      id: 'column-1',
+      title: 'To Do',
+      cardIds: ['card-1', 'card-2', 'card-3']
+    },
+    {
+      id: 'column-2',
+      title: 'In Progress',
+      cardIds: []
+    },
+    {
+      id: 'column-3',
+      title: 'Done',
+      cardIds: []
+    }
+  ],
+  columnOrder: ['column-1', 'column-2', 'column-3']
+}
 
-attribute_types: [
-  {
-    _id: '1',
-    name: 'Celular',
-
-  },
-  {
-    _id: '2',
-    name: 'Email'
-  }
-]
-
-export { clients };
+export { clients, kanban };

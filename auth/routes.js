@@ -24,7 +24,8 @@ module.exports = function(passport) {
     function(req, res) {
       const user = req.user.toObject();
       res.cookie('token', user.tokens.local);
-      res.redirect('http://localhost:4000');
+      // res.redirect('http://localhost:4000');
+      res.redirect('http://4f654ffe.ngrok.io')
     });
 
   router.get('/twitter',

@@ -9,18 +9,23 @@
     "bluemix": "cd ./client && yarn build:prod && cd ../ && cf push"
   },
   "engines": {
-    "node": "8.x"
+    "node": "9.x"
   },
   "dependencies": {
+    "apollo-server-express": "^2.0.0",
     "axios": "^0.17.1",
     "babel-polyfill": "^6.26.0",
     "bcrypt-nodejs": "^0.0.3",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
+    "cloudinary": "^1.14.0",
     "cookie-session": "^2.0.0-beta.3",
+    "docx-merger": "^1.2.2",
+    "docx-templates": "^3.0.0",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
     "googleapis": "^23.0.0",
+    "graphql": "^0.13.2",
     "intl": "^1.2.5",
     "jsonwebtoken": "^8.1.1",
     "mongoose": "^4.12.5",
@@ -29,6 +34,7 @@
     "passport-google-oauth20": "^1.0.0",
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.4",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "word2pdf": "^1.0.7"
   }
 }

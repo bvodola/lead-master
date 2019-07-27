@@ -62,7 +62,7 @@ module.exports = function(passport) {
     {
       clientID: '123947318298079',
       clientSecret: '7c24f46ffea1c5be66aa4b8e05a8911d',
-      callbackURL: "http://localhost:3000/auth/facebook/callback",
+      callbackURL: "http://4f654ffe.ngrok.io/auth/facebook/callback",
       profileFields: ['id', 'emails', 'name']
     },
     function(accessToken, refreshToken, profile, cb) {

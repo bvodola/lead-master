@@ -34,13 +34,13 @@ class StateHandler {
 
   set(name,value,push=false) {
 
+    
     let state = this.state;
     let nameArray = name.split('.');
-
     if(nameArray.length>1) {
       if(push == true) {
         const oldValue = _.get(state,name);
-        value = oldValue.push(value);
+        value = oldValue.concat(value);
       }
       _.set(state,name,value);
       let firstName = name.split('.')[0];

@@ -1,0 +1,375 @@
+<div style="
+  position: relative;
+  float: left;
+  width: 100%;
+">
+  <img style="width: 99%" src="/static/img/formulario-unico.jpg" alt="">
+
+  <!-- ********* -->
+  <!-- Main Info -->
+  <!-- ********* -->
+  <span style="
+    font-size: 11px;
+    position: absolute;
+    left: 46.8%;
+    top: 10.8%;
+  ">
+    <%= _client.name %>
+  </span>
+  <span style="
+    font-size: 11px;
+    position: absolute;
+    left: 25.7%;
+    top: 10.8%;
+  ">
+    <%= _client.cpf %>
+  </span>
+
+  <!-- ******* -->
+  <!-- Address -->
+  <!-- ******* -->
+  <span style="
+    font-size: 11px;
+    position: absolute;
+    left: 25.3%;
+    top: 18.2%;
+  ">
+    <%= _client.address.street %>
+  </span>
+
+  <span style="
+    font-size: 11px;
+    position: absolute;
+    left: 73.8%;
+    top: 18.2%;
+  ">
+    <%= _client.address.number %>
+  </span>
+
+  <span style="
+    font-size: 11px;
+    position: absolute;
+    left: 83.5%;
+    top: 18.2%;
+  ">
+    <%= _client.address.complement %>
+  </span>
+
+  <span style="
+    font-size: 11px;
+    position: absolute;
+    left: 4.5%;
+    top: 20.7%;
+  ">
+    <%= _client.address.neighborhood %>
+  </span>
+
+  <span style="
+    font-size: 11px;
+    position: absolute;
+    left: 32.3%;
+    top: 20.7%;
+  ">
+    <%= _client.address.city %>
+  </span>
+
+  <span style="
+    font-size: 11px;
+    position: absolute;
+    left: 65.3%;
+    top: 20.7%;
+  ">
+    <%= _client.address.state %>
+  </span>
+
+  <span style="
+    font-size: 11px;
+    position: absolute;
+    left: 74.8%;
+    top: 20.7%;
+  ">
+    <%= _client.address.zip %>
+  </span>
+
+  <!-- ******** -->
+  <!-- Receiver -->
+  <!-- ******** -->
+
+  <span style="
+    font-size: 11px;
+    position: absolute;
+    left: 4.5%;
+    top: 15.7%;
+  ">
+    <% if(!_client.isUnder16) { %>
+      <%= _client.name %>
+    <% } else { %>
+      <%= _client.tutor.name %>
+    <% } %>
+  </span>
+
+  <span style="
+    font-size: 11px;
+    position: absolute;
+    left: 73.8%;
+    top: 15.7%;
+  ">
+    <% if(!_client.isUnder16) { %>
+      <%= _client.cpf %>
+    <% } else { %>
+      <%= _client.tutor.cpf %>
+    <% } %>
+  </span>
+
+  <span style="
+    font-size: 11px;
+    position: absolute;
+    left: 4.5%;
+    top: 18.2%;
+  ">
+    <% if(!_client.isUnder16) { %>
+      <%= _client.job %>
+    <% } else { %>
+      <%= _client.tutor.job %>
+    <% } %>
+  </span>
+
+  <span style="
+    font-size: 11px;
+    position: absolute;
+    left: 74.8%;
+    top: 23.1%;
+  ">
+    <% if(!_client.isUnder16) { %>
+      <%= _client.phone %>
+    <% } else { %>
+      <%= _client.tutor.phone %>
+    <% } %>
+  </span>
+
+  <span style="
+    font-size: 11px;
+    position: absolute;
+    left: 4.5%;
+    top: 23.1%;
+  ">
+    <% if(!_client.isUnder16) { %>
+      <%= _client.email %>
+    <% } else { %>
+      <%= _client.tutor.email %>
+    <% } %>
+  </span>
+
+  <span style="
+    font-size: 15px;
+    font-weight: bold;
+    position: absolute;
+    left: 4.5%;
+    top: 28.2%;
+  ">
+    X <!-- Income option-->
+  </span>
+
+  <!-- ******* -->
+  <!-- Banking -->
+  <!-- ******* -->
+
+  <!-- Poupança -->
+  <% if(_client.bank_account.type == 'poupanca') { %>
+    <span style="
+      font-size: 15px;
+      font-weight: bold;
+      position: absolute;
+      left: 4.5%;
+      top: 34%;
+    ">
+      X
+    </span>
+
+    <!-- Brandesco -->
+    <% if(_client.bank_account.name == 'Bradesco') { %>
+      <span style="
+        font-size: 15px;
+        font-weight: bold;
+        position: absolute;
+        left: 6.4%;
+        top: 35.5%;
+      ">
+        X
+      </span>
+    <% } %>
+
+    <!-- Itau -->
+    <% if(_client.bank_account.name == 'Itaú') { %>
+      <span style="
+        font-size: 15px;
+        font-weight: bold;
+        position: absolute;
+        left: 21.4%;
+        top: 35.5%;
+      ">
+        X
+      </span>
+    <% } %>
+
+    <!-- Banco do Brasil -->
+    <% if(_client.bank_account.name == 'Banco do Brasil') { %>
+      <span style="
+        font-size: 15px;
+        font-weight: bold;
+        position: absolute;
+        left: 6.4%;
+        top: 37.3%;
+      ">
+        X
+      </span>
+    <% } %>
+
+    <!-- Caixa -->
+    <% if(_client.bank_account.name == 'Caixa') { %>
+      <span style="
+        font-size: 15px;
+        font-weight: bold;
+        position: absolute;
+        left: 21.4%;
+        top: 37.3%;
+      ">
+        X
+      </span>
+    <% } %>
+
+
+    <!-- Bank Account Agency -->
+    <span style="
+      font-size: 12px;
+      font-weight: bold;
+      position: absolute;
+      left: 11.3%;
+      top: 39.9%;
+    ">
+      <%= _client.bank_account.agency[0] %>
+    </span>
+    <span style="
+      font-size: 12px;
+      font-weight: bold;
+      position: absolute;
+      left: 19.4%;
+      top: 39.9%;
+    ">
+      <%= _client.bank_account.agency[1] %>
+    </span>
+
+    <!-- Bank Account Number -->
+    <span style="
+      font-size: 12px;
+      font-weight: bold;
+      position: absolute;
+      left: 29.1%;
+      top: 39.9%;
+    ">
+      <%= _client.bank_account.number[0] %>
+    </span>
+    <span style="
+      font-size: 12px;
+      font-weight: bold;
+      position: absolute;
+      left: 45.3%;
+      top: 39.9%;
+    ">
+      <%= _client.bank_account.number[1] %>
+    </span>
+
+
+  <% } %>
+
+  <!-- Corrente -->
+  <% if(_client.bank_account.type == 'corrente') { %>
+    <span style="
+      font-size: 15px;
+      font-weight: bold;
+      position: absolute;
+      left: 50%;
+      top: 33.8%;
+    ">
+      X
+    </span>
+
+    <!-- Bank Name -->
+    <span style="
+      font-size: 12px;
+      font-weight: bold;
+      position: absolute;
+      left: 63.6%;
+      top: 35.2%;
+    ">
+      <%= _client.bank_account.name %>
+    </span>
+
+    <!-- Bank Account Agency -->
+    <span style="
+      font-size: 12px;
+      font-weight: bold;
+      position: absolute;
+      left: 56.6%;
+      top: 39.9%;
+    ">
+      <%= _client.bank_account.agency[0] %>
+    </span>
+    <span style="
+      font-size: 12px;
+      font-weight: bold;
+      position: absolute;
+      left: 65.1%;
+      top: 39.9%;
+    ">
+      <%= _client.bank_account.agency[1] %>
+    </span>
+
+    <!-- Bank Account Number -->
+    <span style="
+      font-size: 12px;
+      font-weight: bold;
+      position: absolute;
+      left: 74.4%;
+      top: 39.9%;
+    ">
+      <%= _client.bank_account.number[0] %>
+    </span>
+    <span style="
+      font-size: 12px;
+      font-weight: bold;
+      position: absolute;
+      left: 91%;
+      top: 39.9%;
+    ">
+      <%= _client.bank_account.number[1] %>
+    </span>
+
+  <% } %>
+
+  <!-- *** -->
+  <!-- IML -->
+  <!-- *** -->
+  <span style="
+    font-size: 15px;
+    font-weight: bold;
+    position: absolute;
+    left: 6.2%;
+    top: 56.1%;
+  ">
+    X <!-- No IML Option -->
+  </span>
+
+  <!-- **** -->
+  <!-- Date -->
+  <!-- **** -->
+  <span style="
+    font-size: 10px;
+    position: absolute;
+    left: 20.7%;
+    top: 78%;
+  ">
+  <%= _client.company.location %>, <%= date.day %> de <%= date.month %> de <%= date.year %>
+  </span>
+
+</div>

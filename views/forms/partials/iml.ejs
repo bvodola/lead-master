@@ -10,7 +10,7 @@
     left: 1.4%;
     top: 35.8%;
   ">
-    <%= client.name %>
+    <%= _client.name %>
   </span>
   <span style="
     font-size: 12px;
@@ -18,7 +18,7 @@
     left: 51.0%;
     top: 35.8%;
   ">
-    <%= client.cpf %>
+    <%= _client.cpf %>
   </span>
   <span style="
     font-size: 12px;
@@ -26,21 +26,21 @@
     left: 74.3%;
     top: 35.8%;
   ">
-    <%= client.accident_date %>
+    <%= _client.accident_date %>
   </span>
 
   <!-- ***** -->
   <!-- Tutor -->
   <!-- ***** -->
 
-  <% if(client.isUnder16) { %>
+  <% if(_client.isUnder16) { %>
     <span style="
       font-size: 12px;
       position: absolute;
       left: 1.4%;
       top: 43.5%;
     ">
-      <%= client.tutor.name %>
+      <%= _client.tutor.name %>
     </span>
     <span style="
       font-size: 12px;
@@ -48,7 +48,7 @@
       left: 76.3%;
       top: 43.5%;
     ">
-      <%= client.tutor.cpf %>
+      <%= _client.tutor.cpf %>
     </span>
     <span style="
       font-size: 12px;
@@ -56,7 +56,7 @@
       left: 1.2%;
       top: 47%;
     ">
-      <%= client.tutor.email %>
+      <%= _client.tutor.email %>
     </span>
     <span style="
       font-size: 12px;
@@ -64,7 +64,7 @@
       left: 76.3%;
       top: 47%;
     ">
-      <%= client.tutor.phone %>
+      <%= _client.tutor.phone %>
     </span>
   <% } %>
 
@@ -88,7 +88,7 @@
     left: 26.5%;
     top: 86.4%;
   ">
-    <%= client.company.location %>
+    <%= _client.company.location %>
   </span>
   <span style="
     font-size: 12px;

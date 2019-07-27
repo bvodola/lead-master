@@ -3,11 +3,19 @@ import ListClientsTableRow from './ListClientsTableRow';
 import { Table } from '../../helpers/Table';
 
 const ListClientsTable = (props) => {
-  const { clients } = props;
+  const { clients, header, selector, onSelectClient, clearData, scope } = props;
   return(
-    <Table header={['Nome', 'Telefone', 'Produtos', 'Ações']}>
+    <Table header={header}>
       {clients.map((client,i) => (
-        <ListClientsTableRow client={client} deleteClient={props.deleteClient} key={i} />
+        <ListClientsTableRow
+          client={client}
+          deleteClient={props.deleteClient}
+          selector={selector}
+          onSelectClient={onSelectClient}
+          clearData={clearData}
+          key={i}
+          scope={scope}
+        />
       ))}
     </Table>
   );

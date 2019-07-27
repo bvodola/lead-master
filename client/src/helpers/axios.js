@@ -1,21 +1,25 @@
 import axios from 'axios';
 import { cookie } from './';
 
-const port = process.env.PORT || 2000;
-let baseURL;
+const port = process.env.PORT || 3000;
+const NGROK_URL = 'http://8f3a2ed3.ngrok.io'
+const NGROK = false;
+let BASE_URL;
 
 switch(process.env.NODE_ENV) {
   case('development'):
-    baseURL = 'http://localhost:'+String(port);
+    BASE_URL = NGROK ? NGROK_URL : 'http://localhost:'+String(port);
     break;
   case('staging'):
-    baseURL = 'http://lead-master-staging.mybluemix.net';
+    BASE_URL = 'http://lead-master-staging.mybluemix.net';
     break;
   case('production'):
-    baseURL = 'http://www.leadmaster.com.br';
+    BASE_URL = process.env.BASE_URL;
     break;
   default:
-    baseURL = 'http://localhost:'+String(port);
+    BASE_URL = 'http://localhost:'+String(port);
 }
 
-export default axios.create({baseURL});
+
+
+export default axios.create({baseURL: BASE_URL});

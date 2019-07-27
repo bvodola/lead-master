@@ -3,9 +3,13 @@ import { withRouter } from 'react-router-dom';
 
 class KeyLogger extends React.Component {
   componentDidMount() {
-    document.onkeypress = (ev) => {
+    document.onkeydown = (ev) => {
 
-      if(document.activeElement.nodeName !== 'INPUT') {
+      if(
+        document.activeElement.nodeName !== 'INPUT' &&
+        document.activeElement.nodeName !== 'TEXTAREA' &&
+        !document.activeElement.attributes.contentEditable
+      ) {
         switch(ev.keyCode) {
           case(97):
             ev.preventDefault();

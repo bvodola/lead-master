@@ -14,7 +14,7 @@
     left: 54.6%;
     top: 37.1%;
   ">
-    <%= client.name %>
+    <%= _client.name %>
   </span>
   <span style="
     font-size: 12px;
@@ -22,7 +22,7 @@
     left: 28.0%;
     top: 37.1%;
   ">
-    <%= client.cpf %>
+    <%= _client.cpf %>
   </span>
 
   <!-- ******* -->
@@ -34,7 +34,7 @@
     left: 1.3%;
     top: 46.6%;
   ">
-    <%= client.address.street %>
+    <%= _client.address.street %>
   </span>
 
   <span style="
@@ -43,7 +43,7 @@
     left: 60%;
     top: 46.6%;
   ">
-    <%= client.address.number %>
+    <%= _client.address.number %>
   </span>
 
   <span style="
@@ -52,7 +52,7 @@
     left: 73.8%;
     top: 46.6%;
   ">
-    <%= client.address.complement %>
+    <%= _client.address.complement %>
   </span>
 
   <span style="
@@ -61,7 +61,7 @@
     left: 1.3%;
     top: 49.1%;
   ">
-    <%= client.address.neighborhood %>
+    <%= _client.address.neighborhood %>
   </span>
 
   <span style="
@@ -70,7 +70,7 @@
     left: 31.3%;
     top: 49.1%;
   ">
-    <%= client.address.city %>
+    <%= _client.address.city %>
   </span>
 
   <span style="
@@ -79,7 +79,7 @@
     left: 60%;
     top: 49.1%;
   ">
-    <%= client.address.state %>
+    <%= _client.address.state %>
   </span>
 
   <span style="
@@ -88,7 +88,7 @@
     left: 73.8%;
     top: 49.1%;
   ">
-    <%= client.address.zip %>
+    <%= _client.address.zip %>
   </span>
 
   <!-- ******** -->
@@ -101,10 +101,10 @@
     left: 1.3%;
     top: 44%;
   ">
-    <% if(!client.isUnder16) { %>
-      <%= client.name %>
+    <% if(!_client.isUnder16) { %>
+      <%= _client.name %>
     <% } else { %>
-      <%= client.tutor.name %>
+      <%= _client.tutor.name %>
     <% } %>
   </span>
 
@@ -114,10 +114,10 @@
     left: 52.5%;
     top: 44%;
   ">
-    <% if(!client.isUnder16) { %>
-      <%= client.cpf %>
+    <% if(!_client.isUnder16) { %>
+      <%= _client.cpf %>
     <% } else { %>
-      <%= client.tutor.cpf %>
+      <%= _client.tutor.cpf %>
     <% } %>
   </span>
 
@@ -127,10 +127,10 @@
     left: 73.8%;
     top: 44%;
   ">
-    <% if(!client.isUnder16) { %>
-      <%= client.job %>
+    <% if(!_client.isUnder16) { %>
+      <%= _client.job %>
     <% } else { %>
-      <%= client.tutor.job %>
+      <%= _client.tutor.job %>
     <% } %>
   </span>
 
@@ -140,10 +140,10 @@
     left: 73.8%;
     top: 51.8%;
   ">
-    <% if(!client.isUnder16) { %>
-      <%= client.phone %>
+    <% if(!_client.isUnder16) { %>
+      <%= _client.phone %>
     <% } else { %>
-      <%= client.tutor.phone %>
+      <%= _client.tutor.phone %>
     <% } %>
   </span>
 
@@ -153,10 +153,10 @@
     left: 1.3%;
     top: 51.8%;
   ">
-    <% if(!client.isUnder16) { %>
-      <%= client.email %>
+    <% if(!_client.isUnder16) { %>
+      <%= _client.email %>
     <% } else { %>
-      <%= client.tutor.email %>
+      <%= _client.tutor.email %>
     <% } %>
   </span>
 
@@ -175,7 +175,7 @@
   <!-- ******* -->
 
   <!-- Poupança -->
-  <% if(client.bank_account.type == 'poupanca') { %>
+  <% if(_client.bank_account.type == 'poupanca') { %>
     <span style="
       font-size: 15px;
       font-weight: bold;
@@ -187,7 +187,7 @@
     </span>
 
     <!-- Brandesco -->
-    <% if(client.bank_account.name == 'Bradesco') { %>
+    <% if(_client.bank_account.name == 'Bradesco') { %>
       <span style="
         font-size: 15px;
         font-weight: bold;
@@ -200,7 +200,7 @@
     <% } %>
 
     <!-- Itau -->
-    <% if(client.bank_account.name == 'Itaú') { %>
+    <% if(_client.bank_account.name == 'Itaú') { %>
       <span style="
         font-size: 15px;
         font-weight: bold;
@@ -213,7 +213,7 @@
     <% } %>
 
     <!-- Banco do Brasil -->
-    <% if(client.bank_account.name == 'Banco do Brasil') { %>
+    <% if(_client.bank_account.name == 'Banco do Brasil') { %>
       <span style="
         font-size: 15px;
         font-weight: bold;
@@ -226,7 +226,7 @@
     <% } %>
 
     <!-- Caixa -->
-    <% if(client.bank_account.name == 'Caixa') { %>
+    <% if(_client.bank_account.name == 'Caixa') { %>
       <span style="
         font-size: 15px;
         font-weight: bold;
@@ -247,7 +247,7 @@
       left: 2.3%;
       top: 73.7%;
     ">
-      <%= client.bank_account.agency[0] %>
+      <%= _client.bank_account.agency[0] %>
     </span>
     <span style="
       font-size: 15px;
@@ -256,7 +256,7 @@
       left: 18.1%;
       top: 73.7%;
     ">
-      <%= client.bank_account.agency[1] %>
+      <%= _client.bank_account.agency[1] %>
     </span>
 
     <!-- Bank Account Number -->
@@ -267,7 +267,7 @@
       left: 23.1%;
       top: 73.7%;
     ">
-      <%= client.bank_account.number[0] %>
+      <%= _client.bank_account.number[0] %>
     </span>
     <span style="
       font-size: 15px;
@@ -276,14 +276,14 @@
       left: 38.7%;
       top: 73.7%;
     ">
-      <%= client.bank_account.number[1] %>
+      <%= _client.bank_account.number[1] %>
     </span>
 
 
   <% } %>
 
   <!-- Corrente -->
-  <% if(client.bank_account.type == 'corrente') { %>
+  <% if(_client.bank_account.type == 'corrente') { %>
     <span style="
       font-size: 15px;
       font-weight: bold;
@@ -302,7 +302,7 @@
       left: 50.6%;
       top: 69.8%;
     ">
-      <%= client.bank_account.name %>
+      <%= _client.bank_account.name %>
     </span>
 
     <!-- Bank Account Agency -->
@@ -313,7 +313,7 @@
       left: 50.6%;
       top: 73.7%;
     ">
-      <%= client.bank_account.agency[0] %>
+      <%= _client.bank_account.agency[0] %>
     </span>
     <span style="
       font-size: 15px;
@@ -322,7 +322,7 @@
       left: 66.4%;
       top: 73.7%;
     ">
-      <%= client.bank_account.agency[1] %>
+      <%= _client.bank_account.agency[1] %>
     </span>
 
     <!-- Bank Account Number -->
@@ -333,7 +333,7 @@
       left: 73%;
       top: 73.7%;
     ">
-      <%= client.bank_account.number[0] %>
+      <%= _client.bank_account.number[0] %>
     </span>
     <span style="
       font-size: 15px;
@@ -342,7 +342,7 @@
       left: 88.5%;
       top: 73.7%;
     ">
-      <%= client.bank_account.number[1] %>
+      <%= _client.bank_account.number[1] %>
     </span>
 
   <% } %>
@@ -356,7 +356,7 @@
     left: 26.5%;
     top: 86.4%;
   ">
-  <%= client.company.location %>
+  <%= _client.company.location %>
   </span>
   <span style="
     font-size: 12px;

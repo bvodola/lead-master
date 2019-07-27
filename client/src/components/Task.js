@@ -3,9 +3,9 @@ import Radium from 'radium';
 
 import IconButton from 'material-ui/IconButton';
 import Checkbox from 'material-ui/Checkbox';
+import ContentEditable from 'react-contenteditable';
 
 import { screen } from '../helpers/grid';
-import Text from '../helpers/Text';
 import { Icon } from '../helpers';
 import { Table, Tr, Td } from '../helpers/Table';
 
@@ -34,40 +34,53 @@ const style = {
 
 }
 
-const Task = (props) => {
+const Task = ({task, onDeleteTask, onToggleTask, onChangeContent, onFocusContent, onBlurContent, selected, onSelectClient}) => {
 
   return(
-    <Tr>
-      <Td style={{padding: '8px <0></0>'}}>
-        <Checkbox />
+    <Tr  style={{backgroundColor: selected ? '#eee' : '#fff',}}>
+      <Td style={{padding: '8px 0'}}>
+        <Checkbox
+          checked={task.completed}
+          onClick={(ev) => {
+            onToggleTask(task);
+            ev.target.blur();
+          }}
+        />
       </Td>
-      <Td style={style.time} inline>
+      {/* <Td style={style.time} inline>
         07:40
-      </Td>
+      </Td> */}
       <Td style={style.name} inline>
-        José da Silva
+        <span style={{cursor: 'pointer'}} onClick={() => onSelectClient(task.client._id)}>{task.client.name}</span>
       </Td>
-      <Td stackable style={{marginBottom: '16px'}}>
-        Ligar para o José imediatamente.
-        Ligar para o José imediatamente.
-        Ligar para o José imediatamente.
-        Ligar para o José imediatamente.
+      <Td stackable style={{marginBottom: '16px', textDecoration: task.completed ? 'line-through' : 'none'}}>
+        <ContentEditable
+          style={{outline: '0px solid transparent'}}
+          tagName='span'
+          html={task.content}
+          onChange={(ev) => onChangeContent(task, ev.target.value)}
+          onFocus={() => onFocusContent(task)}
+          onBlur={() => onBlurContent()}
+        />
       </Td>
       <Td>
         <div style={style.actions}>
           <span style={style.actions.showSmUp}>
-            <IconButton>
-              <Icon>delete</Icon>
-            </IconButton>
+          <IconButton 
+            style={{
+              padding: '8px',
+              margin: '-4px 0'
+            }}
+            onClick={() => onDeleteTask(task._id)}
+          >
+            <Icon>delete</Icon>
+          </IconButton>
           </span>
           <span style={style.actions.showSmUp}>
             <IconButton>
               <Icon>plus_one</Icon>
             </IconButton>
           </span>
-          <IconButton>
-            <Icon>more_vert</Icon>
-          </IconButton>
         </div>
       </Td>
     </Tr>

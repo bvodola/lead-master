@@ -73,9 +73,12 @@ class SaveClientContainer extends React.Component {
     const { clientId } = this.props;
 
     if(typeof clientId !== 'undefined') {
-      axios.get('/api/clients/'+clientId)
+      axios.get('/api/clients/'+clientId, {
+        headers: {'Authorization': 'Bearer '+cookie.get('token')}
+      })
         .then((response) => {
-          const client = response.data[0];
+          console.log(response)
+          const client = response.data;
           this.setState({ client });
         })
         .catch((err) => {

@@ -11,7 +11,8 @@ const cellStyle = {
 };
 
 const style = {
-  ...col('100%'),
+  // ...col('100%'),
+  width: '100%',
   display: 'table',
   borderCollapse: 'collapse',
   fontFamily: 'Roboto',
@@ -90,7 +91,7 @@ const RawTable = (props) => {
   );
 }
 const RawTr = (props) => (
-  <div style={{...style.row , ...(props.style || noStyle)}}>
+  <div onClick={props.onClick} style={{...style.row , ...(props.style || noStyle)}}>
     {props.children}
   </div>
 );
