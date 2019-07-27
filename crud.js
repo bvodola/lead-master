@@ -59,7 +59,7 @@ module.exports = (Collection, config) => {
     if(typeof sort === 'undefined') sort = '_id';
   
     if(page) {
-      sort == '_id' ?
+      sort === '_id' ?
         query['_id'] = { "$gt": page } :
         skip = (parseInt(page)-1)*limit;
     }
@@ -114,21 +114,19 @@ module.exports = (Collection, config) => {
       }
     }
 
-    Collection.find(query, fields, {sort, limit, skip}, (e,results) => {
+    Collection.find(query, fields, {sort, limit, skip}).exec((e,results) => {
       if(e) {
         res.status(500).send(e);
         console.log(e.message);
       }
       else {
-        if(singleResult) {
+        if(singleResult)
           res.send(callbacks.get(results[0]));
-        }
-          
-        else {
+        else
           res.send(callbacks.get(results));
-        }
       }
     });
+
   });
 
   router.put('/:_id', (req, res) => {

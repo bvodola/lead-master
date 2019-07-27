@@ -25,7 +25,7 @@ const style = {
     position: 'relative',
     display: 'inline-block',
     margin: '0 4px 4px 0',
-    padding: '7px 48px 8px 10px',
+    padding: '7px 10px 8px 10px',
     borderRadius: '30px',
     background: '#eee',
     textTransform: 'capitalize',
@@ -47,6 +47,9 @@ const style = {
       fontWeight: 'bold',
       textTransform: 'uppercase'
     }
+  },
+  selector: {
+    display: 'table-row-group'
   }
 }
 
@@ -61,58 +64,82 @@ class ListClientsTableRow extends React.Component {
   render() {
 
     const
-      { client } = this.props,
+      { client, selector, onSelectClient, clearData, scope } = this.props,
       props = this.props,
       isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent),
       whatsappUrl = isMobile ?  'api' : 'web';
-      
-    return(
-      <Tr>
-        <Td stackable style={{minWidth: '100px'}}><strong>{client.name}</strong></Td>
-        <Td stackable style={{minWidth: '150px'}}>
-          <a target='_blank' href={`http://${whatsappUrl}.whatsapp.com/send?phone=55`+unmask(client.phone)}>{client.phone}</a>
-        </Td>
-        <Td stackable>
-          {typeof client.products !== 'undefined' ?
-            client.products.map((product, i) => (
-              <span style={style.product} key={i}>
-                {typeof product == 'object' ? 
-                  <span>{product.name} <Icon style={style.product.icon}>{product.status.icon}</Icon></span>
-                  :
-                  <span>{product} <span style={{ ...style.product.icon , ...style.product.textIcon}}>{product.substr(0,1)}</span></span>
-                }
-              </span>
-            ))
-            :
-            null
-          }
-        </Td>
-        <Td style={style.actions}>
-          <span style={style.actions.showSmUp}>
-            <Tooltip title='Apagar'>
-              <IconButton onClick={() => { props.deleteClient(client._id) } }>
-                <Icon>delete</Icon>
-              </IconButton>
+
+    if(selector) {
+      return(
+        <div
+          onClick={() => {
+            clearData();
+            onSelectClient(client);
+            scope.setState({isClientSelected: true});
+          }} 
+          style={style.selector}
+        >
+          <Tr>
+            <Td stackable style={{minWidth: '100px'}}><strong>{client.name}</strong></Td>
+          </Tr>
+        </div>
+      )
+    } else {
+      return(
+        <Tr>
+          <Td stackable style={{minWidth: '100px'}}>
+              <Link to={`/clients/${client._id}`}>
+                {client.name}
+              </Link>
+            </Td>
+          <Td stackable style={{minWidth: '150px'}}>
+            <a target='_blank' href={`http://${whatsappUrl}.whatsapp.com/send?phone=55`+unmask(client.phone)}>{client.phone}</a>
+          </Td>
+          <Td stackable>
+            {typeof client.products !== 'undefined' ?
+              client.products.map((product, i) => (
+                <span style={style.product} key={i}>
+                  {typeof product == 'object' ? 
+                    <span>
+                      {product.product.name}
+                      {product.status.icon && <Icon style={style.product.icon}>{product.status.icon}</Icon>}
+                    </span>
+                    :
+                    <span>{product} <span style={{ ...style.product.icon , ...style.product.textIcon}}>{product.substr(0,1)}</span></span>
+                  }
+                </span>
+              ))
+              :
+              null
+            }
+          </Td>
+          <Td style={style.actions}>
+            <span style={style.actions.showSmUp}>
+              <Tooltip title='Apagar'>
+                <IconButton onClick={() => { props.deleteClient(client._id) } }>
+                  <Icon>delete</Icon>
+                </IconButton>
+              </Tooltip>
+            </span>
+            <Tooltip title='Editar'>
+              <Link style={{textDecoration: 'none'}} to={'/documents-form/'+client._id}>
+                <IconButton>
+                  <Icon>edit</Icon>
+                </IconButton>
+              </Link>
             </Tooltip>
-          </span>
-          <Tooltip title='Editar'>
-            <Link style={{textDecoration: 'none'}} to={'/documents-form/'+client._id}>
-              <IconButton>
-                <Icon>edit</Icon>
-              </IconButton>
-            </Link>
-          </Tooltip>
-          <Tooltip title='Ver Documentação'>
-            <a style={{textDecoration: 'none'}} target='_blank' href={'/documents/'+client._id}>
-              <IconButton>
-                <Icon>description</Icon>
-              </IconButton>
-            </a>
-          </Tooltip>
-        </Td>
-      </Tr>
-    )
-  }
+            <Tooltip title='Ver Documentação'>
+              <a style={{textDecoration: 'none'}} target='_blank' href={'/documents/'+client._id}>
+                <IconButton>
+                  <Icon>description</Icon>
+                </IconButton>
+              </a>
+            </Tooltip>
+          </Td>
+        </Tr>
+      )
+    }
+  } 
 }
 
 export default ListClientsTableRow;

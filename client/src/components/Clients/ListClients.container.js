@@ -1,8 +1,8 @@
 import React from 'react';
 import axios from '../../helpers/axios';
 import ListClients from './ListClients';
+import ClientSelector from './ClientSelector';
 import { cookie } from '../../helpers';
-
 
 const removeById = (arr, id) => {
   return arr.filter((v,i,a) => {
@@ -11,16 +11,32 @@ const removeById = (arr, id) => {
   })
 }
 
+const getCachedData = () =>  {
+  return {
+    data: JSON.parse(localStorage.getItem('ListClients_state_data')),
+    page: JSON.parse(localStorage.getItem('ListClients_state_page')),
+    searchTerm: JSON.parse(localStorage.getItem('ListClients_state_searchTerm')),
+  }
+}
+
+const setCachedData = (state) =>  {
+  localStorage.setItem('ListClients_state_data', JSON.stringify(state.data));
+  localStorage.setItem('ListClients_state_page', JSON.stringify(state.page));
+  localStorage.setItem('ListClients_state_searchTerm', JSON.stringify(state.searchTerm));
+}
+
 class ClientsContainer extends React.Component {
 
   constructor(props) {
     super(props);
+    const {data, page, searchTerm} = getCachedData();
     this.state = {
-      searchTerm: '',
-      data: [],
-      page: 2,
+      searchTerm: searchTerm || '',
+      data: data || [],
+      page: page ? Number(page) : 2,
       loading: false,
       showLoadMoreButton: true,
+      isClientSelected: false,
     };
   }
 
@@ -29,10 +45,14 @@ class ClientsContainer extends React.Component {
     const data = (await axios.get(`/api/clients?search=${term}&sort=name`, {
       headers: {'Authorization': 'Bearer '+cookie.get('token')}
     })).data;
-    this.setState({ data, loading: false, page:2, showLoadMoreButton: true});
+    this.setState({ data, loading: false, page:2, showLoadMoreButton: true}, () => {
+      setCachedData(this.state);
+    });
+
   }
 
   async getData(cb=() => {}) {
+    this.setState({loading: true})
     const { page } = this.state;
     const data = [ ...this.state.data, ...(await axios.get(`/api/clients?search=${this.state.searchTerm}&page=${page}&sort=name`, {
       headers: {'Authorization': 'Bearer '+cookie.get('token')}
@@ -43,6 +63,8 @@ class ClientsContainer extends React.Component {
       this.setState({showLoadMoreButton: false});
 
     this.setState({ data, page: page+1 }, () => {
+      this.setState({loading: false})
+      setCachedData(this.state);
       cb(dataWasAdded);
     });
 
@@ -62,9 +84,15 @@ class ClientsContainer extends React.Component {
     })
   }
 
+  clearData() {
+    this.setState({data: []}, () => {setCachedData(this.state);});
+  }
+
   render() {
+    const Component = this.props.selector ? ClientSelector : ListClients;
+
     return(
-      <ListClients
+      <Component
         scope={this} 
         {...this.props}
         {...this.state}
@@ -73,6 +101,7 @@ class ClientsContainer extends React.Component {
         setState={this.setState.bind(this)}
         search={this.search.bind(this)}
         loading={this.state.loading}
+        clearData={this.clearData.bind(this)}
       />
     )
   }

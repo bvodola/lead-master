@@ -2,12 +2,12 @@
 
 <h2>Outorgante</h2>
 <p>
-  <%- include('_client', {client: client}) -%>
+  <%- include('_client', {_client: _client}) -%>
 </p>
 
 <h2>Outorgado(s)</h2>
 <p>
-  <%- include('_parts', {'parts': client.company.modules.dpvat.adm}) -%>
+  <%- include('_parts', {'parts': _client.company.modules.dpvat.adm}) -%>
 </p>
 
 <h2>Poderes</h2>
@@ -29,7 +29,7 @@ documentos apresentados e disponibilizados ao outorgado.
 </p>
 
 <div style="margin: 60px 40px 10px 40px; text-align: center">
-<%- include('_client_signature', {client: client, text: 'Outorgante'}) -%>
+<%- include('_client_signature', {_client: _client, text: 'Outorgante'}) -%>
 <br>
 (Firma por Autenticidade)
 </div>

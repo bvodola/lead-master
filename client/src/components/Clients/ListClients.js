@@ -1,68 +1,49 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-
-import { Icon, unmask } from '../../helpers';
-import IconButton from 'material-ui/IconButton';
-import Tooltip from 'material-ui/Tooltip';
 import Button from 'material-ui/Button';
-import TextField from 'material-ui/TextField';;
+import TextField from 'material-ui/TextField';
 import { LinearProgress } from 'material-ui/Progress';
-
-import Text from '../../helpers/Text';
-
 import ListClientsTable from './ListClientsTable';
 
-
-
-const style = {
-  container: {
-    marginBottom: '70px'
-  },
-  addClient: {
-    position: 'fixed',
-    bottom: '15px',
-    right: '15px',
-  }
-}
-
-const Clients = (props) => {
+const ListClients = (props) => {
   const clients = props.data;
 
     return(
-      <div style={style.container} className='ClientsComponent'>
-
-        <Text type='title'>
-          Clientes
-        </Text>
-        
+      <div className='ListClients'>
         <form action="" onSubmit={(ev) => { ev.preventDefault(); props.search(props.searchTerm) }}>
-          <TextField label='Buscar Clientes (Nome, Email, Telefone, RG, CPF)' autoFocus fullWidth value={props.searchTerm} onChange={(ev) => props.setState({searchTerm: ev.target.value})} />
+          <TextField
+            autoFocus
+            fullWidth
+            label='Buscar Clientes (Nome, Email, Telefone, RG, CPF)'
+            value={props.searchTerm}
+            onChange={(ev) => props.setState({searchTerm: ev.target.value})}
+          />
         </form>
         
-        {props.loading ? <LinearProgress /> : <div style={{height: '5px' }}>&nbsp;</div> }
-        {props.data.length > 0 ?
+        {props.data.length > 0 &&
           <span>
-            <ListClientsTable deleteClient={props.deleteClient} clients={clients} />
+            <ListClientsTable
+              header={['Nome', 'Telefone', 'Produtos', 'Ações']}
+              deleteClient={props.deleteClient}
+              clients={clients}
+            />
             <Button
-              disabled={props.showLoadMoreButton ? false : true }
+              fullWidth
+              disabled={!props.showLoadMoreButton || props.loading ? true : false }
               onClick={() => props.getData()}>
-                {props.showLoadMoreButton ? 'Carregar Mais' : 'Fim da lista'}
+                {props.loading ?
+                  'Carregando...' : 
+                props.showLoadMoreButton ? 
+                  'Carregar Mais':
+                  'Fim da lista'
+                }
             </Button>
-          </span> :
-          null
+          </span>
         }
-        
-        
 
-        <Link to='/clients/add'>
-          <Button variant='fab' color="primary" aria-label="add" style={style.addClient}>
-            <Icon>add</Icon>
-          </Button>
-        </Link>
-
+        {props.loading ? <LinearProgress /> : <div style={{height: '5px' }}>&nbsp;</div> }
       </div>
     )
 
 };
 
-export default Clients;
+export default ListClients;

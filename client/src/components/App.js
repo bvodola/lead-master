@@ -15,13 +15,17 @@ import Login from './Login';
 import DocumentsForm from './Documents/DocumentsForm.container';
 import Agenda from './Agenda';
 import Calendar from './Calendar';
-import Clients from './Clients/ListClients.container';
+import Clients from './Clients/Clients';
 import SaveClient from './Clients/SaveClient.container';
+import Kanban from './Kanban'
+import ClientScreen from '../screens/ClientScreen'
+import TestScreen from '../screens/TestScreen'
 
 import { cookie } from '../helpers';
 import axios from '../helpers/axios';
 
-import Playground from './Playground';
+import Playground from './Playground';  
+import SaveTask from './Tasks/SaveTask';
 
 const style = {
   content: {
@@ -39,14 +43,14 @@ class App extends React.Component {
       email: '',
       password: '',
       isDrawerOpened: false,
-      currentUser: {}
+      currentUser: {},
+      kanban: {},
     }
 
     this.toggleDrawer = this.toggleDrawer.bind(this);
   }
 
   toggleDrawer() {
-    console.log('toggleDrawer');
     this.setState({isDrawerOpened: !this.state.isDrawerOpened});
   }
 
@@ -80,7 +84,17 @@ class App extends React.Component {
     this.setAuth();
   }
 
+  updateKanban = (kanban) => {
+    const newState = {
+      ...this.state,
+      kanban
+    }
+    this.setState(newState)
+  }
+
   render() {
+    const {currentUser, kanban} = this.state;
+
     return (
       <JssProvider classNamePrefix="mui-">
         <StyleRoot>
@@ -92,13 +106,17 @@ class App extends React.Component {
 
                 <div style={style.content}>
                   <Switch>
+                    <Route path='/test' component={TestScreen} />
                     <Route path='/clients/add' component={SaveClient} />
                     <Route path='/agenda' component={Agenda} />
                     <Route path='/calendar' component={Calendar} />
-                    <Route path='/clients/edit/:_id' render={({match}) => <SaveClientContainer clientId={match.params._id} />} />
-                    <Route path='/clients' render={() => <Clients setAppState={this.setState.bind(this)} />} />
+                    <Route path='/clients/:_id' render={({match}) => <ClientScreen clientId={match.params._id} />} />
+                    <Route path='/clients/edit/:_id' render={({match}) => <SaveClient clientId={match.params._id} />} />
+                    <Route exact path='/clients' render={() => <Clients setAppState={this.setState.bind(this)} />} />
                     <Route path='/documents-form/:_id?' render={({match}) => <DocumentsForm clientId={match.params._id} />} />
                     <Route path='/playground' component={Playground} />
+                    <Route path='/save-task' render={() => <SaveTask currentUser={currentUser} /> } />
+                    <Route path='/kanban' render={() => <Kanban kanban={kanban} onDragEnd={this.updateKanban} /> } />
                     <Redirect to='/clients' />
                   </Switch>
                 </div>

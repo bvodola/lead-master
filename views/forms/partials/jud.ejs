@@ -5,8 +5,8 @@
 <h1 style="text-align: center;">Procuração 'Ad Judicia'</h1>
 
 <p style="text-align: justify;">
-<%- include('_client', {client: client}) -%>, pelo presente instrumento de procuração
-nomeia e constitui seu procurador o <%- include('_parts', {'parts': client.company.modules.dpvat.jud}) -%>
+<%- include('_client', {_client: _client}) -%>, pelo presente instrumento de procuração
+nomeia e constitui seu procurador o <%- include('_parts', {'parts': _client.company.modules.dpvat.jud}) -%>
 a quem confere amplos poderes para o foro em geral, propor
 contra quem de direito as ações competentes e defendê-lo nas contrárias, seguindo
 umas e outras, até final decisão, usando recursos legais c acompanhando-a,
@@ -22,9 +22,9 @@ convênio DPVAT.
 <br>
 <br>
 <p style="text-align: center;">
-  <%= client.company.location %>, <%= fullDate %>.
+  <%= _client.company.location %>, <%= fullDate %>.
 </p>
 
 <div style="margin: 60px 40px 10px 40px; text-align: center">
-<%- include('_signature', {parts: client, text: 'Outorgante'}) -%>
+<%- include('_signature', {parts: _client, text: 'Outorgante'}) -%>
 </div>

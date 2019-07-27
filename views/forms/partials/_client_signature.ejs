@@ -5,10 +5,10 @@ ____________________________________________________________
 <%= text %>:
 
 
-<% if(client.isUnder16)  {%>
-  <%= client.tutor.name %> - CPF <%= client.tutor.cpf %>
+<% if(_client.isUnder16)  {%>
+  <%= _client.tutor.name %> - CPF <%= _client.tutor.cpf %>
 <% } else { %>
-  <%= client.name %> - CPF <%= client.cpf %>
+  <%= _client.name %> - CPF <%= _client.cpf %>
 <% } %>
 
 </div>
