@@ -33,9 +33,9 @@ app.use('/graphql', () => {})
 // ====
 app.use((req, res, next) => {
   const allowedOrigins = ['http://www.leadmaster.com.br', 'http://www.indenizamais.com.br'];
-  if(allowedOrigins.indexOf(req.headers.origin) > -1){
-    res.setHeader('Access-Control-Allow-Origin', origin);
-  }
+  allowedOrigins.forEach(origin => {
+    res.header('Access-Control-Allow-Origin', origin);
+  })
 
   if(app.settings.env !== 'production') res.header("Access-Control-Allow-Origin", "*");
 	res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
