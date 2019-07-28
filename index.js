@@ -34,7 +34,7 @@ app.use('/graphql', () => {})
 app.use((req, res, next) => {
   const allowedOrigins = ['http://www.leadmaster.com.br', 'http://www.indenizamais.com.br'];
   if(allowedOrigins.indexOf(req.headers.origin) > -1){
-    res.header('Access-Control-Allow-Origin', origin);
+    res.setHeader('Access-Control-Allow-Origin', origin);
   }
 
   if(app.settings.env !== 'production') res.header("Access-Control-Allow-Origin", "*");
