@@ -1,6 +1,5 @@
 backup/
 node_modules/
-client/build/
 client/node_modules/
 cordova/node_modules/
 cordova/platforms/
