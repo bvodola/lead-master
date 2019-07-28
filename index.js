@@ -56,7 +56,7 @@ app.use('/auth', require('./auth/routes')(passport));
 // ===
 // API
 // ===
-app.use('/mail', require('./mail'));
+app.use('/api/mail', require('./mail'));
 
 app.use('/integrations/hyperseg', async (req, res) => {
   const hypersegClients = req.body;
