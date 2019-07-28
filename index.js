@@ -47,8 +47,6 @@ app.use('/static', express.static('static/'));
 app.use(session({secret: 'passport-secret'}));
 app.use(passport.initialize());
 
-app.use('/mail', require('./mail'));
-
 // ====
 // Auth
 // ====
@@ -58,6 +56,8 @@ app.use('/auth', require('./auth/routes')(passport));
 // ===
 // API
 // ===
+app.use('/mail', require('./mail'));
+
 app.use('/integrations/hyperseg', async (req, res) => {
   const hypersegClients = req.body;
 
