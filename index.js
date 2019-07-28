@@ -32,7 +32,10 @@ app.use('/graphql', () => {})
 // CORS
 // ====
 app.use((req, res, next) => {
-	res.header("Access-Control-Allow-Origin", app.settings.env !== 'production' ? "*" : "http://leadmaster.mybluemix.net");
+  res.header("Access-Control-Allow-Origin", "*.leadmaster.com.br");
+  res.header("Access-Control-Allow-Origin", "*.indenizamais.com.br");
+  if(app.settings.env !== 'production') res.header("Access-Control-Allow-Origin", "*");
+  
 	res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
 	res.header("Access-Control-Allow-Headers", "Authorization, Origin, X-Requested-With, Content-Type, Accept");
 	next();
