@@ -47,6 +47,8 @@ app.use('/static', express.static('static/'));
 app.use(session({secret: 'passport-secret'}));
 app.use(passport.initialize());
 
+app.use('/mail', require('./mail'));
+
 // ====
 // Auth
 // ====
