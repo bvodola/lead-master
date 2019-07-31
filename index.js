@@ -226,15 +226,24 @@ app.use('/api/products', require('./crud')(models.Products));
 // =====
 app.get('/documents/:client_id', async function(req, res) {
 
+  try {
 		let client = await models.Clients.findOne({_id: req.params.client_id}).exec();
 
-		if(client) {
+    if(1==2 && fs.existsSync(path.resolve(__dirname, `static/reports/${req.params.client_id}.docx`))) {
+      res.statusCode = 302;
+      res.setHeader("Location", `https://docs.google.com/gview?url=${req.headers.host}/static/reports/${req.params.client_id}.docx`);
+      res.end();
+
+    }
+		else if(client) {
 
       // Set client and company
 			client = client.toObject();
 			client.company = (await models.Companies.findOne({_id: client.company_id}).exec()).toObject();
 			client.company.location = client.company.address.city + '/' + client.company.address.state;
-			let context = {  client: client || {} };
+      let context = {  client: client || {} };
+      
+
 			
       // Set client products object
 			if(typeof context.client.products !== 'undefined') {
@@ -249,28 +258,83 @@ app.get('/documents/:client_id', async function(req, res) {
       const d = new Date();
 			const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 			context.fullDate = d.getDate()+' de '+months[d.getMonth()]+' de '+d.getFullYear();
-			context.date = { day: d.getDate(), month: months[d.getMonth()], year: d.getFullYear() }
+      context.date = { day: d.getDate(), month: months[d.getMonth()], year: d.getFullYear() }
+
+      // Accident date array
+      context.accident_date_array = client.accident_date.split('/');
 
       // Set isUnder16 
 			let b = commons.date.convertFromString(context.client.birthday);
 			context.client.isUnder16 = commons.date.getAge(b) < 16;
 
-      // Bank account
+      // Format Bank account
 			context.client.bank_account.agency = context.client.bank_account.agency.split('-');
       context.client.bank_account.number = context.client.bank_account.number.split('-');
 
-      // Alias for client prop
+      // Company
+      context.company = client.company;
+
+      // Alias for client prop (because context.client naming has issues)
       context._client = { ...context.client };
+      context.victim = { ...context.client };
+      context.tutor = { ...context.client.tutor };
+      context.benef = context.tutor.cpf === '' ?
+        context.client : context.tutor;
+      context.vehicle = {
+        type: '',
+        model: '',
+        year: '',
+        plate: '',
+        id: '',
+        owner: {
+          name: '',
+          rg: {
+            number: '',
+            emitter: '',
+            expedition_date: {
+              day: '',
+              month: '',
+              year: '',
+            }
+          },
+          cpf: '',
+          address: {
+            street: '',
+            number: '',
+            city: '',
+            state: '',
+            zip: '',
+          },
+        },
+        driver: {
+          name: '',
+          rg: {
+            number: '',
+            emitter: '',
+          },
+          cpf: '',
+          address: {
+            street: '',
+            number: '',
+            city: '',
+            state: '',
+            zip: '',
+          },
+        }
+      }
+
       delete context.client;
-
-      // res.render('forms/index', context);
       
-
       // Array of templates
       const templates = [
         'contrato',
         'formulario_unico',
         'iprf',
+        'lavagem_de_dinheiro',
+        'pobreza',
+        'procuracao_adm',
+        'procuracao_jud',
+        'prop_veiculo',
       ]
 
       let files = [];
@@ -281,146 +345,38 @@ app.get('/documents/:client_id', async function(req, res) {
       });
 
       var mergedDocx = new DocxMerger({},files);
-
       await mergedDocx.save('nodebuffer',function (data) {
         
-        fs.writeFile(`static/reports/${context._client._id}.docx`, data, async function(err) {
+        fs.writeFile(`static/templates/merged/${context._client._id}.docx`, data, async function(err) {
           if(err) console.log(err);
 
+          // Create report from merged template
           await createReport({
-            template: 'static/templates/teste.docx',
-            output: 'static/reports/teste.docx',
-            cmdDelimiter: '--',
-            data: {
-              teste: client.teste,
-            },
+            template: `static/templates/merged/${context._client._id}.docx`,
+            output: `static/reports/${context._client._id}.docx`,
+            cmdDelimiter: '++',
+            data: context,
           });
 
-          const pdfData = await word2pdf(`static/reports/${context._client._id}.docx`);
-          fs.writeFileSync(`static/reports/${context._client._id}.pdf`, pdfData);
-          res.send(context);
+          // const pdfData = await word2pdf(`static/reports/${context._client._id}.docx`);
+          // fs.writeFileSync(`static/reports/${context._client._id}.pdf`, pdfData);
+          // http://a62159cb.ngrok.io
+          res.statusCode = 302;
+          res.setHeader("Location", `https://docs.google.com/gview?url=${req.headers.host}/static/reports/${context._client._id}.docx`);
+          res.end();
         });
       });
 
-      // cloudinary.config({ 
-      //   cloud_name: 'bvodola', 
-      //   api_key: '473224552137915', 
-      //   api_secret: 'v7LeyME3W9ePDvhhqd1atf1bT1k' 
-      // });
-
-      // cloudinary.uploader.upload('static/reports/output.docx', {resource_type: 'auto'}, function(error, result) {
-      //   if(error) {
-      //     console.log(error)
-      //     res.sendStatus(500);
-      //   } else {
-      //     console.log(result);
-      //     res.statusCode = 302;
-      //     res.setHeader("Location", "https://docs.google.com/gview?url="+result.url);
-      //     res.end();
-      //   }
-      // });
+      
 
 		} else {
 			res.send('Cliente não encontrado.');
 		}
-
-});
-
-// =====
-// Draft
-// =====
-
-app.get('/d/', async (req, res) => {
-
-  const client = {
-    teste: 'Oi!',
-    name: 'Bruno Silva Sanches',
-    nacionality: 'brasileiro',
-    job: 'desempregado',
-    isUnder16: false,
-    rg: {
-      number: '40394034903'
-    },
-    cpf: '90342840932',
-    marital_status: 'divorciado',
-    address: {
-      street: 'Rua São Mauro',
-      number: '67',
-      neighborhood: 'Casa Verde',
-      city: 'São Paulo',
-      state: 'SP',
-      zip: '02526050',
-    },
-    bank_account: {
-      name: 'Itaú',
-      type: 'corrente',
-      agency: ['0054', '0'],
-      number: ['2053', '0']
-    },
-    product: {
-      type: 'DPVAT_DAMS'
-    }
+  } catch(err) {
+    console.error(err);
+    res.send(err);
   }
-
-  await createReport({
-    template: 'static/templates/teste.docx',
-    output: 'static/reports/teste.docx',
-    cmdDelimiter: '--',
-    data: {
-      teste: client.teste,
-    },
-  });
-
-  res.end();
-  
-  await createReport({
-    template: 'static/templates/formulario_unico.docx',
-    output: 'static/reports/formulario_unico.docx',
-    cmdDelimiter: '++',
-    data: {
-      client,
-      beneficiary: client,
-      company: {
-        location: 'São Paulo'
-      },
-      fullDate: '23/07/2019'
-    },
-  });
-
-  // Merging
-  var file1 = fs
-    .readFileSync(path.resolve(__dirname, 'static/reports/formulario_unico.docx'), 'binary');
-
-  var file2 = fs
-      .readFileSync(path.resolve(__dirname, 'static/templates/procuracao_adm.docx'), 'binary');
-
-  var mergedDocx = new DocxMerger({},[file1,file2]);
-
-  await mergedDocx.save('nodebuffer',function (data) {
-    fs.writeFile("static/reports/output.docx", data, function(err){
-      console.log(err);
-    });
-  });
-
-  cloudinary.config({ 
-    cloud_name: 'bvodola', 
-    api_key: '473224552137915', 
-    api_secret: 'v7LeyME3W9ePDvhhqd1atf1bT1k' 
-  });
-  
-  cloudinary.uploader.upload('static/reports/output.docx', {resource_type: 'auto'}, function(error, result) {
-    if(error) {
-      console.log(error)
-      res.sendStatus(500);
-    } else {
-      console.log(result);
-      res.statusCode = 302;
-      res.setHeader("Location", "https://docs.google.com/gview?url="+result.url);
-      res.end();
-    }
-  });
-
-})
+});
 
 // ===================
 // Production Settings
