@@ -221,9 +221,9 @@ app.use('/api/tasks', require('./crud')(models.Tasks));
 app.use('/api/leads', require('./crud')(models.Leads));
 app.use('/api/products', require('./crud')(models.Products));
 
-// =====
-// Views
-// =====
+// =========
+// Documents
+// =========
 app.get('/documents/:client_id', async function(req, res) {
 
   try {
@@ -242,8 +242,6 @@ app.get('/documents/:client_id', async function(req, res) {
 			client.company = (await models.Companies.findOne({_id: client.company_id}).exec()).toObject();
 			client.company.location = client.company.address.city + '/' + client.company.address.state;
       let context = {  client: client || {} };
-      
-
 			
       // Set client products object
 			if(typeof context.client.products !== 'undefined') {
@@ -277,7 +275,16 @@ app.get('/documents/:client_id', async function(req, res) {
       // Alias for client prop (because context.client naming has issues)
       context._client = { ...context.client };
       context.victim = { ...context.client };
-      context.tutor = { ...context.client.tutor };
+      context.tutor = {
+        ...context.client.tutor,
+        address: client.address,
+        bank_account: client.bank_account,
+        rg: {
+          number: '',
+          emitter: '',
+          expedition_date: '',
+        }
+      };
       context.benef = context.tutor.cpf === '' ?
         context.client : context.tutor;
       context.vehicle = {
@@ -323,6 +330,8 @@ app.get('/documents/:client_id', async function(req, res) {
         }
       }
 
+      console.log(context.victim)
+      console.log(context.tutor)
       delete context.client;
       
       // Array of templates

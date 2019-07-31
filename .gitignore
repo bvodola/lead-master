@@ -4,3 +4,5 @@ client/node_modules/
 cordova/node_modules/
 cordova/platforms/
 cordova/plugins/
+static/reports/
+static/templates/merged/
