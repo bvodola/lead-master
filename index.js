@@ -330,8 +330,6 @@ app.get('/documents/:client_id', async function(req, res) {
         }
       }
 
-      console.log(context.victim)
-      console.log(context.tutor)
       delete context.client;
       
       // Array of templates
