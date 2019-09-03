@@ -12,7 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 import {CLIENT, ADD_TASK, TOGGLE_TASK, EDIT_TASK, REMOVE_TASK, ADD_LOG, EDIT_LOG, REMOVE_LOG} from '../../types';
 import WithData from '../../components/withData'
 import ContentEditable from 'react-contenteditable'
-import { DatePicker } from 'material-ui-pickers';
+import { DatePicker } from '@material-ui/pickers';
 import PropTypes from 'prop-types';
 import DatePickerButton from '../../components/DatePickerButton'
 moment.locale('pt-br');

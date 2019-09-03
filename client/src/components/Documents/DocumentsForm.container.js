@@ -9,6 +9,7 @@ import { withRouter } from 'react-router-dom';
 
 const initialState = () => ({
   client: {
+    is_lead: false,
     name: '',
     birthday: '',
     nacionality: 'brasileira',
@@ -70,6 +71,9 @@ class DocumentsFormContainer extends React.Component {
 
   async onSubmit(generate=true) {
     let _id = this.props.clientId;
+    let {client} = this.state;
+    client.is_lead = false;
+    this.setState({client});
 
     if(typeof _id === 'undefined') {
       _id = (await axios.post('/api/clients/', this.state.client, {
@@ -153,6 +157,7 @@ class DocumentsFormContainer extends React.Component {
   render() {
     const stateHandler = new StateHandler(this);
 
+    console.log(this.state);
     if(this.state.loading) {
       return <LinearProgress />
     } else {

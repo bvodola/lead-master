@@ -5,8 +5,6 @@ import { Icon, unmask } from '../../helpers';
 
 import IconButton from 'material-ui/IconButton';
 import Tooltip from 'material-ui/Tooltip';
-import Chip from 'material-ui/Chip';
-import Avatar from 'material-ui/Avatar';
 
 const style = {
   actions: {

@@ -24,5 +24,10 @@ module.exports = {
   },
   plugins: [
     HtmlWebpackPluginConfig
-  ]
+  ],
+  resolve: {
+    alias: {
+      src: path.resolve(__dirname, "../src"),
+    }
+  }
 }

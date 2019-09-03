@@ -5,6 +5,35 @@ const CLIENT = ({_id}) => `
     }
   }`;
 
+const LEADS = () => `
+  {
+    clients(client: { is_lead: true, is_archived: false} ) {
+      _id name phone lead_description created
+    }
+  }`;
+
+const TOGGLE_LEAD = ({_id, is_lead}) => `
+  mutation {
+    editClient(client: {
+      _id: "${_id}"
+      is_lead: ${is_lead}
+    }) {
+      _id
+      is_lead
+    }
+  }`;
+
+const TOGGLE_CLIENT_ARCHIVED = ({_id, is_archived}) => `
+  mutation {
+    editClient(client: {
+      _id: "${_id}"
+      is_archived: ${is_archived}
+    }) {
+      _id
+      is_archived
+    }
+  }`;
+
 const ADD_TASK = ({content, date, client_id}) => `
   mutation {
     addTask(task: {
@@ -100,4 +129,7 @@ export {
   EDIT_LOG,
   REMOVE_LOG,
   TASKS_FROM_PERIOD,
+  LEADS,
+  TOGGLE_LEAD,
+  TOGGLE_CLIENT_ARCHIVED,
 }

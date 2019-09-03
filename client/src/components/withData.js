@@ -30,19 +30,26 @@ class withData extends React.Component {
   }
 
   async query(dataQuery, config) {
-    if(!config) config = {};
-    if(typeof config.fromPolling === 'undefined') config.fromPolling = false;
-    if(typeof config.triggerLoading === 'undefined') config.triggerLoading = true;
-    const {fromPolling, triggerLoading} = config;
 
-    if(!dataQuery) dataQuery = this.props.query;
-    const queryName = dataQuery.match(/([A-Z,a-z])\w+/g)[0];
-    this.setState({loading: triggerLoading && true, loadingQueryName: triggerLoading ? queryName : null});
-    
-    let res = await axios.post(`/graphql`, { query: dataQuery })
-    if(!fromPolling || (fromPolling && !this.state.mutation)) {
-      this.setState({data: res.data.data, loading: false, loadingQueryName: null})
+    try {
+      if(!config) config = {};
+      if(typeof config.fromPolling === 'undefined') config.fromPolling = false;
+      if(typeof config.triggerLoading === 'undefined') config.triggerLoading = true;
+      const {fromPolling, triggerLoading} = config;
+
+      if(!dataQuery) dataQuery = this.props.query;
+      const queryName = dataQuery.match(/([A-Z,a-z])\w+/g)[0];
+      this.setState({loading: triggerLoading && true, loadingQueryName: triggerLoading ? queryName : null});
+      
+      let res = await axios.post(`/graphql`, { query: dataQuery })
+      if(!fromPolling || (fromPolling && !this.state.mutation)) {
+        this.setState({data: res.data.data, loading: false, loadingQueryName: null})
+      }
+
+    } catch (err) {
+      console.error(err); 
     }
+    
   }
 
   async componentDidMount() {
@@ -83,18 +90,19 @@ class withData extends React.Component {
       mutation: this.mutation,
       scope: this,
       handler: new StateHandler(this),
+      key: '1'
     }
 
     return(
-      <div>
+      <React.Fragment>
         {children(childProps)}
         <Snackbar
           handleToggleSnackbar={this.handleToggleSnackbar}
           isSnackbarOpened={this.state.isSnackbarOpened}
         >
-          Informações salvas com sucesso
+          {this.state.snackBarMessage}
         </Snackbar>
-      </div>
+      </React.Fragment>
     );
   }
 }

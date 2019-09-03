@@ -8,29 +8,27 @@ class Snackbar extends React.Component {
   render() {
 
     return (
-      <div>
-        <MuiSnackbar
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'right',
-          }}
-          open={this.props.isSnackbarOpened}
-          onClose={this.props.handleToggleSnackbar}
-          autoHideDuration={3000}
-        
-          message={<span>{this.props.children}</span>}
-          action={[
-            <IconButton
-              key="close"
-              aria-label="Close"
-              color="inherit"
-              onClick={this.props.handleToggleSnackbar}
-            >
-              <Icon>close</Icon>
-            </IconButton>
-          ]}
-        />
-      </div>
+      <MuiSnackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right',
+        }}
+        open={this.props.isSnackbarOpened}
+        onClose={this.props.handleToggleSnackbar}
+        autoHideDuration={3000}
+      
+        message={<span>{this.props.children}</span>}
+        action={[
+          <IconButton
+            key="close"
+            aria-label="Close"
+            color="inherit"
+            onClick={this.props.handleToggleSnackbar}
+          >
+            <Icon>close</Icon>
+          </IconButton>
+        ]}
+      />
     );
   }
 }

@@ -14,6 +14,9 @@ const typeDefs = gql`
     cpf: String
     phone: String
     created: String
+    is_lead: Boolean
+    is_archived: Boolean
+    lead_description: String
     company: Company
     products: [ClientProduct]
     tasks: [Task]
@@ -65,7 +68,7 @@ const typeDefs = gql`
   type Query {
     users: [User]
     user(_id: ID): User
-    clients: [Client]
+    clients(client: ClientInput): [Client]
     client(_id: ID): Client
     logs: [Log]
     log(_id: ID): Log
@@ -91,6 +94,9 @@ const typeDefs = gql`
     name: String
     email: String
     phone: String
+    is_lead: Boolean
+    is_archived: Boolean
+    lead_description: String
     company: ID
     creator: ID
   }
@@ -151,14 +157,17 @@ const linkToParent = (config) => async (parent, args, context, info) => {
       return (await Model.find({ '_id': { $in: parent[`${config.fieldName ? config.fieldName : modelName+'_ids' }`] } }).exec()).map(prepare)
     }
   }
+
   return isCollection ?
     (await Model.find({[`${parentName}_id${config.habtm ? 's' : ''}`]: parent._id}).exec()).map(prepare) :
     prepare(await Model.findOne(parent[`${modelName}_id`]))
 }
 
 const linkToModel = async (parent, args, context, info) => {
-  const { Model, isCollection } = getInfo(info)
+  const { Model, isCollection, modelName } = getInfo(info)
 
+  if(typeof args[modelName] !== 'undefined' ) args = args[modelName];
+  
   return isCollection ?
     (await Model.find(args).exec()).map(prepare) :
     prepare(await Model.findOne(args).exec())

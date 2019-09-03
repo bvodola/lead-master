@@ -45,5 +45,10 @@ module.exports = {
     HtmlWebpackPluginConfig,
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin()
-  ]
+  ],
+  resolve: {
+    alias: {
+      src: path.resolve(__dirname, "../src"),
+    }
+  }
 }

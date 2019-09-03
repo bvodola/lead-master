@@ -57,5 +57,10 @@ module.exports = {
         'NODE_ENV': JSON.stringify('staging')
       }
     })
-  ]
+  ],
+  resolve: {
+    alias: {
+      src: path.resolve(__dirname, "../src"),
+    }
+  }
 }

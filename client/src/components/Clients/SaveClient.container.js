@@ -44,7 +44,8 @@ const initialState = () => ({
       job: '',
       cpf: '',
     },
-    products: []
+    products: [],
+    is_lead: false,
   }
 });
 

@@ -216,6 +216,7 @@ app.use('/api/clients',
 		searchFields: ['name', 'rg.number', 'cpf', 'phone', 'email', 'accident_date']
 	})
 );
+
 app.use('/api/logs', require('./crud')(models.Logs));
 app.use('/api/tasks', require('./crud')(models.Tasks));
 app.use('/api/leads', require('./crud')(models.Leads));

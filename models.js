@@ -30,6 +30,9 @@ usersSchema.methods.validPassword = function(password) {
 
 const clientsSchema = new Schema({
     company_id: Schema.ObjectId,
+    is_lead: { type: Boolean, default: false },
+    is_archived: { type: Boolean, default: false },
+    lead_description: String,
     products: [{
       product: { type: Schema.Types.ObjectId, ref: 'products' },
       status: String,

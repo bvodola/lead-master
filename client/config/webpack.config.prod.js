@@ -43,5 +43,10 @@ module.exports = {
       filename: "[name].css",
       chunkFilename: "[id].css"
     })
-  ]
+  ],
+  resolve: {
+    alias: {
+      src: path.resolve(__dirname, "../src"),
+    }
+  }
 }

@@ -101,4 +101,7 @@ const getAge = (year, month, day)  => {
 	return age
 }
 
-export { Icon, checkNested, getNested, merge, isObject, unmask, cookie, getAge };
+const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+const whatsappUrl = isMobile ?  'api' : 'web';
+
+export { Icon, checkNested, getNested, merge, isObject, unmask, cookie, getAge, isMobile, whatsappUrl };

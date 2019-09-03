@@ -20,6 +20,7 @@ import SaveClient from './Clients/SaveClient.container';
 import Kanban from './Kanban'
 import ClientScreen from '../screens/ClientScreen'
 import TestScreen from '../screens/TestScreen'
+import LeadsScreen from '../screens/LeadsScreen';
 
 import { cookie } from '../helpers';
 import axios from '../helpers/axios';
@@ -107,6 +108,7 @@ class App extends React.Component {
                 <div style={style.content}>
                   <Switch>
                     <Route path='/test' component={TestScreen} />
+                    <Route path='/leads' component={LeadsScreen} />
                     <Route path='/clients/add' component={SaveClient} />
                     <Route path='/agenda' component={Agenda} />
                     <Route path='/calendar' component={Calendar} />
