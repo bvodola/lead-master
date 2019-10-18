@@ -109,15 +109,6 @@ const feedSchema = new Schema({
   { strict: false}
 );
 
-const vouchersSchema = new Schema({
-  code: { type: String, unique: true },
-  points: Number,
-  created: { type: Date, default: new Date() },
-  
-},
-{ strict: false }
-);
-
 const models = {};
 models.Users = mongoose.model('users', usersSchema);
 models.Clients = mongoose.model('clients', clientsSchema);
@@ -128,6 +119,5 @@ models.Companies = mongoose.model('companies', companiesSchema);
 models.Leads = mongoose.model('leads', leadsSchema);
 models.Products = mongoose.model('products', productsSchema);
 models.Feed = mongoose.model('feed', feedSchema);
-models.Vouchers = mongoose.model('vouchers', vouchersSchema);
 
 module.exports = models;
