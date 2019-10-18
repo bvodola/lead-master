@@ -17,6 +17,7 @@ const createReport = require('docx-templates');
 const DocxMerger = require('docx-merger');
 const cloudinary = require('cloudinary').v2;
 const word2pdf = require('word2pdf');
+const vouchers = require('./vouchers.json');
 
 // ==============
 // Initial Config

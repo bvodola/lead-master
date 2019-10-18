@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "start:dev": "nodemon",
-    "bluemix": "cd ./client && yarn build:prod && cd ../ && cf push"
+    "bluemix": "cd ./client && yarn build:prod && cd ../ && cf push",
+    "deploy:heroku": "export NODE_ENV=production && cd ./client && yarn build:prod && cd ../ && git add . && git commit -m 'Deploy' && git push heroku heroku:master"
   },
   "engines": {
     "node": "9.x"
