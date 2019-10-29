@@ -341,6 +341,11 @@ app.get('/documents/:client_id', async function(req, res) {
         }
       };
 
+      const extraForms =
+        typeof req.query.forms !== 'undefined' && req.query.forms !== ''
+          ? req.query.forms.split(',')
+          : [];
+
       delete context.client;
 
       // Array of templates
@@ -352,7 +357,9 @@ app.get('/documents/:client_id', async function(req, res) {
         'pobreza',
         'procuracao_adm',
         'procuracao_jud',
-        'prop_veiculo'
+        'prop_veiculo',
+        'carta_laudos',
+        ...extraForms
       ];
 
       let files = [];
@@ -383,11 +390,11 @@ app.get('/documents/:client_id', async function(req, res) {
           // const pdfData = await word2pdf(`static/reports/${context._client._id}.docx`);
           // fs.writeFileSync(`static/reports/${context._client._id}.pdf`, pdfData);
           // http://a62159cb.ngrok.io
-          res.statusCode = 302;
-          res.setHeader(
-            'Location',
-            `https://docs.google.com/gview?url=${req.headers.host}/static/reports/${context._client._id}.docx`
-          );
+          // res.statusCode = 302;
+          // res.setHeader(
+          //   'Location',
+          //   `https://docs.google.com/gview?url=${req.headers.host}/static/reports/${context._client._id}.docx`
+          // );
           res.end();
         });
       });

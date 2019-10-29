@@ -1,11 +1,10 @@
-import React from 'react'
-import DocumentsForm from './DocumentsForm'
+import React from 'react';
+import DocumentsForm from './DocumentsForm';
 import { StateHandler } from 'react-form-container';
 import axios from '../../helpers/axios';
 import { cookie, getAge } from '../../helpers';
 import { LinearProgress } from 'material-ui/Progress';
 import { withRouter } from 'react-router-dom';
-
 
 const initialState = () => ({
   client: {
@@ -29,7 +28,7 @@ const initialState = () => ({
       neighborhood: '',
       zip: '',
       city: '',
-      state: '',
+      state: ''
     },
     phone: '',
     email: '',
@@ -47,108 +46,103 @@ const initialState = () => ({
       nacionality: '',
       marital_status: '',
       job: '',
-      cpf: '',
+      cpf: ''
     },
     products: []
   },
   isUnder16: false,
   loading: true,
   isSnackbarOpened: false
-})
+});
 
 class DocumentsFormContainer extends React.Component {
-
   constructor() {
-    super()
+    super();
     this.state = initialState();
   }
 
   handleToggleSnackbar = (event, reason) => {
     if (reason === 'clickaway') return;
-    const newState = reason !== 'timeout' ?  !this.state.isSnackbarOpened : false;
+    const newState = reason !== 'timeout' ? !this.state.isSnackbarOpened : false;
     this.setState({ isSnackbarOpened: newState });
   };
 
-  async onSubmit(generate=true) {
+  async onSubmit(generate = true) {
     let _id = this.props.clientId;
-    let {client} = this.state;
-    client.is_lead = false;
-    this.setState({client});
+    let { client } = this.state;
+    client.is_lead = false; // As we are generating client forms, he is no longer just a lead
+    this.setState({ client });
 
-    if(typeof _id === 'undefined') {
+    if (typeof _id === 'undefined') {
+      // If we have no id, save new client
       _id = (await axios.post('/api/clients/', this.state.client, {
-        headers: {'Authorization': 'Bearer '+cookie.get('token')}
+        headers: { Authorization: 'Bearer ' + cookie.get('token') }
       })).data._id;
     } else {
-      await axios.put('/api/clients/'+_id, this.state.client, {
-        headers: {'Authorization': 'Bearer '+cookie.get('token')}
+      // Otherwise, updates existing client
+      await axios.put('/api/clients/' + _id, this.state.client, {
+        headers: { Authorization: 'Bearer ' + cookie.get('token') }
       });
     }
 
-    this.props.history.push('/documents-form/'+_id);
+    // Goes to the client page and opens feedback snackbar
+    this.props.history.push('/documents-form/' + _id);
     this.handleToggleSnackbar();
 
-    if(generate)
-      window.open('/documents/'+_id);      
+    // Open Google Drive forms window
+    if (generate) window.open(`/documents/${_id}?forms=${client.products.join(',')}`);
   }
 
   handleChangeAge() {
     const { birthday } = this.state.client;
 
-    if(birthday.length === 10) {
+    if (birthday.length === 10) {
       const b = birthday;
-      const age = getAge(
-        b.substr(6,4),
-        b.substr(3,2),
-        b.substr(0,2)
-      );
-      const isUnder16 = (age < 16);
+      const age = getAge(b.substr(6, 4), b.substr(3, 2), b.substr(0, 2));
+      const isUnder16 = age < 16;
 
-      this.setState({isUnder16});
-      
+      this.setState({ isUnder16 });
     } else if (this.state.isUnder16) {
-      this.setState({isUnder16 : false});
+      this.setState({ isUnder16: false });
     }
-    
   }
 
   async getData() {
     const { clientId } = this.props;
 
-    if(typeof clientId !== 'undefined') {
-      const client = (await axios.get('/api/clients/'+clientId, {
-        headers: {'Authorization': 'Bearer '+cookie.get('token')}
-      })).data
-      this.setState({ client: { ...this.state.client, ...client}});
+    if (typeof clientId !== 'undefined') {
+      const client = (await axios.get('/api/clients/' + clientId, {
+        headers: { Authorization: 'Bearer ' + cookie.get('token') }
+      })).data;
+      this.setState({ client: { ...this.state.client, ...client } });
     }
   }
 
   async componentDidMount() {
     await this.getData();
-    this.setState({ loading: false}, () => {
+    this.setState({ loading: false }, () => {
       this.handleChangeAge();
     });
-
   }
 
   async completeAddress(zip) {
-    if(zip.length == 9) {
+    if (zip.length == 9) {
       try {
         const res = (await axios.get(`http://viacep.com.br/ws/${zip}/json/`)).data;
-      let { client } = this.state;
-  
-      let address = { 
-        zip,
-        street: res.logradouro,
-        complement: res.complemento,
-        neighborhood: res.bairro,
-        city: res.localidade,
-        state: res.uf,
-      };
-  
-      client.address = { ...client.address, ...address };
-      this.setState({ client });
-      } catch(err) {
+        let { client } = this.state;
+
+        let address = {
+          zip,
+          street: res.logradouro,
+          complement: res.complemento,
+          neighborhood: res.bairro,
+          city: res.localidade,
+          state: res.uf
+        };
+
+        client.address = { ...client.address, ...address };
+        this.setState({ client });
+      } catch (err) {
         console.log(err);
       }
     }
@@ -158,10 +152,10 @@ class DocumentsFormContainer extends React.Component {
     const stateHandler = new StateHandler(this);
 
     console.log(this.state);
-    if(this.state.loading) {
-      return <LinearProgress />
+    if (this.state.loading) {
+      return <LinearProgress />;
     } else {
-      return(
+      return (
         <DocumentsForm
           {...this.state}
           handleChange={stateHandler.set.bind(this)}
@@ -172,9 +166,8 @@ class DocumentsFormContainer extends React.Component {
           completeAddress={this.completeAddress.bind(this)}
           scope={this}
         />
-      )
+      );
     }
-
   }
 }
 
