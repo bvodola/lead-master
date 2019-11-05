@@ -28,7 +28,7 @@
     "graphql": "^0.13.2",
     "intl": "^1.2.5",
     "jsonwebtoken": "^8.1.1",
-    "mongoose": "^4.12.5",
+    "mongoose": "^5.7.5",
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
     "passport-google-oauth20": "^1.0.0",
