@@ -5,7 +5,6 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const session = require('cookie-session');
-const ejs = require('ejs');
 var mongoose = require('mongoose');
 const apolloServer = require('./apollo');
 const api = require('./api');
@@ -15,8 +14,6 @@ const commons = require('./commons');
 const { unmaskCPF } = require('./helpers');
 const createReport = require('docx-templates');
 const DocxMerger = require('docx-merger');
-const cloudinary = require('cloudinary').v2;
-const word2pdf = require('word2pdf');
 
 // ==============
 // Initial Config
@@ -24,7 +21,6 @@ const word2pdf = require('word2pdf');
 const app = express();
 const port = process.env.PORT || 3000;
 const server = http.createServer(app);
-app.set('view engine', 'ejs');
 apolloServer.applyMiddleware({ app });
 app.use('/graphql', () => {});
 
