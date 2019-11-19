@@ -1,19 +1,19 @@
-const express = require('express');
-const http = require('http');
-const fs = require('fs');
-const path = require('path');
-const bodyParser = require('body-parser');
-const passport = require('passport');
-const session = require('cookie-session');
-var mongoose = require('mongoose');
-const apolloServer = require('./apollo');
-const api = require('./api');
-const models = require('./models');
-const tokens = require('./auth/tokens');
-const commons = require('./commons');
-const { unmaskCPF } = require('./helpers');
-const createReport = require('docx-templates');
-const DocxMerger = require('docx-merger');
+const express = require("express");
+const http = require("http");
+const fs = require("fs");
+const path = require("path");
+const bodyParser = require("body-parser");
+const passport = require("passport");
+const session = require("cookie-session");
+var mongoose = require("mongoose");
+const apolloServer = require("./apollo");
+const api = require("./api");
+const models = require("./models");
+const tokens = require("./auth/tokens");
+const commons = require("./commons");
+const { unmaskCPF } = require("./helpers");
+const createReport = require("docx-templates");
+const DocxMerger = require("docx-merger");
 
 // ==============
 // Initial Config
@@ -22,22 +22,28 @@ const app = express();
 const port = process.env.PORT || 3000;
 const server = http.createServer(app);
 apolloServer.applyMiddleware({ app });
-app.use('/graphql', () => {});
+app.use("/graphql", () => {});
 
 // ====
 // CORS
 // ====
 app.use((req, res, next) => {
-  const allowedOrigins = ['http://www.leadmaster.com.br', 'http://www.indenizamais.com.br'];
+  const allowedOrigins = [
+    "http://www.leadmaster.com.br",
+    "http://www.indenizamais.com.br",
+    "https://youthful-davinci-a51b66.netlify.com/",
+    "https://processoaereo.com.br"
+  ];
   allowedOrigins.forEach(origin => {
-    res.header('Access-Control-Allow-Origin', origin);
+    res.header("Access-Control-Allow-Origin", origin);
   });
 
-  if (app.settings.env !== 'production') res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  if (app.settings.env !== "production")
+    res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
   res.header(
-    'Access-Control-Allow-Headers',
-    'Authorization, Origin, X-Requested-With, Content-Type, Accept'
+    "Access-Control-Allow-Headers",
+    "Authorization, Origin, X-Requested-With, Content-Type, Accept"
   );
   next();
 });
@@ -45,93 +51,95 @@ app.use((req, res, next) => {
 // ==========
 // Middleware
 // ==========
-app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use('/static', express.static('static/'));
-app.use(session({ secret: 'passport-secret' }));
+app.use("/static", express.static("static/"));
+app.use(session({ secret: "passport-secret" }));
 app.use(passport.initialize());
 
 // ====
 // Auth
 // ====
-require('./auth/strategies')(passport);
-app.use('/auth', require('./auth/routes')(passport));
+require("./auth/strategies")(passport);
+app.use("/auth", require("./auth/routes")(passport));
 
 // ===
 // API
 // ===
-app.use('/api/mail', require('./mail'));
+app.use("/api/mail", require("./mail"));
 
-app.use('/integrations/hyperseg', async (req, res) => {
+app.use("/integrations/hyperseg", async (req, res) => {
   const hypersegClients = req.body;
 
   await models.Feed.remove({
-    type: 'hyperseg'
+    type: "hyperseg"
   });
 
   await models.Feed.create({
-    type: 'hyperseg',
+    type: "hyperseg",
     data: hypersegClients
   });
 
-  res.send({ message: 'OK' }).status(200);
+  res.send({ message: "OK" }).status(200);
 });
 
 const getStatusCodeFromTitle = statusTitle => {
   switch (statusTitle) {
-    case 'DOCUMENTAÇÃO COMPLEMENTAR RECEBIDA NA UNIDADE':
-      return '6';
-    case 'PEDIDO DE REPROGRAMAÇÃO DE PAGAMENTO - ANALISADO E APROVADO':
-      return '6';
-    case 'PROCESSO ANALISADO E APROVADO (aguarda liberação do sistema da Seguradora Líder)':
-      return '6';
-    case 'PROCESSO COM RESTRIÇÕES':
-      return '11';
-    case 'PROCESSO DEVOLVIDO':
-      return '8';
-    case 'PROCESSO EM FASE DE REPROGRAMAÇÃO DE ESTORNO':
-      return '';
-    case 'PRÉ-CADASTRO COM RESTRIÇÕES':
-      return '5';
-    case 'PROCESSO COM PENDENCIA':
-      return '11';
-    case 'PROC. REABERTO (ANALISADO E APROVADO)':
-      return '6';
-    case 'PROCESSO ENVIADO PARA ANÁLISE DA SEGURADORA LÍDER':
-      return '6';
-    case 'PROCESSO ENVIADO PARA PERICIA':
-      return '12';
-    case 'PROCESSO ANALISADO E APROVADO':
-      return '6';
-    case 'PROCESSO EM VERIFICACAO COMPLEMENTAR':
-      return '10';
-    case 'REANALISE MANTIDA':
-      return '6';
-    case 'PROCESSO CANCELADO':
-      return '8';
-    case 'PROCESSO NEGADO':
-      return '8';
-    case 'PAGAMENTO ESTORNADO':
-      return '11';
-    case 'PROCESSO PAGO':
-      return '7';
+    case "DOCUMENTAÇÃO COMPLEMENTAR RECEBIDA NA UNIDADE":
+      return "6";
+    case "PEDIDO DE REPROGRAMAÇÃO DE PAGAMENTO - ANALISADO E APROVADO":
+      return "6";
+    case "PROCESSO ANALISADO E APROVADO (aguarda liberação do sistema da Seguradora Líder)":
+      return "6";
+    case "PROCESSO COM RESTRIÇÕES":
+      return "11";
+    case "PROCESSO DEVOLVIDO":
+      return "8";
+    case "PROCESSO EM FASE DE REPROGRAMAÇÃO DE ESTORNO":
+      return "";
+    case "PRÉ-CADASTRO COM RESTRIÇÕES":
+      return "5";
+    case "PROCESSO COM PENDENCIA":
+      return "11";
+    case "PROC. REABERTO (ANALISADO E APROVADO)":
+      return "6";
+    case "PROCESSO ENVIADO PARA ANÁLISE DA SEGURADORA LÍDER":
+      return "6";
+    case "PROCESSO ENVIADO PARA PERICIA":
+      return "12";
+    case "PROCESSO ANALISADO E APROVADO":
+      return "6";
+    case "PROCESSO EM VERIFICACAO COMPLEMENTAR":
+      return "10";
+    case "REANALISE MANTIDA":
+      return "6";
+    case "PROCESSO CANCELADO":
+      return "8";
+    case "PROCESSO NEGADO":
+      return "8";
+    case "PAGAMENTO ESTORNADO":
+      return "11";
+    case "PROCESSO PAGO":
+      return "7";
     default:
-      return '0';
+      return "0";
   }
 };
 
-app.use('/get/hyperseg', async (req, res) => {
+app.use("/get/hyperseg", async (req, res) => {
   try {
-    const feed = await models.Feed.findOne({ type: 'hyperseg' });
+    const feed = await models.Feed.findOne({ type: "hyperseg" });
     const hypersegClients = feed.data;
-    const DPVAT_ADM = 'DPVAT Administrativo';
+    const DPVAT_ADM = "DPVAT Administrativo";
 
     let clients = (await models.Clients.find()).map(c => c.toObject());
 
     clients = await Promise.all(
       clients.map(async c => {
-        let h = hypersegClients.find(h => unmaskCPF(c.cpf) === unmaskCPF(h.cpf));
-        if (typeof h !== 'undefined') {
+        let h = hypersegClients.find(
+          h => unmaskCPF(c.cpf) === unmaskCPF(h.cpf)
+        );
+        if (typeof h !== "undefined") {
           const updatedProduct = { ...h };
           updatedProduct.externalStatus = updatedProduct.status;
           updatedProduct.status = getStatusCodeFromTitle(updatedProduct.status);
@@ -152,7 +160,7 @@ app.use('/get/hyperseg', async (req, res) => {
             c.products = [
               ...c.products,
               {
-                product: mongoose.Types.ObjectId('5b41298f7997cfafafe2b3c6'),
+                product: mongoose.Types.ObjectId("5b41298f7997cfafafe2b3c6"),
                 ...updatedProduct
               }
             ];
@@ -173,16 +181,20 @@ app.use('/get/hyperseg', async (req, res) => {
   }
 });
 
-app.use('/api', api);
+app.use("/api", api);
 app.use(
-  '/api/clients',
+  "/api/clients",
   (req, res, next) => tokens.validateMiddleware(req, res, next),
   async (req, res, next) => {
     try {
-      let user = (await models.Users.findOne({ _id: res.locals.user_id }).exec()).toObject();
+      let user = (
+        await models.Users.findOne({ _id: res.locals.user_id }).exec()
+      ).toObject();
 
-      if (req.method == 'GET') {
-        let company = (await models.Companies.findOne({ _id: user.company_id }).exec()).toObject();
+      if (req.method == "GET") {
+        let company = (
+          await models.Companies.findOne({ _id: user.company_id }).exec()
+        ).toObject();
         let queries = [{ company_id: user.company_id }];
 
         if (company.external_clients)
@@ -193,7 +205,7 @@ app.use(
         };
       }
 
-      if (req.method == 'POST') {
+      if (req.method == "POST") {
         req.body.company_id = user.company_id;
       }
 
@@ -202,44 +214,58 @@ app.use(
       res.status(500).send({ message: err.message });
     }
   },
-  require('./crud')(models.Clients, {
-    searchFields: ['name', 'rg.number', 'cpf', 'phone', 'email', 'accident_date']
+  require("./crud")(models.Clients, {
+    searchFields: [
+      "name",
+      "rg.number",
+      "cpf",
+      "phone",
+      "email",
+      "accident_date"
+    ]
   })
 );
 
-app.use('/api/logs', require('./crud')(models.Logs));
-app.use('/api/tasks', require('./crud')(models.Tasks));
-app.use('/api/leads', require('./crud')(models.Leads));
-app.use('/api/products', require('./crud')(models.Products));
+app.use("/api/logs", require("./crud")(models.Logs));
+app.use("/api/tasks", require("./crud")(models.Tasks));
+app.use("/api/leads", require("./crud")(models.Leads));
+app.use("/api/products", require("./crud")(models.Products));
 
 // =========
 // Documents
 // =========
-app.get('/documents/:client_id', async function(req, res) {
+app.get("/documents/:client_id", async function(req, res) {
   try {
-    let client = await models.Clients.findOne({ _id: req.params.client_id }).exec();
+    let client = await models.Clients.findOne({
+      _id: req.params.client_id
+    }).exec();
 
     if (
       1 == 2 &&
-      fs.existsSync(path.resolve(__dirname, `static/reports/${req.params.client_id}.docx`))
+      fs.existsSync(
+        path.resolve(__dirname, `static/reports/${req.params.client_id}.docx`)
+      )
     ) {
       res.statusCode = 302;
       res.setHeader(
-        'Location',
+        "Location",
         `https://docs.google.com/gview?url=${req.headers.host}/static/reports/${req.params.client_id}.docx`
       );
       res.end();
     } else if (client) {
       // Set client and company
       client = client.toObject();
-      client.company = (await models.Companies.findOne({
-        _id: client.company_id
-      }).exec()).toObject();
-      client.company.location = client.company.address.city + '/' + client.company.address.state;
+      client.company = (
+        await models.Companies.findOne({
+          _id: client.company_id
+        }).exec()
+      ).toObject();
+      client.company.location =
+        client.company.address.city + "/" + client.company.address.state;
       let context = { client: client || {} };
 
       // Set client products object
-      if (typeof context.client.products !== 'undefined') {
+      if (typeof context.client.products !== "undefined") {
         let products = {};
         context.client.products.forEach(product => {
           products[product] = true;
@@ -250,32 +276,41 @@ app.get('/documents/:client_id', async function(req, res) {
       // Full Date object
       const d = new Date();
       const months = [
-        'Janeiro',
-        'Fevereiro',
-        'Março',
-        'Abril',
-        'Maio',
-        'Junho',
-        'Julho',
-        'Agosto',
-        'Setembro',
-        'Outubro',
-        'Novembro',
-        'Dezembro'
+        "Janeiro",
+        "Fevereiro",
+        "Março",
+        "Abril",
+        "Maio",
+        "Junho",
+        "Julho",
+        "Agosto",
+        "Setembro",
+        "Outubro",
+        "Novembro",
+        "Dezembro"
       ];
-      context.fullDate = d.getDate() + ' de ' + months[d.getMonth()] + ' de ' + d.getFullYear();
-      context.date = { day: d.getDate(), month: months[d.getMonth()], year: d.getFullYear() };
+      context.fullDate =
+        d.getDate() + " de " + months[d.getMonth()] + " de " + d.getFullYear();
+      context.date = {
+        day: d.getDate(),
+        month: months[d.getMonth()],
+        year: d.getFullYear()
+      };
 
       // Accident date array
-      context.accident_date_array = client.accident_date.split('/');
+      context.accident_date_array = client.accident_date.split("/");
 
       // Set isUnder16
       let b = commons.date.convertFromString(context.client.birthday);
       context.client.isUnder16 = commons.date.getAge(b) < 16;
 
       // Format Bank account
-      context.client.bank_account.agency = context.client.bank_account.agency.split('-');
-      context.client.bank_account.number = context.client.bank_account.number.split('-');
+      context.client.bank_account.agency = context.client.bank_account.agency.split(
+        "-"
+      );
+      context.client.bank_account.number = context.client.bank_account.number.split(
+        "-"
+      );
 
       // Company
       context.company = client.company;
@@ -288,73 +323,73 @@ app.get('/documents/:client_id', async function(req, res) {
         address: client.address,
         bank_account: client.bank_account,
         rg: {
-          number: '',
-          emitter: '',
-          expedition_date: ''
+          number: "",
+          emitter: "",
+          expedition_date: ""
         }
       };
-      context.benef = context.tutor.cpf === '' ? context.client : context.tutor;
+      context.benef = context.tutor.cpf === "" ? context.client : context.tutor;
       context.vehicle = {
-        type: '',
-        model: '',
-        year: '',
-        plate: '',
-        id: '',
+        type: "",
+        model: "",
+        year: "",
+        plate: "",
+        id: "",
         owner: {
-          name: '',
+          name: "",
           rg: {
-            number: '',
-            emitter: '',
+            number: "",
+            emitter: "",
             expedition_date: {
-              day: '',
-              month: '',
-              year: ''
+              day: "",
+              month: "",
+              year: ""
             }
           },
-          cpf: '',
+          cpf: "",
           address: {
-            street: '',
-            number: '',
-            city: '',
-            state: '',
-            zip: ''
+            street: "",
+            number: "",
+            city: "",
+            state: "",
+            zip: ""
           }
         },
         driver: {
-          name: '',
+          name: "",
           rg: {
-            number: '',
-            emitter: ''
+            number: "",
+            emitter: ""
           },
-          cpf: '',
+          cpf: "",
           address: {
-            street: '',
-            number: '',
-            city: '',
-            state: '',
-            zip: ''
+            street: "",
+            number: "",
+            city: "",
+            state: "",
+            zip: ""
           }
         }
       };
 
       const extraForms =
-        typeof req.query.forms !== 'undefined' && req.query.forms !== ''
-          ? req.query.forms.split(',')
+        typeof req.query.forms !== "undefined" && req.query.forms !== ""
+          ? req.query.forms.split(",")
           : [];
 
       delete context.client;
 
       // Array of templates
       const templates = [
-        'contrato',
-        'formulario_unico',
-        'iprf',
-        'lavagem_de_dinheiro',
-        'pobreza',
-        'procuracao_adm',
-        'procuracao_jud',
-        'prop_veiculo',
-        'carta_laudos',
+        "contrato",
+        "formulario_unico",
+        "iprf",
+        "lavagem_de_dinheiro",
+        "pobreza",
+        "procuracao_adm",
+        "procuracao_jud",
+        "prop_veiculo",
+        "carta_laudos",
         ...extraForms
       ];
 
@@ -363,38 +398,40 @@ app.get('/documents/:client_id', async function(req, res) {
       templates.forEach(templateName => {
         var file = fs.readFileSync(
           path.resolve(__dirname, `static/templates/${templateName}.docx`),
-          'binary'
+          "binary"
         );
         files.push(file);
       });
 
       var mergedDocx = new DocxMerger({}, files);
-      await mergedDocx.save('nodebuffer', function(data) {
-        fs.writeFile(`static/templates/merged/${context._client._id}.docx`, data, async function(
-          err
-        ) {
-          if (err) console.log(err);
+      await mergedDocx.save("nodebuffer", function(data) {
+        fs.writeFile(
+          `static/templates/merged/${context._client._id}.docx`,
+          data,
+          async function(err) {
+            if (err) console.log(err);
 
-          // Create report from merged template
-          await createReport({
-            template: `static/templates/merged/${context._client._id}.docx`,
-            output: `static/reports/${context._client._id}.docx`,
-            cmdDelimiter: '++',
-            data: context
-          });
+            // Create report from merged template
+            await createReport({
+              template: `static/templates/merged/${context._client._id}.docx`,
+              output: `static/reports/${context._client._id}.docx`,
+              cmdDelimiter: "++",
+              data: context
+            });
 
-          // const pdfData = await word2pdf(`static/reports/${context._client._id}.docx`);
-          // fs.writeFileSync(`static/reports/${context._client._id}.pdf`, pdfData);
-          res.statusCode = 302;
-          res.setHeader(
-            'Location',
-            `https://docs.google.com/gview?url=${req.headers.host}/static/reports/${context._client._id}.docx`
-          );
-          res.end();
-        });
+            // const pdfData = await word2pdf(`static/reports/${context._client._id}.docx`);
+            // fs.writeFileSync(`static/reports/${context._client._id}.pdf`, pdfData);
+            res.statusCode = 302;
+            res.setHeader(
+              "Location",
+              `https://docs.google.com/gview?url=${req.headers.host}/static/reports/${context._client._id}.docx`
+            );
+            res.end();
+          }
+        );
       });
     } else {
-      res.send('Cliente não encontrado.');
+      res.send("Cliente não encontrado.");
     }
   } catch (err) {
     console.error(err);
@@ -405,15 +442,17 @@ app.get('/documents/:client_id', async function(req, res) {
 // ===================
 // Production Settings
 // ===================
-if (app.settings.env === 'production') {
-  app.use(express.static('./client/build'));
-  app.get('*', function(req, res) {
-    res.sendFile('./client/build/index.html', { root: __dirname });
+if (app.settings.env === "production") {
+  app.use(express.static("./client/build"));
+  app.get("*", function(req, res) {
+    res.sendFile("./client/build/index.html", { root: __dirname });
   });
 }
 
 // ======
 // Server
 // ======
-server.listen(port, () => console.log(`Listening on port ${port}, ${apolloServer.graphqlPath}`));
+server.listen(port, () =>
+  console.log(`Listening on port ${port}, ${apolloServer.graphqlPath}`)
+);
 module.exports = app;
