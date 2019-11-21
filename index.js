@@ -19,7 +19,7 @@ const DocxMerger = require("docx-merger");
 // Initial Config
 // ==============
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 2000;
 const server = http.createServer(app);
 apolloServer.applyMiddleware({ app });
 app.use("/graphql", () => {});
@@ -30,13 +30,24 @@ app.use("/graphql", () => {});
 app.use((req, res, next) => {
   const allowedOrigins = [
     "http://www.leadmaster.com.br",
+    "https://www.leadmaster.com.br",
     "http://www.indenizamais.com.br",
-    "https://youthful-davinci-a51b66.netlify.com/",
+    "https://www.indenizamais.com.br",
+    "https://youthful-davinci-a51b66.netlify.com",
     "https://processoaereo.com.br"
   ];
-  allowedOrigins.forEach(origin => {
-    res.header("Access-Control-Allow-Origin", origin);
-  });
+
+  let isOriginAllowed = false;
+  if (typeof req.headers.origin === "undefined") {
+    isOriginAllowed = true;
+  } else {
+    const reqOrigin = `${req.protocol}://${req.headers.origin}`;
+    allowedOrigins.forEach(origin => {
+      if (reqOrigin === origin) {
+        res.header("Access-Control-Allow-Origin", reqOrigin);
+      }
+    });
+  }
 
   if (app.settings.env !== "production")
     res.header("Access-Control-Allow-Origin", "*");
