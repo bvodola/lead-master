@@ -37,14 +37,12 @@ app.use((req, res, next) => {
     "https://processoaereo.com.br"
   ];
 
-  let isOriginAllowed = false;
-  if (typeof req.headers.origin === "undefined") {
-    isOriginAllowed = true;
-  } else {
-    const reqOrigin = `${req.protocol}://${req.headers.origin}`;
+  console.log(JSON.stringify(req.headers));
+  if (typeof req.headers.origin !== "undefined") {
+    // const reqOrigin = `${req.protocol}://${req.headers.origin}`;
     allowedOrigins.forEach(origin => {
-      if (reqOrigin === origin) {
-        res.header("Access-Control-Allow-Origin", reqOrigin);
+      if (req.headers.origin === origin) {
+        res.header("Access-Control-Allow-Origin", req.headers.origin);
       }
     });
   }
