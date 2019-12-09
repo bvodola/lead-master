@@ -34,7 +34,8 @@ app.use((req, res, next) => {
     "http://www.indenizamais.com.br",
     "https://www.indenizamais.com.br",
     "https://youthful-davinci-a51b66.netlify.com",
-    "https://processoaereo.com.br"
+    "https://processoaereo.com.br",
+    "https://landing.meuprocesso.com.br"
   ];
 
   console.log(JSON.stringify(req.headers));
