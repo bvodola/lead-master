@@ -39,17 +39,17 @@ app.use((req, res, next) => {
   ];
 
   console.log(JSON.stringify(req.headers));
-  if (typeof req.headers.origin !== "undefined") {
-    // const reqOrigin = `${req.protocol}://${req.headers.origin}`;
-    allowedOrigins.forEach(origin => {
-      if (req.headers.origin === origin) {
-        res.header("Access-Control-Allow-Origin", req.headers.origin);
-      }
-    });
-  }
+  // if (typeof req.headers.origin !== "undefined") {
+  //   // const reqOrigin = `${req.protocol}://${req.headers.origin}`;
+  //   allowedOrigins.forEach(origin => {
+  //     if (req.headers.origin === origin) {
+  //       res.header("Access-Control-Allow-Origin", req.headers.origin);
+  //     }
+  //   });
+  // }
 
-  if (app.settings.env !== "production")
-    res.header("Access-Control-Allow-Origin", "*");
+  // if (app.settings.env !== "production")
+  res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
   res.header(
     "Access-Control-Allow-Headers",
