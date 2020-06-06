@@ -12,7 +12,7 @@
     "node": "9.x"
   },
   "dependencies": {
-    "apollo-server-express": "^2.0.0",
+    "apollo-server-express": "^2.14.2",
     "axios": "^0.17.1",
     "babel-polyfill": "^6.26.0",
     "bcrypt-nodejs": "^0.0.3",
