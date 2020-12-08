@@ -5,13 +5,13 @@
   "license": "MIT",
   "scripts": {
     "start": "node index.js",
-    "start:dev": "nodemon",
+    "dev": "nodemon",
     "bluemix": "cd ./client && yarn build:prod && cd ../ && cf push",
     "deploy:heroku": "export NODE_ENV=production && cd ./client && yarn build:prod && cd ../ && git add . && git commit -m 'Deploy' && git push heroku heroku:master",
     "deploy:heroku:server": "git add . && git commit -m 'Deploy' && git push heroku heroku:master"
   },
   "engines": {
-    "node": "9.x"
+    "node": "12.x"
   },
   "dependencies": {
     "apollo-server-express": "^2.0.0",
@@ -31,7 +31,7 @@
     "intl": "^1.2.5",
     "jsonwebtoken": "^8.1.1",
     "mailgun.js": "^2.0.1",
-    "mongoose": "^4.12.5",
+    "mongoose": "^5.11.5",
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
     "passport-google-oauth20": "^1.0.0",

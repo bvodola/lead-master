@@ -19,7 +19,7 @@ const DocxMerger = require("docx-merger");
 // Initial Config
 // ==============
 const app = express();
-const port = process.env.PORT || 2000;
+const port = process.env.PORT || 3000;
 const server = http.createServer(app);
 apolloServer.applyMiddleware({ app });
 app.use("/graphql", () => {});
@@ -35,7 +35,7 @@ app.use((req, res, next) => {
     "https://www.indenizamais.com.br",
     "https://youthful-davinci-a51b66.netlify.com",
     "https://processoaereo.com.br",
-    "https://landing.meuprocesso.com.br"
+    "https://landing.meuprocesso.com.br",
   ];
 
   console.log(JSON.stringify(req.headers));
@@ -82,18 +82,18 @@ app.use("/integrations/hyperseg", async (req, res) => {
   const hypersegClients = req.body;
 
   await models.Feed.remove({
-    type: "hyperseg"
+    type: "hyperseg",
   });
 
   await models.Feed.create({
     type: "hyperseg",
-    data: hypersegClients
+    data: hypersegClients,
   });
 
   res.send({ message: "OK" }).status(200);
 });
 
-const getStatusCodeFromTitle = statusTitle => {
+const getStatusCodeFromTitle = (statusTitle) => {
   switch (statusTitle) {
     case "DOCUMENTAÇÃO COMPLEMENTAR RECEBIDA NA UNIDADE":
       return "6";
@@ -142,12 +142,12 @@ app.use("/get/hyperseg", async (req, res) => {
     const hypersegClients = feed.data;
     const DPVAT_ADM = "DPVAT Administrativo";
 
-    let clients = (await models.Clients.find()).map(c => c.toObject());
+    let clients = (await models.Clients.find()).map((c) => c.toObject());
 
     clients = await Promise.all(
-      clients.map(async c => {
+      clients.map(async (c) => {
         let h = hypersegClients.find(
-          h => unmaskCPF(c.cpf) === unmaskCPF(h.cpf)
+          (h) => unmaskCPF(c.cpf) === unmaskCPF(h.cpf)
         );
         if (typeof h !== "undefined") {
           const updatedProduct = { ...h };
@@ -155,11 +155,11 @@ app.use("/get/hyperseg", async (req, res) => {
           updatedProduct.status = getStatusCodeFromTitle(updatedProduct.status);
 
           let productWasFound = false;
-          c.products = c.products.map(p => {
+          c.products = c.products.map((p) => {
             if (p.product.name === DPVAT_ADM) {
               p = {
                 ...p,
-                ...updatedProduct
+                ...updatedProduct,
               };
               productWasFound = true;
             }
@@ -171,8 +171,8 @@ app.use("/get/hyperseg", async (req, res) => {
               ...c.products,
               {
                 product: mongoose.Types.ObjectId("5b41298f7997cfafafe2b3c6"),
-                ...updatedProduct
-              }
+                ...updatedProduct,
+              },
             ];
           }
 
@@ -208,10 +208,12 @@ app.use(
         let queries = [{ company_id: user.company_id }];
 
         if (company.external_clients)
-          queries = queries.concat(company.external_clients.map(v => v.query));
+          queries = queries.concat(
+            company.external_clients.map((v) => v.query)
+          );
 
         res.locals.query = {
-          $and: [{ $or: queries }]
+          $and: [{ $or: queries }],
         };
       }
 
@@ -231,8 +233,8 @@ app.use(
       "cpf",
       "phone",
       "email",
-      "accident_date"
-    ]
+      "accident_date",
+    ],
   })
 );
 
@@ -244,10 +246,10 @@ app.use("/api/products", require("./crud")(models.Products));
 // =========
 // Documents
 // =========
-app.get("/documents/:client_id", async function(req, res) {
+app.get("/documents/:client_id", async function (req, res) {
   try {
     let client = await models.Clients.findOne({
-      _id: req.params.client_id
+      _id: req.params.client_id,
     }).exec();
 
     if (
@@ -267,7 +269,7 @@ app.get("/documents/:client_id", async function(req, res) {
       client = client.toObject();
       client.company = (
         await models.Companies.findOne({
-          _id: client.company_id
+          _id: client.company_id,
         }).exec()
       ).toObject();
       client.company.location =
@@ -277,7 +279,7 @@ app.get("/documents/:client_id", async function(req, res) {
       // Set client products object
       if (typeof context.client.products !== "undefined") {
         let products = {};
-        context.client.products.forEach(product => {
+        context.client.products.forEach((product) => {
           products[product] = true;
         });
         context.client.products = products;
@@ -297,14 +299,14 @@ app.get("/documents/:client_id", async function(req, res) {
         "Setembro",
         "Outubro",
         "Novembro",
-        "Dezembro"
+        "Dezembro",
       ];
       context.fullDate =
         d.getDate() + " de " + months[d.getMonth()] + " de " + d.getFullYear();
       context.date = {
         day: d.getDate(),
         month: months[d.getMonth()],
-        year: d.getFullYear()
+        year: d.getFullYear(),
       };
 
       // Accident date array
@@ -335,8 +337,8 @@ app.get("/documents/:client_id", async function(req, res) {
         rg: {
           number: "",
           emitter: "",
-          expedition_date: ""
-        }
+          expedition_date: "",
+        },
       };
       context.benef = context.tutor.cpf === "" ? context.client : context.tutor;
       context.vehicle = {
@@ -353,8 +355,8 @@ app.get("/documents/:client_id", async function(req, res) {
             expedition_date: {
               day: "",
               month: "",
-              year: ""
-            }
+              year: "",
+            },
           },
           cpf: "",
           address: {
@@ -362,14 +364,14 @@ app.get("/documents/:client_id", async function(req, res) {
             number: "",
             city: "",
             state: "",
-            zip: ""
-          }
+            zip: "",
+          },
         },
         driver: {
           name: "",
           rg: {
             number: "",
-            emitter: ""
+            emitter: "",
           },
           cpf: "",
           address: {
@@ -377,9 +379,9 @@ app.get("/documents/:client_id", async function(req, res) {
             number: "",
             city: "",
             state: "",
-            zip: ""
-          }
-        }
+            zip: "",
+          },
+        },
       };
 
       const extraForms =
@@ -400,12 +402,12 @@ app.get("/documents/:client_id", async function(req, res) {
         "procuracao_jud",
         "prop_veiculo",
         "carta_laudos",
-        ...extraForms
+        ...extraForms,
       ];
 
       let files = [];
 
-      templates.forEach(templateName => {
+      templates.forEach((templateName) => {
         var file = fs.readFileSync(
           path.resolve(__dirname, `static/templates/${templateName}.docx`),
           "binary"
@@ -414,11 +416,11 @@ app.get("/documents/:client_id", async function(req, res) {
       });
 
       var mergedDocx = new DocxMerger({}, files);
-      await mergedDocx.save("nodebuffer", function(data) {
+      await mergedDocx.save("nodebuffer", function (data) {
         fs.writeFile(
           `static/templates/merged/${context._client._id}.docx`,
           data,
-          async function(err) {
+          async function (err) {
             if (err) console.log(err);
 
             // Create report from merged template
@@ -426,7 +428,7 @@ app.get("/documents/:client_id", async function(req, res) {
               template: `static/templates/merged/${context._client._id}.docx`,
               output: `static/reports/${context._client._id}.docx`,
               cmdDelimiter: "++",
-              data: context
+              data: context,
             });
 
             // const pdfData = await word2pdf(`static/reports/${context._client._id}.docx`);
@@ -454,7 +456,7 @@ app.get("/documents/:client_id", async function(req, res) {
 // ===================
 if (app.settings.env === "production") {
   app.use(express.static("./client/build"));
-  app.get("*", function(req, res) {
+  app.get("*", function (req, res) {
     res.sendFile("./client/build/index.html", { root: __dirname });
   });
 }

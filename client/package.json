@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "test": "jest",
-    "start": "webpack-dev-server --config ./config/webpack.config.js",
+    "dev": "webpack-dev-server --config ./config/webpack.config.js",
     "build": "webpack --config ./config/webpack.config.js",
     "build:staging": "webpack --config ./config/webpack.config.staging.js",
     "build:prod": "webpack --config ./config/webpack.config.prod.js",
