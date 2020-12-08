@@ -38,6 +38,6 @@
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.4",
     "path": "^0.12.7",
-    "word2pdf": "^1.0.7"
+    "word2pdf": "0.0.1-security"
   }
 }
