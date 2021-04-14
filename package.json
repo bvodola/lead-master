@@ -7,7 +7,7 @@
     "start": "node index.js",
     "dev": "nodemon",
     "bluemix": "cd ./client && yarn build:prod && cd ../ && cf push",
-    "deploy:heroku": "export NODE_ENV=production && cd ./client && yarn build:prod && cd ../ && git add . && git commit -m 'Deploy' && git push heroku heroku:master",
+    "deploy": "export NODE_ENV=production && cd ./client && yarn build:prod && cd ../ && git add . && git commit -m 'Deploy' && git push origin master",
     "deploy:heroku:server": "git add . && git commit -m 'Deploy' && git push heroku heroku:master"
   },
   "engines": {

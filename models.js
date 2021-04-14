@@ -59,14 +59,14 @@ const clientsSchema = new Schema(
   { strict: false }
 );
 
-var autoPopulateClient = function (next) {
-  this.populate("products.product", "name");
-  next();
-};
+// var autoPopulateClient = function (next) {
+//   this.populate("products.product", "name");
+//   next();
+// };
 
-clientsSchema
-  .pre("find", autoPopulateClient)
-  .pre("findOne", autoPopulateClient);
+// clientsSchema
+//   .pre("find", autoPopulateClient)
+//   .pre("findOne", autoPopulateClient);
 
 const logsSchema = new Schema(
   {

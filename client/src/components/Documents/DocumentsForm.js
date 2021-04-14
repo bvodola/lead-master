@@ -1,33 +1,33 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Button from 'material-ui/Button';
-import Divider from 'material-ui/Divider';
-import Text from 'material-ui/Typography';
+import React from "react";
+import PropTypes from "prop-types";
+import Button from "material-ui/Button";
+import Divider from "material-ui/Divider";
+import Text from "material-ui/Typography";
 import {
   FormContainer,
   TextField,
   MaskedTextField,
   CheckboxGroup,
-  SelectField
-} from 'react-form-container';
-import Snackbar from '../Commons/Snackbar';
+  SelectField,
+} from "react-form-container";
+import Snackbar from "../Commons/Snackbar";
 
-import './DocumentsForm.sass';
-import { Icon } from '../../helpers/index';
+import "./DocumentsForm.sass";
+import { Icon } from "../../helpers/index";
 
 const style = {
   container: {
-    padding: '32px'
+    padding: "32px",
   },
 
   box: {
-    padding: '32px',
-    margin: '16px -32px',
-    background: '#f9f9f9'
-  }
+    padding: "32px",
+    margin: "16px -32px",
+    background: "#f9f9f9",
+  },
 };
 
-const DocumentsForm = props => {
+const DocumentsForm = (props) => {
   const { client, handleChangeAge, isUnder16, scope, completeAddress } = props;
 
   return (
@@ -51,10 +51,23 @@ const DocumentsForm = props => {
           />
           {!isUnder16 ? (
             <div>
-              <TextField name="client.nacionality" label="Nacionalidade" fullWidth />
-              <TextField name="client.marital_status" label="Estado Civil" fullWidth />
+              <TextField
+                name="client.nacionality"
+                label="Nacionalidade"
+                fullWidth
+              />
+              <TextField
+                name="client.marital_status"
+                label="Estado Civil"
+                fullWidth
+              />
               <TextField name="client.job" label="Emprego" fullWidth />
-              <MaskedTextField name="client.income" mask="money" label="Renda mensal" fullWidth />
+              <MaskedTextField
+                name="client.income"
+                mask="money"
+                label="Renda mensal"
+                fullWidth
+              />
             </div>
           ) : null}
 
@@ -78,8 +91,17 @@ const DocumentsForm = props => {
               label="Data de expedição"
               fullWidth
             />
-            <TextField name="client.rg.emitter" label="Órgão Emissor" fullWidth />
-            <MaskedTextField name="client.cpf" label="CPF" fullWidth mask="999.999.999-99" />
+            <TextField
+              name="client.rg.emitter"
+              label="Órgão Emissor"
+              fullWidth
+            />
+            <MaskedTextField
+              name="client.cpf"
+              label="CPF"
+              fullWidth
+              mask="999.999.999-99"
+            />
           </div>
 
           {isUnder16 ? (
@@ -93,8 +115,16 @@ const DocumentsForm = props => {
                 mask="999.999.999-99"
               />
               <TextField name="client.tutor.job" label="Profissão" fullWidth />
-              <TextField name="client.tutor.nacionality" label="Nacionalidade" fullWidth />
-              <TextField name="client.tutor.marital_status" label="Estado Civil" fullWidth />
+              <TextField
+                name="client.tutor.nacionality"
+                label="Nacionalidade"
+                fullWidth
+              />
+              <TextField
+                name="client.tutor.marital_status"
+                label="Estado Civil"
+                fullWidth
+              />
               <TextField name="client.tutor.email" label="Email" fullWidth />
               <MaskedTextField
                 name="client.tutor.phone"
@@ -106,33 +136,47 @@ const DocumentsForm = props => {
           ) : null}
 
           <div style={style.box}>
-            <Text type="subheading">Endereço{isUnder16 ? ' (Representante Legal)' : ''}</Text>
+            <Text type="subheading">
+              Endereço{isUnder16 ? " (Representante Legal)" : ""}
+            </Text>
             <MaskedTextField
-              onBlur={ev => completeAddress(ev.target.value)}
+              onBlur={(ev) => completeAddress(ev.target.value)}
               name="client.address.zip"
               label="CEP"
               fullWidth
               mask="99999-999"
             />
-            <TextField name="client.address.street" label="Endereço" fullWidth />
+            <TextField
+              name="client.address.street"
+              label="Endereço"
+              fullWidth
+            />
             <TextField name="client.address.number" label="Número" fullWidth />
-            <TextField name="client.address.complement" label="Complemento" fullWidth />
-            <TextField name="client.address.neighborhood" label="Bairro" fullWidth />
+            <TextField
+              name="client.address.complement"
+              label="Complemento"
+              fullWidth
+            />
+            <TextField
+              name="client.address.neighborhood"
+              label="Bairro"
+              fullWidth
+            />
             <TextField name="client.address.city" label="Cidade" fullWidth />
             <TextField name="client.address.state" label="Estado" fullWidth />
           </div>
 
           <div style={style.box}>
             <Text type="subheading">
-              Dados Bancários{isUnder16 ? ' (Representante Legal)' : ''}
+              Dados Bancários{isUnder16 ? " (Representante Legal)" : ""}
             </Text>
 
             <SelectField
               name="client.bank_account.type"
               options={[
-                { id: ' ', label: ' ' },
-                { id: 'corrente', label: 'Conta Corrente' },
-                { id: 'poupanca', label: 'Conta Poupança' }
+                { id: " ", label: " " },
+                { id: "corrente", label: "Conta Corrente" },
+                { id: "poupanca", label: "Conta Poupança" },
               ]}
               label="Tipo"
               fullWidth
@@ -141,38 +185,46 @@ const DocumentsForm = props => {
             <SelectField
               name="client.bank_account.name"
               options={
-                props.client.bank_account.type === 'poupanca'
-                  ? ['Banco do Brasil', 'Bradesco', 'Caixa', 'Itaú']
+                props.client.bank_account.type === "poupanca"
+                  ? ["Banco do Brasil", "Bradesco", "Caixa", "Itaú"]
                   : [
-                      'Banco do Brasil',
-                      'Banco Real',
-                      'Bradesco',
-                      'Caixa',
-                      'Citibank',
-                      'HSBC',
-                      'Itaú',
-                      'Itaú Unibanco',
-                      'Safra',
-                      'Santander'
+                      "Banco do Brasil",
+                      "Banco Real",
+                      "Bradesco",
+                      "Caixa",
+                      "Citibank",
+                      "HSBC",
+                      "Itaú",
+                      "Itaú Unibanco",
+                      "Safra",
+                      "Santander",
                     ]
               }
               label="Banco"
               fullWidth
             />
 
-            <TextField name="client.bank_account.agency" label="Agência" fullWidth />
-            <TextField name="client.bank_account.number" label="Conta" fullWidth />
+            <TextField
+              name="client.bank_account.agency"
+              label="Agência"
+              fullWidth
+            />
+            <TextField
+              name="client.bank_account.number"
+              label="Conta"
+              fullWidth
+            />
           </div>
 
           <div style={style.box}>
             <Text type="subheading">Gerar também formulários para</Text>
-            <CheckboxGroup
+            {/* <CheckboxGroup
               name="client.products"
               options={[
                 { name: 'fisioterapia_guarulhos', label: 'Fisioterapia (Guarulhos)' },
                 { name: 'fisioterapia_se', label: 'Fisioterapia (Sé)' }
               ]}
-            />
+            /> */}
           </div>
 
           <div className="row">
@@ -190,7 +242,7 @@ const DocumentsForm = props => {
             <div className="col-md mt-2">
               <Button
                 className="Button"
-                style={{ width: '100%' }}
+                style={{ width: "100%" }}
                 variant="raised"
                 color="primary"
                 onClick={() => props.onSubmit()}
@@ -218,5 +270,5 @@ DocumentsForm.propTypes = {
   handleChangeAge: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   data: PropTypes.object,
-  openSnackbar: PropTypes.bool
+  openSnackbar: PropTypes.bool,
 };

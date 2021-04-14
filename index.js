@@ -38,7 +38,6 @@ app.use((req, res, next) => {
     "https://landing.meuprocesso.com.br",
   ];
 
-  console.log(JSON.stringify(req.headers));
   // if (typeof req.headers.origin !== "undefined") {
   //   // const reqOrigin = `${req.protocol}://${req.headers.origin}`;
   //   allowedOrigins.forEach(origin => {
